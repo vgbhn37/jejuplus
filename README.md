@@ -1,1 +1,1 @@
-# tripJeju
+# jejuplus
