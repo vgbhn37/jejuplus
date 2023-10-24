@@ -1,0 +1,172 @@
+/**
+ * 10-24
+ * 강중현
+ */
+
+/* 전체 페이지 스타일 */
+* {
+    text-decoration: none;
+    color: black;
+}
+ul,
+li,
+ol {
+    list-style: none;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* flight start */
+.flight {
+    background-image: url(../../images/air/air-main.PNG);
+    height: 250px;
+    margin: 0 auto;
+    padding: 100px 0;
+    color: white;
+    display: flex;
+}
+
+.flight .flight-container {
+    background-color: white;
+    border: 1px solid red;
+    margin: 0 auto;
+    width: 700px;
+    height: 300px;
+}
+
+.flight .flight-container h4 {
+    margin: 15px 15px;
+    font-size: 25px;
+}
+
+.flight .flight-container span {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.dep-name {
+}
+
+.dep-name label {
+}
+
+.dep-input {
+    display: flex;
+}
+
+/* flight end */
+
+/* calender start */
+label {
+    font-size: 18px;
+}
+
+.calender-input {
+    padding: 10px 15px !important;
+    border: 1px solid #cfd8dc !important;
+    border-radius: 4px !important;
+    box-sizing: border-box;
+    background-color: #fff !important;
+    color: #000 !important;
+    font-size: 16px !important;
+    letter-spacing: 1px;
+    position: relative;
+    width: 350px;
+    text-align: center;
+}
+
+input:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ffa000 !important;
+    outline-width: 0;
+}
+
+.daterangepicker {
+    background-color: #fff;
+    border-radius: 0 !important;
+    align-content: center !important;
+    padding: 0 !important;
+    width: 625px !important;
+}
+
+/*Weekday Heading*/
+thead tr:nth-child(2) {
+    color: #bdbdbd !important;
+}
+
+tbody tr td {
+    padding: 5px 7px !important;
+}
+
+.month {
+    font-size: 16px !important;
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+}
+
+.start-date,
+.end-date {
+    border-radius: 0px !important;
+}
+
+.available:hover {
+    border-radius: 0px !important;
+}
+
+.off {
+    color: #eeeeee !important;
+}
+
+.off:hover {
+    background-color: #eeeeee !important;
+    color: #fff !important;
+}
+
+.drp-buttons {
+    display: none !important;
+}
+/* calender end */
+
+/* air start */
+
+/* 공지사항 */
+.air_notice {
+    height: 250px;
+    width: 1000px;
+    background-color: white;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.air_notice h2 {
+    display: inline;
+    margin-bottom: 24px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.more_view {
+    display: inline;
+    float: right;
+    line-height: 20px;
+}
+.notice_list {
+    margin-top: 20px;
+}
+
+.notice-title {
+    width: 850px;
+    float: left;
+}
+
+.notice-date {
+    width: 95px;
+    float: right;
+}
