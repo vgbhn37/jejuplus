@@ -12,6 +12,7 @@
 
 
 <!-- bootstrap -->
+
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type="text/javascript"
@@ -20,6 +21,7 @@
 	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 
 <!-- google font -->
 
@@ -39,14 +41,15 @@
 				<li><a href="#">로그인</a></li>
 				<li><a href="#">여행 정보</a></li>
 				<div class="app">
-					<li>
-						<a href="#" id="toggleButton">날씨</a>
-					</li>
+					<li><a href="#" id="toggleButton">날씨</a></li>
 					<div class="sidebar">
-						<div id="ww_6b8b1bb7b5dc0" v="1.3" loc="id" a='{"t":"horizontal","lang":"ko","sl_lpl":1,"ids":["wl7410"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>More forecasts:
-							<a href="https://sharpweather.com/ko/seoul/" id="ww_6b8b1bb7b5dc0_u" target="_blank">날씨 시간별 서울</a>
+						<div id="ww_6b8b1bb7b5dc0" v="1.3" loc="id"
+							a='{"t":"horizontal","lang":"ko","sl_lpl":1,"ids":["wl7410"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>
+							More forecasts: <a href="https://sharpweather.com/ko/seoul/"
+								id="ww_6b8b1bb7b5dc0_u" target="_blank">날씨 시간별 서울</a>
 						</div>
-						<script async src="https://app2.weatherwidget.org/js/?id=ww_6b8b1bb7b5dc0"></script>
+						<script async
+							src="https://app2.weatherwidget.org/js/?id=ww_6b8b1bb7b5dc0"></script>
 					</div>
 				</div>
 			</ul>

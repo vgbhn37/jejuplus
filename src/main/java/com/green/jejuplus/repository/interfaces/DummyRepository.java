@@ -1,10 +1,18 @@
 package com.green.jejuplus.repository.interfaces;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import com.green.jejuplus.repository.model.Contents;
+import com.green.jejuplus.repository.model.Place;
 
 @Mapper
-public class DummyRepository {
+public interface DummyRepository {
 
-	// 더미파일임 추후 제거 요망
+	public List<Place> findPlace();
+	public void updateOverview(@Param("overview")String overview, @Param("placeId")Integer placeId);
 	
+	public void insertData(Contents contents);
 }
