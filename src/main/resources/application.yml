@@ -21,4 +21,4 @@ mybatis:
   - classpath:mapper/**.xml
   configuration:
     map-underscore-to-camel-case: true
-  type-aliases-package: com.grenn.jejuplus.repository.model
+  type-aliases-package: com.green.jejuplus.repository.model

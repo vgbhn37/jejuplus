@@ -4,7 +4,10 @@
  */
 
 /* 전체 페이지 스타일 */
+<<<<<<< HEAD
 /* 전체 페이지 스타일 */
+=======
+>>>>>>> d22d76a282eae12c8a4800f730d6dab7742204a2
 * {
     text-decoration: none;
     color: black;
@@ -21,6 +24,7 @@ body {
     background-color: #f5f5f5;
 }
 
+<<<<<<< HEAD
 /* ---------- index css start ---------- */
 
 /* flight start */
@@ -28,6 +32,14 @@ body {
     background-image: url(../../images/air/air-main.PNG);
     height: 450px;
     margin: auto;
+=======
+/* flight start */
+.flight {
+    background-image: url(../../images/air/air-main.PNG);
+    height: 250px;
+    margin: 0 auto;
+    padding: 100px 0;
+>>>>>>> d22d76a282eae12c8a4800f730d6dab7742204a2
     color: white;
     display: flex;
 }
@@ -35,10 +47,16 @@ body {
 .flight .flight-container {
     background-color: white;
     border: 1px solid red;
+<<<<<<< HEAD
     margin: auto;
     width: 1000px;
     height: 300px;
     padding: 15px;
+=======
+    margin: 0 auto;
+    width: 700px;
+    height: 300px;
+>>>>>>> d22d76a282eae12c8a4800f730d6dab7742204a2
 }
 
 .flight .flight-container h4 {
@@ -47,6 +65,7 @@ body {
 }
 
 .flight .flight-container span {
+<<<<<<< HEAD
     font-size: 20px;
 }
 
@@ -156,6 +175,27 @@ body {
 }
 .calender-label {
     font-size: 25px;
+=======
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.dep-name {
+}
+
+.dep-name label {
+}
+
+.dep-input {
+    display: flex;
+}
+
+/* flight end */
+
+/* calender start */
+label {
+    font-size: 18px;
+>>>>>>> d22d76a282eae12c8a4800f730d6dab7742204a2
 }
 
 .calender-input {
@@ -226,6 +266,7 @@ tbody tr td {
 }
 /* calender end */
 
+<<<<<<< HEAD
 .flight-find {
     margin: 10px 0;
     display: flex;
@@ -240,6 +281,9 @@ tbody tr td {
 }
 
 /* flight end */
+=======
+/* air start */
+>>>>>>> d22d76a282eae12c8a4800f730d6dab7742204a2
 
 /* 공지사항 */
 .air_notice {
@@ -276,6 +320,7 @@ tbody tr td {
     width: 95px;
     float: right;
 }
+<<<<<<< HEAD
 /* 공지사항 end */
 
 /* ---------- index css end ---------- */
@@ -617,3 +662,5 @@ main .booking-container .mybooking .nav p.current span {
 }
 
 /* ---------- booking complete css end ---------- */
+=======
+>>>>>>> d22d76a282eae12c8a4800f730d6dab7742204a2

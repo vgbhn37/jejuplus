@@ -1,0 +1,17 @@
+.map {
+	display: block;
+	margin: 0 auto;
+}
+
+.sche-container{
+	display: flex;
+}
+
+.sche-left{
+	flex: 65%;
+}
+
+.sche-right{
+	flex: 35%;
+}
+
