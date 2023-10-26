@@ -29,14 +29,13 @@ public class DummyController {
 	@Transactional
 	public String insertData() {
 
-//		int count = 0;
 //		String result = "";
 //
 //		for (int i = 1; i <= 53; i++) {
 //			try {
 //				Contents contents = new Contents();
 //				URL url = new URL(
-//						"https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=0umsv2g0w0skuqrx&locale=kr&page="
+//						"https://api.visitjeju.net/vsjApi/contents/searchList?apiKey={API_KEY}&locale=kr&page="
 //								+ i);
 //				BufferedReader bf;
 //				bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
@@ -108,20 +107,6 @@ public class DummyController {
 //					contents.setLatitude(null);
 //					contents.setLongitude(null);
 
-//					System.out.println(contentsId);
-//					System.out.println(contentsLabel);
-//					System.out.println(title);
-//				
-//					
-//					System.out.println(jibeonAddress);
-//					System.out.println(roadAddress);
-//					System.out.println(tag);
-//					System.out.println(introduction);
-//					System.out.println(latitude);
-//					System.out.println(longitude);
-//					System.out.println(phoneNo);
-//
-//					count++;
 //
 //				}
 //
@@ -131,8 +116,7 @@ public class DummyController {
 //			}
 //		}
 
-		return "All Complete";
-		
+		return "All Complete";	
 
 	}
 
