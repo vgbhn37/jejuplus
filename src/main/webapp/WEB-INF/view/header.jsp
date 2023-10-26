@@ -24,6 +24,9 @@
 <!-- google font -->
 
 <!-- fontawesome -->
+<script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+	integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"
+	crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -35,6 +38,7 @@
 				</a>
 			</div>
 			<ul class="menu">
+				<li><a href="#">항공권</a></li>
 				<li><a href="#">회원가입</a></li>
 				<li><a href="#">로그인</a></li>
 				<li><a href="#">여행 정보</a></li>

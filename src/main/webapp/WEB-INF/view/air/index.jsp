@@ -2,9 +2,12 @@
 <%@ include file="/WEB-INF/view/header.jsp" %>
 <!-- air css -->
 <link rel="stylesheet" href="../../css/air/air.css" />
+<!-- js -->
+<script src="../../js/main.js"></script>
 
-        <!-- main -->
+       <!-- main -->
         <main>
+            <!-- 항공 스케줄 선택 start -->
             <section class="flight">
                 <div class="flight-container">
                     <h4>항공권</h4>
@@ -13,41 +16,81 @@
                         <label for="oneway"><input type="radio" name="flight-type" id="oneway" />편도</label>
                     </div>
                     <div class="flight-search">
+                        <!-- dep -->
                         <div class="dep-name">
                             <label for="dep-name">출발지</label>
-                            <div class="dep-input">
-                                <input type="text" id="dep-name" name="dep-name" placeholder="출발지" />
+                            <div class="dep-search">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <i class="fas fa-times-circle"></i>
+                                <input
+                                    type="text"
+                                    class="dep-input"
+                                    id="dep-name"
+                                    name="dep-name"
+                                    placeholder="출발지"
+                                />
                             </div>
                         </div>
+                        <!-- dep end -->
+
+                        <!-- arr start -->
                         <div class="arr-name">
                             <label for="arr-name">도착지</label>
-                            <div class="arr-input">
-                                <input type="text" id="arr-name" name="arr-name" placeholder="도착지" />
+                            <div class="arr-search">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <i class="fas fa-times-circle"></i>
+                                <input
+                                    type="text"
+                                    class="arr-input"
+                                    id="arr-name"
+                                    name="arr-name"
+                                    placeholder="도착지"
+                                />
                             </div>
                         </div>
-                    </div>
-                </div>
+                        <!-- arr end -->
 
-                <!-- 날짜 선택 -->
-                <!--    
-                    <div class="container px-1 px-sm-5 mx-auto">
+                        <!-- customer start -->
+                        <div class="customer-container">
+                            <label for="">탑승객</label>
+                            <div class="customer-option">
+                                <span>성인</span>
+                                <div class="passenger-selector">
+                                    <button id="decreasePassenger">-</button>
+                                    <span id="passengerCount">1</span>
+                                    <button id="increasePassenger">+</button>
+                                </div>
+                            </div>
+                            <div class="customer-option">
+                                <span>어린이</span>
+                                <div class="passenger-selector">
+                                    <button id="decreasePassenger">-</button>
+                                    <span id="passengerCount">1</span>
+                                    <button id="increasePassenger">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- customer end -->
+                    </div>
+                    <!-- 날짜 선택 -->
+                    <div class="calnender-container px-1 px-sm-5 mx-auto">
                         <form autocomplete="off">
                             <div class="flex-row d-flex justify-content-center">
                                 <div class="col-xl-5 col-lg-6 col-11 px-1">
                                     <div class="input-group input-daterange">
-                                        <label class="">날짜 선택 : </label>
+                                        <label class="calender-label">날짜 선택 : </label>
                                         <input type="text" name="daterange" class="calender-input" readonly />
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-                 -->
+                    <div class="flight-find">
+                        <button type="submit" class="flight-find-btn">구매하기</button>
+                    </div>
+                </div>
             </section>
+            <!-- 항공 스케줄 선택 end -->
 
             <!-- 공지사항 start -->
             <section class="air_notice">
@@ -76,6 +119,5 @@
         </main>
 
 
-        <!-- js -->
-        <script src="../../js/main.js"></script>
+        
 <%@ include file="/WEB-INF/view/footer.jsp" %>

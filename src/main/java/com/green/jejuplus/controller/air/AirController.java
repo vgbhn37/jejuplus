@@ -11,4 +11,18 @@ public class AirController {
 	public String index() {
 		return "air/index";
 	}
+	
+	// 예약 및 결제 페이지
+	@GetMapping("/air/booking")
+	public String booking() {
+		return "air/booking";
+	}
+	
+	// 결제 완료 페이지
+	@GetMapping("/air/bookingcomplete")
+	public String bookingcomplete() {
+		return "air/bookingcomplete";
+	}
+	
+	
 }
