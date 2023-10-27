@@ -1,9 +1,18 @@
 package com.green.jejuplus.handler;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.green.jejuplus.handler.exception.CustomException;
 
+/**
+ *  예외 발생 시 (Json, Xml)
+ *  데이터를 가공해서 내려 줄 수 있다.
+ *   
+ */
+@RestControllerAdvice // IoC 대상 + Aop 대상
+@Order(1)
 public class MyUserExceptionHandler {
 
 	@ExceptionHandler(Exception.class)

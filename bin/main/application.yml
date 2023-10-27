@@ -15,6 +15,20 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: asd1234
+  
+  mail:
+    host: smtp.gmail.com # 1
+    port: 587 # 2
+    username: godql7408@gmail.com # 3
+    password: hjnz zmah zcxi vwnq # 4
+    properties:
+      mail:
+        smtp:
+          auth: true # 5
+          timeout: 5000 # 6
+          starttls:
+            enable: true # 7
+      
 
 mybatis:
   mapper-locations:
@@ -22,3 +36,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   type-aliases-package: com.green.jejuplus.repository.model
+  
+# 초기 파라미터 설정
+tenco:
+  key: 85135F3C6BFE9DF1735F8806F045AE73CECE7219F7840D8E7E9297A7F846B48A
