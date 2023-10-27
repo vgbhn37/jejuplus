@@ -36,11 +36,11 @@
 	<header>
 		<nav>
 			<div class="logo">
-				<a href="#"> <img src="../images/logo_sample.jpg" alt="로고" />
+				<a href="/main"> <img src="../images/logo_sample.jpg" alt="로고" />
 				</a>
 			</div>
 			<ul class="menu">
-				<li><a href="#">항공권</a></li>
+				<li><a href="/air/index">항공권</a></li>
 				<li><a href="#">회원가입</a></li>
 				<li><a href="#">로그인</a></li>
 				<li><a href="#">여행 정보</a></li>

@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<<<<<<< HEAD
-<mapper namespace="com.green.jejuplus.repository.interfaces.DummyRepository"> 
-=======
 <mapper namespace="com.green.jejuplus.repository.interfaces.DummyRepository">
 
 <select id="findPlace" resultType="Place">
@@ -21,5 +18,4 @@
 </insert>
 	
  
->>>>>>> d22d76a282eae12c8a4800f730d6dab7742204a2
 </mapper>

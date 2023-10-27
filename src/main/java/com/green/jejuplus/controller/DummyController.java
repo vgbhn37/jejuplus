@@ -1,13 +1,5 @@
 package com.green.jejuplus.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.List;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.jejuplus.repository.interfaces.DummyRepository;
-import com.green.jejuplus.repository.model.Contents;
-import com.green.jejuplus.repository.model.Place;
 
 @Controller
 public class DummyController {
