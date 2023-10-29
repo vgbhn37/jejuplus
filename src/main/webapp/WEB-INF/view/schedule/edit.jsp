@@ -1,20 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/header.jsp"%>
-<link rel="stylesheet" href="../../css/schedule/scheduleEdit.css" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link rel="stylesheet" href="/css/schedule/scheduleEdit.css" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+	crossorigin="anonymous">
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d5568461ac8305d5d4737b9523509aed"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+	crossorigin="anonymous"></script>
 <!-- ------------------------------------------------------------- -->
 
 
-<div class="sche-container">
-	<div class="sche-left">
-		<div id="map" class="map" style="width: 700px; height: 560px;"></div>
-		<button onclick="sorting()">딸깍</button>
-	</div>
-	<div class="sche-right">
-		<div>
-			CARDVIEW LIST
+<div class="container">
+	<div class="row">
+		<div class="sche-left col-7">
+			<div id="map" class="map" style="width: 90%; height: 500px;"></div>
+			<button onclick="sorting()">딸깍</button>
+			<ul class="nav justify-content-between">
+				<li class="nav-item"><a class="nav-link" onclick="showList(all)">전체</a></li>
+				<li class="nav-item"><a class="nav-link" onclick="showList(attraction)">관광지</a></li>
+				<li class="nav-item"><a class="nav-link" onclick="showList(accomodation)">숙박</a></li>
+				<li class="nav-item"><a class="nav-link" onclick="showList(shopping)">쇼핑</a></li>
+				<li class="nav-item"><a class="nav-link" onclick="showList(restaurant)">음식점</a></li>
+				<li class="nav-item"><a class="nav-link" onclick="showList(favorite)">찜한 곳</a></li>
+				<li class="nav-item"><a class="nav-link" onclick="showList(search)">검색</a></li>
+			</ul>
+			<div id = "tab-output">
+				<c:forEach var="item" items="${list}">
+					
+				</c:forEach>
+			</div>
+		</div>
+		<div class="sche-right col-5">
+			<div id = "list-output">CARDVIEW LIST</div>
 		</div>
 	</div>
 </div>
@@ -26,48 +50,116 @@
 	
 	let container = document.getElementById('map'); // 지도를 담을 영역의 DOM
 	let markers = []; // 마커를 담을 배열
-	let locations = []; // 위치 정보를 담을 배열
+	let locations = []; // 선택한 장소 정보를 담을 배열
 	let distances = []; // 거리 정보를 담을 배열
 	let polyline; // 지도에 표시할 선
 	
+	// 장소 리스트 보여주기
+	function showList(category){
+		
+		let url = "/schedule/show-list/" + category;
+		fetch(url).then(res=>{
+			if(!res.ok){
+				throw new Error("네트워크 응답 오류");
+			}
+			
+			return res.text();
+		})
+		.then(data=>{
+			const output = document.getElementById('tab-output');
+			// 장소 리스트 출력
+		});
+		
+		
+	}
+	
+	
+	// 선택한 장소 리스트에 추가
+	function addList(idValue,titleValue,mapX,mapY){
+		locations.forEach(item=>{
+			if(item.id == idValue){
+				alert("이미 일정에 있는 장소입니다.");
+				return;
+			}
+		})
+		
+		let item = {
+			id : idValue,
+			title : titleValue,
+			x : mapX,
+			y : mapY
+		};
+		
+		locations.push(item);
+		printList();
+		polyline.setMap(null);
+		drawLine(locations);
+		
+	}
+	
+	// 리스트 출력
+	function printList(){
+		const output = document.getElementById('list-output');
+		output.innerHTML = '';
+		locations.forEach(item=>{
+			
+			// 선택한 리스트 출력
+			
+		});
+	}
+	
+	// 드래그 드랍시 발생하는 이벤트 
+	
+	
+	
 	// 더미데이터
 	let item1 = {
+		title : '1번',
 		x : 126.4947726967,
 		y : 33.5071207433
 	};
 	let item2 = {
+			title : '2번',
 		x : 126.3576659720,
 		y : 33.3481028325
 	};
 	let item3 = {
+			title : '3번',
 		x : 126.2353395628,
 		y : 33.3898379598
 	};
 	let item4 = {
+			title : '4번',
 		x : 126.2686822387,
 		y : 33.3390996509
 	};
 	let item5 = {
+			title : '5번',
 		x : 126.4286648899,
 		y : 33.4924157657
 	};
 	let item6 = {
+			title : '6번',
 		x : 126.1820167,
 		y : 33.3491801	
 	};
 	let item7 = {
+			title : '7번',
 		x : 126.5452464,
 		y : 33.5035437
 	};
 	let item8 = {
+			title : '8번',
 		x : 126.5617231,
 		y : 33.2477094
 	};
 	let item9 = {
+			title : '9번',
 		x : 126.5375841,
 		y : 33.5059721
 	}
 	let item10 = {
+			title : '10번',
 		x : 126.55698,
 		y : 33.247944
 	};
