@@ -1,4 +1,4 @@
-package com.green.jejuplus.dto;
+package com.green.jejuplus.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,14 +11,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserUpdateDto {
-
-	int userId;
-	int levelId;
-	String username; 
-	String password; 
-	String fullname;
-	String email;
-	String phoneNumber; 
-	String isKakao;
+public class SignInFormDto {
+	
+	private String username;  
+	private String password;
 }

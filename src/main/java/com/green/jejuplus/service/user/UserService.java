@@ -1,4 +1,4 @@
-package com.green.jejuplus.service;
+package com.green.jejuplus.service.user;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.green.jejuplus.dto.SignInFormDto;
-import com.green.jejuplus.dto.SignUpFormDto;
-import com.green.jejuplus.dto.UserUpdateDto;
+import com.green.jejuplus.dto.user.SignInFormDto;
+import com.green.jejuplus.dto.user.SignUpFormDto;
+import com.green.jejuplus.dto.user.UserUpdateDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.interfaces.UserRepository;
 import com.green.jejuplus.repository.model.User;
@@ -120,6 +120,31 @@ public class UserService {
 	public int userDetailUpdate(int userId,UserUpdateDto userUpdateDto) {
 		int result = userRepository.updateUser(userUpdateDto);
 		return result;
+	}
+
+	public boolean updateEmail(String email,int userId) {
+        try {
+            User user = userRepository.findByUpdateEmail(userId); 
+            System.out.println(" 서비스 : " + user);
+            if (user != null) {
+                user.setEmail(email);
+                userRepository.updateEmail(user); 
+                return true; 
+            }
+        } catch (Exception e) {
+        }
+        return false; 
+    }
+
+	public User getUserPassword(int userId) {
+		return userRepository.findByPassword(userId);
+	}
+
+	public void updateUserPassword(User user) {
+		String rawPwd = user.getPassword();
+		String hashPwd = passwordEncoder.encode(rawPwd);
+		user.setPassword(hashPwd);	
+		 userRepository.updateUserPassword(user);		
 	}
 	
 

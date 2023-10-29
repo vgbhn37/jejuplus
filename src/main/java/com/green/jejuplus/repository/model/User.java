@@ -34,6 +34,7 @@ public class User {
 	        this.verified = verified;
 	    }
 
+		
 
 		
 

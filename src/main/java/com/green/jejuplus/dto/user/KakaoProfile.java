@@ -1,4 +1,4 @@
-package com.green.jejuplus.dto;
+package com.green.jejuplus.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

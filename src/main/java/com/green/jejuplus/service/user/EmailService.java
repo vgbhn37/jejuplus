@@ -1,4 +1,4 @@
-package com.green.jejuplus.service;
+package com.green.jejuplus.service.user;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,7 +14,7 @@ public class EmailService {
 
     public void sendVerificationCode(String to, String code) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("godql7408@google.com");
+        message.setFrom("jejuplus@google.com");
         message.setTo(to);
         message.setSubject("이메일 인증 코드");
         message.setText("인증 코드: " + code);

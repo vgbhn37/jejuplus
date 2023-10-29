@@ -1,4 +1,4 @@
-package com.green.jejuplus.dto;
+package com.green.jejuplus.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
