@@ -19,13 +19,18 @@
 
 <div class="container">
 	<div class="row">
-		<div class="sche-left col-8 row">
-			<div class="col-7">
-				<h4>${schedule.title }</h4>
-				<h5 style="color: #767676;">${schedule.startDate }~
-					${schedule.endDate }</h5>
+		<div class="sche-left col-8">
+			<div class="row">
+				<div class="col-7">
+					<h4>${schedule.title }</h4>
+					<h5 style="color: #767676;">${schedule.startDate }~
+						${schedule.endDate }</h5>
+				</div>
+				<div class="col-5">
+				 대충 달력위치
+				 <br><br><br><br>
+				</div>
 			</div>
-			<div class="col-5"></div>	
 			<div id="map" class="map" style="width: 90%; height: 500px;"></div>
 
 			<ul class="nav justify-content-between">
@@ -55,7 +60,7 @@
 							<h4 class="card-title">${item.title}</h4>
 							<p class="card-text">${item.region1 }>${item.region2}</p>
 							<p class="card-text tag">${item.tag }</p>
-							<button class="btn float-right"
+							<button class="btn btn-orange float-right"
 								onclick="addList(${item.contentsId},'${item.title}',${item.longitude },${item.latitude})">일정추가</button>
 						</div>
 					</div>
@@ -65,11 +70,12 @@
 
 		</div>
 		<div class="sche-right col-4 row">
-			<div id="day" class="col-9">
+			<div id="day" class="col-6">
 				<h3>DAY 1</h3>
 			</div>
-			<div class="col-3">
-				<button class="btn" onclick="sorting()">정렬하기</button>
+			<div class="col-6">
+				<button class="btn btn-orange" style="width: 58px; height: 38px;" onclick="sorting()">정렬</button>
+				<button class="btn btn-primary" onclick="saveSchedule()">저장</button>
 			</div>
 			<div id="list-output">CARDVIEW LIST</div>
 		</div>
@@ -104,9 +110,9 @@
 	
 	
 	// 장소 리스트 보여주기
-	function showList(category){
+	function showList(label){
 		
-		let url = "/schedule/show-list/" + category;
+		let url = "/schedule/show-list/" + label;
 		fetch(url).then(res=>{
 			if(!res.ok){
 				throw new Error("네트워크 응답 오류");
@@ -133,6 +139,7 @@
 				
 				// 이미지
 				let cardImg = document.createElement('img');
+				cardImg.classList.add('thumbnail');
 				cardImg.src = data.thumbnailPath;
 				cardImg.onerror = function(){
 					cardImg.src = '/images/NoImage.jpg';
@@ -144,12 +151,34 @@
 				cardBody.classList.add('card-body');
 				cardBody.classList.add('p-5');
 				
-				//
+				// 명소 이름
 				let cardTitle = document.createElement('h4');
 				cardTitle.classList.add('card-title');
 				cardTitle.textContent = data.title;
-				cardBody.appendChild();
-		
+				cardBody.appendChild(cardTitle);
+				
+				// 지역
+				let cardText = document.createElement('p');
+				cardText.classList.add('card-text');
+				cardText.textContent = data.region1 + '>' + data.region2;
+				cardBody.appendChild(cardText);
+				
+				// 태그
+				let cardText2 = document.createElement('p');
+				cardText2.classList.add('card-text');
+				cardText2.classList.add('tag');
+				cardText2.textContent = data.tag;
+				cardBody.appendChild(cardText2);
+				
+				// 버튼
+				let button = document.createElement('button');
+				button.classList.add('btn');
+				button.classList.add('btn-orange');
+				button.classList.add('float-right');
+				
+				
+				
+				
 				
 				
 			});
@@ -296,9 +325,13 @@
 		 
 		}
 		
-		
-    
 	}
+	
+	// 일정 저장
+	function saveSchedule(){
+		alert('저장');
+	}
+	
 	
 	
 </script>
