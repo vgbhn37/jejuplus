@@ -5,10 +5,10 @@
 <mapper namespace="com.green.jejuplus.repository.interfaces.ScheduleRepository">
 
 <select id="findAllList" resultType="Contents">
-	select * from tb_contents limit 5000
+	select * from tb_contents limit 50
 </select>
 <select id="findListByLabel" resultType="Contents">
-	select * from tb_contents where contents_label = #{label} limit 5000
+	select * from tb_contents where contents_label = #{label} limit 50
 </select>
 <select id="findMyFavoriteList" resultType="Contents">
 	select * from tb_contents c join tb_favorite f on c.contents_id = f.contents_id
@@ -19,6 +19,9 @@
 </select>
 <select id="findContentsBySearchTag" resultType="Contents">
 	select * from tb_contents where tag like concat('%',#{search},'%')
+</select>
+<select id="findScheduleById" resultType="Schedule">
+	select * from tb_schedule where schedule_id = #{scheduleId}
 </select>
 
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.green.jejuplus.repository.interfaces.ScheduleRepository;
 import com.green.jejuplus.repository.model.Contents;
+import com.green.jejuplus.repository.model.Schedule;
 
 @Service
 public class ScheduleService {
@@ -16,7 +17,20 @@ public class ScheduleService {
 	
 	public List<Contents> findAllList() {
 		
-		return scheduleRepository.findAllList();
+		List<Contents> list = scheduleRepository.findAllList();
+		StringBuilder sb = new StringBuilder();
+		for (Contents contents : list) {
+			String tag = contents.getTag();
+			String[] tags = tag.split(",");
+			for (String tagElement : tags) {
+				sb.append("#").append(tagElement).append(" ");
+			}
+			String result = sb.substring(0, sb.length()-1);
+			contents.setTag(result);
+			sb.setLength(0);
+		}
+		
+		return list;
 		
 	}
 	
@@ -33,6 +47,11 @@ public class ScheduleService {
 	public List<Contents> findContentsBySearchTitle(String search){
 		
 		return scheduleRepository.findContentsBySearchTitle(search);
+	}
+	
+	public Schedule findScheduleById(Integer scheduleId) {
+		
+		return scheduleRepository.findScheduleById(scheduleId);
 	}
 	
 	
