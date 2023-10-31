@@ -3,8 +3,10 @@ package com.green.jejuplus.service.schedule;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.interfaces.ScheduleRepository;
 import com.green.jejuplus.repository.model.Contents;
 import com.green.jejuplus.repository.model.Schedule;
@@ -17,48 +19,44 @@ public class ScheduleService {
 
 	@Autowired
 	ScheduleRepository scheduleRepository;
-	
+
 	public List<Contents> findAllList(PagingDto paging) {
-		
+
 		List<Contents> list = scheduleRepository.findAllList(paging);
-		StringBuilder sb = new StringBuilder();
-		for (Contents contents : list) {
-			String tag = contents.getTag();
-			String[] tags = tag.split(",");
-			for (String tagElement : tags) {
-				sb.append("#").append(tagElement).append(" ");
-			}
-			String result = sb.substring(0, sb.length()-1);
-			contents.setTag(result);
-			sb.setLength(0);
-		}
-		
+		addHashTag(list);
+
 		return list;
-		
+
 	}
 	
-	public List<Contents> findListByLabel(String label,User user, PagingDto paging){
+	public List<Contents> findListByLabel(String label, User user, PagingDto paging) {
+		
+		List<Contents> list = null;
 		
 		switch (label) {
 
 		case "attraction":
-			return scheduleRepository.findListByLabel(Define.ATTRACTION, paging);
+			list = scheduleRepository.findListByLabel(Define.ATTRACTION, paging);
 		case "accomodation":
-			return scheduleRepository.findListByLabel(Define.ACCOMODATION, paging);
+			list = scheduleRepository.findListByLabel(Define.ACCOMODATION, paging);
 		case "shopping":
-			return scheduleRepository.findListByLabel(Define.SHOPPING ,paging);
+			list = scheduleRepository.findListByLabel(Define.SHOPPING, paging);
 		case "restaurant":
-			return scheduleRepository.findListByLabel(Define.RESTAURANT, paging);
+			list = scheduleRepository.findListByLabel(Define.RESTAURANT, paging);
 		case "favorite":
-			return scheduleRepository.findMyFavoriteList(user.getUserId(), paging);
-		default :
-			return scheduleRepository.findAllList(paging);
+			list = scheduleRepository.findMyFavoriteList(user.getUserId(), paging);
+		default:
+			list = scheduleRepository.findAllList(paging);
 		}
 		
-	}
-	
-	public int countList(String label, User user) {
+		addHashTag(list);
 		
+		return list;
+
+	}
+
+	public int countList(String label, User user) {
+
 		switch (label) {
 
 		case "attraction":
@@ -71,22 +69,60 @@ public class ScheduleService {
 			return scheduleRepository.findCountByLabel(Define.RESTAURANT);
 		case "favorite":
 			return scheduleRepository.findCountByMyFavorite(user.getUserId());
-		default :
+		default:
 			return scheduleRepository.findCountAll();
 		}
 	}
-	
-	
-	public List<Contents> findContentsBySearchTitle(String search, PagingDto paging){
-		
-		return scheduleRepository.findContentsBySearchTitle(search,paging);
+
+	public int countSearchList(String category, String keyword) {
+
+		int count = 0;
+		if (category.equals("title")) {
+			count = scheduleRepository.findCountBySearchTitle(keyword);
+		} else if (category.equals("tag")) {
+			count = scheduleRepository.findCountBySearchTag(keyword);
+		} else {
+			throw new CustomException("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+		}
+		return count;
 	}
-	
-	public Schedule findScheduleById(Integer scheduleId) {
+
+	public List<Contents> findContentsBySearch(String category, String search, PagingDto paging) {
 		
+		List<Contents> list = null;
+		
+		if (category.equals("title")) {
+			list = scheduleRepository.findContentsBySearchTitle(search, paging);
+		} else if (category.equals("tag")) {
+			list =  scheduleRepository.findContentsBySearchTag(search, paging);
+		} else {
+			throw new CustomException("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+		}
+		
+		addHashTag(list);
+		return list;
+
+	}
+
+	public Schedule findScheduleById(Integer scheduleId) {
+
 		return scheduleRepository.findScheduleById(scheduleId);
 	}
 	
-	
-	
+	//해쉬태그(#)를 붙여줌
+	public void addHashTag(List<Contents> list) {
+
+		StringBuilder sb = new StringBuilder();
+		for (Contents contents : list) {
+			String tag = contents.getTag();
+			String[] tags = tag.split(",");
+			for (String tagElement : tags) {
+				sb.append("#").append(tagElement).append(" ");
+			}
+			String result = sb.substring(0, sb.length() - 1);
+			contents.setTag(result);
+			sb.setLength(0);
+		}
+	}
+
 }

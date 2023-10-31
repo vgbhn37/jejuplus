@@ -94,18 +94,26 @@ public class ScheduleController {
 		return "/schedule/searchWindow";
 	}
 	
-	@GetMapping("/schedule/search-list")
+	@GetMapping("/search-list")
 	public String searchList(@ModelAttribute("paging")PagingDto paging, @RequestParam("category") String category, 
 			@RequestParam("keyword") String keyword, @RequestParam(value = "page", required = false, defaultValue = "1")int page, 
-			HttpServletRequest request ) {
+			HttpServletRequest request, Model model) {
 		// 주소창에 직접 입력시 오류 발생
 		if (request.getHeader("REFERER") == null) {
 			throw new CustomException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
 		}
+	
+		Pagination pagination = new Pagination();
+		paging.setPage(page);
+		pagination.setPaging(paging);
+		int total = scheduleService.countSearchList(category,keyword);
+		pagination.setArticleTotalCount(total);
+		List<Contents> list = scheduleService.findContentsBySearch(category, keyword, paging);
+		model.addAttribute("list",list);
+		model.addAttribute("pagination", pagination);
 		
-		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		
-		
+		return "/schedule/searchList";
 	}
 	
 }

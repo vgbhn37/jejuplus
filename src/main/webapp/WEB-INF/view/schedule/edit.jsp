@@ -124,8 +124,9 @@
 
 <script>
 	
-	const tabOutput = document.getElementById('tab-output'); // 맵 하단 navs를 클릭했을때 결과를 출력할 div
 	
+	
+	/* 지도 */
 	let container = document.getElementById('map'); // 지도를 담을 영역의 DOM
 	let markers = []; // 마커를 담을 배열
 	let locations = []; // 선택한 장소 정보를 담을 배열
@@ -133,7 +134,20 @@
 	let distance; // 하루 일정 동안 총 직선거리
 	let polyline; // 지도에 표시할 선
 	let isFirst = true; // 지도에 처음 선을 그리는지 여부
+	let options = { //지도를 생성할 때 필요한 기본 옵션
+			center : new kakao.maps.LatLng(33.5056848111, 126.4960226206), //지도의 중심좌표.
+			level : 8
+		//지도의 레벨(확대, 축소 정도)
+		};
+
+	let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 	
+	/* 검색 */
+	let category; // 검색 카테고리
+	let keyword; // 검색 키워드
+	
+	/* 페이지네이션 */
+	const tabOutput = document.getElementById('tab-output'); // 맵 하단 navs를 클릭했을때 결과를 출력할 div
 	// 리스트의 페이지 저장 (기본값 1)
 	let allPage = 1;
 	let attractionPage = 1;
@@ -143,21 +157,9 @@
 	let favoritePage = 1;
 	let searchPage = 1;
 
-	let options = { //지도를 생성할 때 필요한 기본 옵션
-			center : new kakao.maps.LatLng(33.5056848111, 126.4960226206), //지도의 중심좌표.
-			level : 8
-		//지도의 레벨(확대, 축소 정도)
-		};
 
-	let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-	function showLocations(){
-		locations.forEach(item=>{
-			console.log(item.title);
-		});
-	}
 	
-	// 페이지 바꾸기
+	// 페이지 저장 및 변경
 	function changePage(e){
 		let label = document.getElementById('label').value;
 	
@@ -187,47 +189,6 @@
 		
 		showList(label);
 	}
-	
-	// 검색 창 띄우기
-	function showSearchWindow(){
-		
-		fetch('/schedule/call-search')
-		.then(res=>{
-			if(!res.ok){
-				throw new Error('네트워크 응답 오류');
-			}
-			return res.text();
-		}).then(data=>{
-			tabOutput.innerHTML = data;
-		}).catch((error)=>{
-			console.error(error);
-		});
-		
-	}
-	
-	function setSearch(){
-		let category = document.getElementById('search-select').value;
-		let keyword = document.getElementById('search-input').value;
-		
-		searchList(category,keyword,1);
-	}
-	
-	function searchList(page){
-		
-		const searchOutput = document.getElementById('search-output');
-		
-		let url = "/schedule/search-list?category="+ category + "&keyword=" keyword;
-		
-		fetch(url).then(res=>{
-			if(!res.ok){
-				throw new Error('네트워크 응답 오류');
-			}
-			return res.text();
-		}).then(data=>{
-			searchOutput.innerHTML = data;
-		})
-	}
-	
 	
 	// 장소 리스트 보여주기
 	function showList(label){
@@ -273,6 +234,49 @@
 		});
 		
 	}
+	
+	// 검색 창 띄우기
+	function showSearchWindow(){
+		
+		fetch('/schedule/call-search')
+		.then(res=>{
+			if(!res.ok){
+				throw new Error('네트워크 응답 오류');
+			}
+			return res.text();
+		}).then(data=>{
+			tabOutput.innerHTML = data;
+		}).catch((error)=>{
+			console.error(error);
+		});
+		
+	}
+	
+	// 검색 카테고리와 검색어 저장
+	function setSearch(){
+		category = document.getElementById('search-select').value;
+		keyword = document.getElementById('search-input').value;
+		
+		searchList(1);
+	}
+	
+	// 검색 결과 출력
+	function searchList(page){
+		
+		const searchOutput = document.getElementById('search-output');
+		
+		let url = "/schedule/search-list?category="+ category + "&keyword=" + keyword + "&page=" + page;
+		
+		fetch(url).then(res=>{
+			if(!res.ok){
+				throw new Error('네트워크 응답 오류');
+			}
+			return res.text();
+		}).then(data=>{
+			searchOutput.innerHTML = data;
+		})
+	}
+	
 	
 	// 선택한 장소 리스트에 추가
 	function addList(idValue,titleValue,region1Value,region2Value,labelValue,mapX,mapY){

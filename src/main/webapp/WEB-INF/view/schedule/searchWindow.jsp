@@ -8,7 +8,7 @@
     <option value="title">이름</option>
     <option value="tag">태그</option>
   </select>
-  <button id="search-button" onclick="searchList()">검색</button>
+  <button id="search-button" onclick="setSearch()">검색</button>
 </div>
 <div id ="search-output">
 </div>

@@ -23,21 +23,20 @@
 		<ul class="pagination" id="pagination">
 			<c:if test="${pagination.prev}">
 				<li class="page-item "><a class="page-link"
-					onclick="changePage(event)" data-page="${pagination.beginPage-1}">Prev</a></li>
+					onclick="searchList(${pagination.beginPage-1})" data-page="${pagination.beginPage-1}">Prev</a></li>
 			</c:if>
 			<c:forEach var="num" begin="${pagination.beginPage}"
 				end="${pagination.endPage}">
 				<li
 					class="${pagination.paging.page == num ? 'page-item active' : ''}"><a
-					class="page-link" onclick="changePage(event)" data-page="${num}">${num}</a></li>
+					class="page-link" onclick="searchList(${num})" data-page="${num}">${num}</a></li>
 			</c:forEach>
 
 			<c:if test="${pagination.next}">
 				<li class="page-item"><a class="page-link"
-					onclick="changePage(event)" data-page="${pagination.endPage+1}">Next</a></li>
+					onclick="searchList(${pagination.endPage+1})" data-page="${pagination.endPage+1}">Next</a></li>
 			</c:if>
 		</ul>
 		<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
-		<input type="hidden" id="label" name="label" value="${label}">
 	</div>
 </div>

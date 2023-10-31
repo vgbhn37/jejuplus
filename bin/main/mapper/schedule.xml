@@ -45,6 +45,7 @@
 	<select id="findCountBySearchTag">
 		select count(*) from tb_contents where tag like concat('%',#{search},'%')
 	</select>
+	
 
 
 </mapper> 
