@@ -27,10 +27,7 @@
 						${schedule.endDate }</h5>
 				</div>
 				<div class="col-5">
-					대충 달력위치
-					<button onclick="test()">딸깍</button>
-
-					<br> <br> <br> <br>
+					대충 달력위치 <br> <br> <br> <br>
 				</div>
 			</div>
 			<div id="map" class="map" style="width: 90%; height: 500px;"></div>
@@ -50,7 +47,7 @@
 				<li class="nav-item"><a class="nav-link"
 					onclick="showList('favorite')">찜한 곳</a></li>
 				<li class="nav-item"><a class="nav-link"
-					onclick="showList('search')">검색</a></li>
+					onclick="showSearchWindow()">검색</a></li>
 			</ul>
 			<div id="tab-output">
 				<c:forEach var="item" items="${list}">
@@ -59,7 +56,7 @@
 							<img src="${item.thumbnailPath}" class="thumbnail"
 								onerror="this.src='/images/NoImage.jpg'">
 						</div>
-						<div class="card-body p-5">
+						<div class="card-body p-3">
 							<h4 class="card-title">${item.title}</h4>
 							<p class="card-text">${item.region1 }>${item.region2}</p>
 							<p class="card-text tag">${item.tag }</p>
@@ -70,36 +67,29 @@
 				</c:forEach>
 
 				<div class="paging">
-					<form action="javascript:void(0);" name="pageForm"
-						onsubmit="changePage(e)">
-						<div class="text-center clearfix">
-							<ul class="pagination" id="pagination">
-								<c:if test="${pagination.prev}">
-									<li class="page-item"><a class="page-link"
-										onclick="changePage(event)"
-										data-page="${pagination.beginPage-1}">Prev</a></li>
-								</c:if>
+					<div class="text-center clearfix">
+						<ul class="pagination" id="pagination">
+							<c:if test="${pagination.prev}">
+								<li class="page-item"><a class="page-link"
+									onclick="changePage(event)"
+									data-page="${pagination.beginPage-1}">Prev</a></li>
+							</c:if>
+							<c:forEach var="num" begin="${pagination.beginPage}"
+								end="${pagination.endPage}">
+								<li
+									class="${pagination.paging.page == num ? 'page-item active' : ''}"><a
+									class="page-link" onclick="changePage(event)"
+									data-page="${num}">${num}</a></li>
+							</c:forEach>
 
-								<c:forEach var="num" begin="${pagination.beginPage}"
-									end="${pagination.endPage}">
-									<li
-										class="${pagination.paging.page == num ? 'page-item active' : ''}"><a
-										class="page-link" onclick="changePage(event)"
-										data-page="${num}">${num}</a></li>
-								</c:forEach>
-
-								<c:if test="${pagination.next}">
-									<li class="page-item"><a class="page-link"
-										onclick="changePage(event)"
-										data-page="${pagination.endPage+1}">Next</a></li>
-								</c:if>
-							</ul>
-
-							<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
-							<input type="hidden" id="label" name="label" value="${label}">
-
-						</div>
-					</form>
+							<c:if test="${pagination.next}">
+								<li class="page-item"><a class="page-link"
+									onclick="changePage(event)" data-page="${pagination.endPage+1}">Next</a></li>
+							</c:if>
+						</ul>
+						<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
+						<input type="hidden" id="label" name="label" value="${label}">
+					</div>
 				</div>
 			</div>
 
@@ -133,7 +123,9 @@
 
 
 <script>
-
+	
+	const tabOutput = document.getElementById('tab-output'); // 맵 하단 navs를 클릭했을때 결과를 출력할 div
+	
 	let container = document.getElementById('map'); // 지도를 담을 영역의 DOM
 	let markers = []; // 마커를 담을 배열
 	let locations = []; // 선택한 장소 정보를 담을 배열
@@ -149,6 +141,7 @@
 	let shoppingPage = 1;
 	let restaurantPage = 1;
 	let favoritePage = 1;
+	let searchPage = 1;
 
 	let options = { //지도를 생성할 때 필요한 기본 옵션
 			center : new kakao.maps.LatLng(33.5056848111, 126.4960226206), //지도의 중심좌표.
@@ -195,6 +188,47 @@
 		showList(label);
 	}
 	
+	// 검색 창 띄우기
+	function showSearchWindow(){
+		
+		fetch('/schedule/call-search')
+		.then(res=>{
+			if(!res.ok){
+				throw new Error('네트워크 응답 오류');
+			}
+			return res.text();
+		}).then(data=>{
+			tabOutput.innerHTML = data;
+		}).catch((error)=>{
+			console.error(error);
+		});
+		
+	}
+	
+	function setSearch(){
+		let category = document.getElementById('search-select').value;
+		let keyword = document.getElementById('search-input').value;
+		
+		searchList(category,keyword,1);
+	}
+	
+	function searchList(page){
+		
+		const searchOutput = document.getElementById('search-output');
+		
+		let url = "/schedule/search-list?category="+ category + "&keyword=" keyword;
+		
+		fetch(url).then(res=>{
+			if(!res.ok){
+				throw new Error('네트워크 응답 오류');
+			}
+			return res.text();
+		}).then(data=>{
+			searchOutput.innerHTML = data;
+		})
+	}
+	
+	
 	// 장소 리스트 보여주기
 	function showList(label){
 		
@@ -230,9 +264,12 @@
 			return res.text();
 		})
 		.then(data=>{
-			const output = document.getElementById('tab-output');
-			output.innerHTML = data;	
+			
+			tabOutput.innerHTML = data;
+			location.href="#";
 		
+		}).catch((error)=>{
+			console.error(error);
 		});
 		
 	}
@@ -384,17 +421,6 @@
 		alert('저장');
 	}
 	
-	function test(){
-		fetch("/schedule/test")
-		.then(res=>{
-			if(!res.ok){
-				throw new Error("네트워크 응답 오류");
-			}
-			return res.text();
-		}).then(data=>{
-			console.log(data);
-		})
-	}
 	
 	
 	

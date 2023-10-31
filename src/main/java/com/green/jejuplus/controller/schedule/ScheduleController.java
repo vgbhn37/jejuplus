@@ -2,9 +2,11 @@ package com.green.jejuplus.controller.schedule;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.model.Contents;
 import com.green.jejuplus.repository.model.Schedule;
 import com.green.jejuplus.repository.model.User;
@@ -50,7 +53,6 @@ public class ScheduleController {
 		
 		model.addAttribute(pagination);
 		
-		
 		List<Contents> list = scheduleService.findAllList(paging);
 
 		model.addAttribute("schedule", schedule);
@@ -61,8 +63,13 @@ public class ScheduleController {
 	}
 
 	@GetMapping("/show-list/{label}")
-	
-	public String contentList(@ModelAttribute("paging")PagingDto paging,@PathVariable("label") String label,@RequestParam(value = "page", required = false, defaultValue = "1")int page, Model model) {
+	public String contentList(@ModelAttribute("paging")PagingDto paging,@PathVariable("label") String label,
+			@RequestParam(value = "page", required = false, defaultValue = "1")int page, Model model, HttpServletRequest request) {
+		
+		// 주소창에 직접 입력시 오류 발생
+		if (request.getHeader("REFERER") == null) {
+			throw new CustomException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
 		
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		Pagination pagination = new Pagination();
@@ -78,18 +85,27 @@ public class ScheduleController {
 		return "/schedule/contentsList";
 	}
 	
-	@GetMapping("/test")
-	public String test(@ModelAttribute("paging")PagingDto paging,Model model, @RequestParam(value = "page", required = false, defaultValue = "1")int page) {
-		User user = (User) session.getAttribute(Define.PRINCIPAL);
-		paging.setPage(page);
-		Pagination pagination = new Pagination();
-		pagination.setPaging(paging);
-		int total = scheduleService.countList("all", user);
-		pagination.setArticleTotalCount(total);
-		List<Contents> list = scheduleService.findAllList(paging);
-		model.addAttribute("pagination",pagination);
-		model.addAttribute("list",list);
-		return "/schedule/test";
+	@GetMapping("/call-search")
+	public String callSearch(HttpServletRequest request) {
+		if (request.getHeader("REFERER") == null) {
+			throw new CustomException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
+		
+		return "/schedule/searchWindow";
 	}
-
+	
+	@GetMapping("/schedule/search-list")
+	public String searchList(@ModelAttribute("paging")PagingDto paging, @RequestParam("category") String category, 
+			@RequestParam("keyword") String keyword, @RequestParam(value = "page", required = false, defaultValue = "1")int page, 
+			HttpServletRequest request ) {
+		// 주소창에 직접 입력시 오류 발생
+		if (request.getHeader("REFERER") == null) {
+			throw new CustomException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
+		
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		
+		
+	}
+	
 }
