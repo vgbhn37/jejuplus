@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/WEB-INF/view/header.jsp"%>
 <!-- css -->
 <link rel="stylesheet" href="../../css/air/air.css" />
@@ -7,6 +8,8 @@
 <script src="../../js/air/air.js"></script>
 <!-- main -->
 <main>
+
+	
 	<div class="booking-container">
 		<div class="mybooking">
 			<div>
@@ -22,43 +25,44 @@
 			<div class="booking-info">
 				<div class="left-info">
 					<!-- flight-info start -->
-					<div class="info-wrap">
-						<div class="info-header">
-							<p class="info-title">총 1개의 항공편이 있습니다</p>
-						</div>
-						<div class="info-body">
-							<div class="flight-info-row">
-								<div class="flight-info-column">
-									<div class="flight-info-head">
-										<img src="../../images/air/jeju_air_logo.png" alt="jeju_logo"
-											class="flight-logo" />
-										<p class="flight-brand">제주항공</p>
-									</div>
-									<div class="flight-info-body">
-										<div class="">
-											<div class="dep-block">
-												<p>10:40</p>
-												<div class="flight-time">
-													<span class="flight-time-info">1시간 소요</span>
-												</div>
-											</div>
-											<p class="airport-name">PUS</p>
-										</div>
-										<div style="margin-left: 35px">
-											<div class="arr-block">
-												<p>11:40</p>
-											</div>
-											<p class="airport-name">CJU</p>
-										</div>
-									</div>
-								</div>
-								<div class="price-block">
-									<span>60,000 원</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- flight-info end -->
+                    <div class="info-wrap">
+                        <div class="info-header">
+                            <p class="info-title">총 <c:out value="${itemList.size()}" />개의 항공편이 있습니다</p>
+                        </div>
+                        	<c:forEach var="item" items="${itemList}" varStatus="loop">
+						    	<div class="info-body">
+						        	<div class="flight-info-row">
+						            	<div class="flight-info-column">
+						                	<div class="flight-info-head">
+						                    	<img src="../../images/air/jeju_air_logo.png" alt="jeju_logo" class="flight-logo" />
+						                    	<p class="flight-brand"><c:out value="${item.airlineNm}" /></p>
+						                	</div>
+						                	<div class="flight-info-body">
+						                    	<div class="">
+						                        	<div class="dep-block">
+						                            	<p><c:out value="${item.depTimeFormatted}" /></p>
+						                            	<div class="flight-time">
+						                                	<span class="flight-time-info"><c:out value="${item.flightTimeMinutes}" /> 분 소요</span>
+						                            	</div>
+					                        		</div>
+						                        	<p class="airport-name"><c:out value="${item.depAirportNm}" /></p>
+						                    	</div>
+						                    	<div style="margin-left: 35px">
+							                        <div class="arr-block">
+							                            <p><c:out value="${item.arrTimeFormatted}" /></p>
+							                        </div>
+						                        	<p class="airport-name"><c:out value="${item.arrAirportNm}" /></p>
+						                    	</div>
+						                	</div>
+						            	</div>
+							            <div class="price-block">
+							                <span>60,000 원</span>
+							            </div>
+						        	</div>
+							    </div>
+							</c:forEach>
+                    	</div>
+                    <!-- flight-info end -->
 					<!-- 항공권 정보 start -->
 					<div class="info-wrap">
 						<div class="info-header">
