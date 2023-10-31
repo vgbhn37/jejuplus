@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.jejuplus.repository.interfaces.ContentsRepository"> 
+
+	<select id="findTouristAreaList" resultType="com.green.jejuplus.dto.TouristAreaListDto">
+		select * from tb_contents where contents_label = #{contentsLabel}
+	</select>
+	
+	<select id="showTouristAreaDetail" resultType="com.green.jejuplus.dto.TouristAreaDetailDto">
+		select * from tb_contents where contents_id = #{contentsId}
+	</select>
+
+	<select id="findRestaurantList" resultType="com.green.jejuplus.dto.RestaurantListDto">
+		select * from tb_contents where contents_label = #{contentsLabel}
+	</select>
+	
+	<select id="showRestaurantDetail" resultType="com.green.jejuplus.dto.RestaurantDetailDto">
+		select * from tb_contents where contents_id = #{contentsId}
+	</select>
+	
+	<select id="findLodgingList" resultType="com.green.jejuplus.dto.LodgingListDto">
+		select * from tb_contents where contents_label = #{contentsLabel}
+	</select>
+	
+	<select id="showLodgingDetail" resultType="com.green.jejuplus.dto.LodgingDetailDto">
+		select * from tb_contents where contents_id = #{contentsId}
+	</select>
+	
+	<select id="findShoppingList" resultType="com.green.jejuplus.dto.ShoppingListDto">
+		select * from tb_contents where contents_label = #{contentsLabel}
+	</select>
+
+	<select id="showShoppingDetail" resultType="com.green.jejuplus.dto.ShoppingDetailDto">
+		select * from tb_contents where contents_id = #{contentsId}
+	</select>
+	
+
+</mapper>

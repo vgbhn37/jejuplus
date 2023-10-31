@@ -3,4 +3,60 @@
 	margin: 0 auto;
 }
 
+.card-body {
+	white-space: nowrap;
+	overflow: hidden;
+}
 
+.tag {
+	font-size: 16px;
+	color: #767676;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+}
+
+.btn-orange {
+	width: 90px;
+	height: 40px;
+	background-color: orange;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+
+}
+
+.btn-orange:hover {
+	background-color: white;
+	color: orange;
+	border: solid 2px orange;
+	cursor: pointer;
+}
+
+.thumbnail {
+	width: 180px;
+	height: 140px;
+	margin: auto;
+}
+
+.nav-link {
+	cursor: pointer;
+}
+
+.page-link {
+	cursor: pointer;
+}
+
+.circle {
+
+	width: 25px;
+	height: 25px;
+	background-color: orange;
+	border-radius: 50%;
+	color: #fff;
+	text-align: center;
+	line-height: 25px;
+	font-size: 14px;
+}
