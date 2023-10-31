@@ -27,27 +27,30 @@
 						${schedule.endDate }</h5>
 				</div>
 				<div class="col-5">
-				 대충 달력위치
-				 <br><br><br><br>
+					대충 달력위치
+					<button onclick="test()">딸깍</button>
+
+					<br> <br> <br> <br>
 				</div>
 			</div>
 			<div id="map" class="map" style="width: 90%; height: 500px;"></div>
 
+
 			<ul class="nav justify-content-between">
 				<li class="nav-item"><a class="nav-link"
-					onclick="showList(all)">전체</a></li>
+					onclick="showList('all')">전체</a></li>
 				<li class="nav-item"><a class="nav-link"
-					onclick="showList(attraction)">관광지</a></li>
+					onclick="showList('attraction')">관광지</a></li>
 				<li class="nav-item"><a class="nav-link"
-					onclick="showList(accomodation)">숙박</a></li>
+					onclick="showList('accomodation')">숙박</a></li>
 				<li class="nav-item"><a class="nav-link"
-					onclick="showList(shopping)">쇼핑</a></li>
+					onclick="showList('shopping')">쇼핑</a></li>
 				<li class="nav-item"><a class="nav-link"
-					onclick="showList(restaurant)">음식점</a></li>
+					onclick="showList('restaurant')">음식점</a></li>
 				<li class="nav-item"><a class="nav-link"
-					onclick="showList(favorite)">찜한 곳</a></li>
+					onclick="showList('favorite')">찜한 곳</a></li>
 				<li class="nav-item"><a class="nav-link"
-					onclick="showList(search)">검색</a></li>
+					onclick="showList('search')">검색</a></li>
 			</ul>
 			<div id="tab-output">
 				<c:forEach var="item" items="${list}">
@@ -61,23 +64,68 @@
 							<p class="card-text">${item.region1 }>${item.region2}</p>
 							<p class="card-text tag">${item.tag }</p>
 							<button class="btn btn-orange float-right"
-								onclick="addList(${item.contentsId},'${item.title}',${item.longitude },${item.latitude})">일정추가</button>
+								onclick="addList(${item.contentsId},'${item.title}','${item.region1}','${item.region2}','${item.contentsLabel}',${item.longitude},${item.latitude})">일정추가</button>
 						</div>
 					</div>
 				</c:forEach>
+
+				<div class="paging">
+					<form action="javascript:void(0);" name="pageForm"
+						onsubmit="changePage(e)">
+						<div class="text-center clearfix">
+							<ul class="pagination" id="pagination">
+								<c:if test="${pagination.prev}">
+									<li class="page-item"><a class="page-link"
+										onclick="changePage(event)"
+										data-page="${pagination.beginPage-1}">Prev</a></li>
+								</c:if>
+
+								<c:forEach var="num" begin="${pagination.beginPage}"
+									end="${pagination.endPage}">
+									<li
+										class="${pagination.paging.page == num ? 'page-item active' : ''}"><a
+										class="page-link" onclick="changePage(event)"
+										data-page="${num}">${num}</a></li>
+								</c:forEach>
+
+								<c:if test="${pagination.next}">
+									<li class="page-item"><a class="page-link"
+										onclick="changePage(event)"
+										data-page="${pagination.endPage+1}">Next</a></li>
+								</c:if>
+							</ul>
+
+							<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
+							<input type="hidden" id="label" name="label" value="${label}">
+
+						</div>
+					</form>
+				</div>
 			</div>
 
 
 		</div>
 		<div class="sche-right col-4 row">
-			<div id="day" class="col-6">
+			<div id="day" style="height: 40px;" class="col-6">
 				<h3>DAY 1</h3>
 			</div>
-			<div class="col-6">
-				<button class="btn btn-orange" style="width: 58px; height: 38px;" onclick="sorting()">정렬</button>
+			<div class="col-6" style="height: 40px;">
+				<button class="btn btn-orange" style="width: 58px; height: 38px;"
+					onclick="sorting()">정렬</button>
 				<button class="btn btn-primary" onclick="saveSchedule()">저장</button>
 			</div>
-			<div id="list-output">CARDVIEW LIST</div>
+			<div id="list-output">
+				<div class=card>
+					<div class="row">
+						<div class="col-2">
+							<div class=circle>1</div>
+						</div>
+						<div class="col-10">
+							<div class="card-text">언양닭칼국수</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -86,13 +134,22 @@
 
 <script>
 
-	
 	let container = document.getElementById('map'); // 지도를 담을 영역의 DOM
 	let markers = []; // 마커를 담을 배열
 	let locations = []; // 선택한 장소 정보를 담을 배열
 	let distances = []; // 거리 정보를 담을 배열
+	let distance; // 하루 일정 동안 총 직선거리
 	let polyline; // 지도에 표시할 선
 	let isFirst = true; // 지도에 처음 선을 그리는지 여부
+	
+	// 리스트의 페이지 저장 (기본값 1)
+	let allPage = 1;
+	let attractionPage = 1;
+	let accomodationPage = 1;
+	let shoppingPage = 1;
+	let restaurantPage = 1;
+	let favoritePage = 1;
+
 	let options = { //지도를 생성할 때 필요한 기본 옵션
 			center : new kakao.maps.LatLng(33.5056848111, 126.4960226206), //지도의 중심좌표.
 			level : 8
@@ -101,95 +158,87 @@
 
 	let map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-	
 	function showLocations(){
 		locations.forEach(item=>{
 			console.log(item.title);
 		});
 	}
 	
+	// 페이지 바꾸기
+	function changePage(e){
+		let label = document.getElementById('label').value;
+	
+		switch(label){
+		case 'all' :
+			allPage = e.target.getAttribute('data-page');
+			break;
+		case 'attraction' :
+			attractionPage = e.target.getAttribute('data-page');
+			break;
+		case 'accomodation' :
+			accomodationPage = e.target.getAttribute('data-page');
+			break;
+		case 'shopping' :
+			shoppingPage = e.target.getAttribute('data-page');
+			break;
+		case 'restaurant' :
+			restaurantPage = e.target.getAttribute('data-page');
+			break;
+		case 'favorite' :
+			favoritePage = e.target.getAttribute('data-page');
+			break;
+		default :
+			allPage = 1;
+			break;
+		}
+		
+		showList(label);
+	}
 	
 	// 장소 리스트 보여주기
 	function showList(label){
 		
-		let url = "/schedule/show-list/" + label;
+		let url = "";
+		switch(label){
+			case 'all' :
+				url = "/schedule/show-list/all?page=" + allPage;
+				break;
+			case 'attraction' :
+				url = "/schedule/show-list/attraction?page=" + attractionPage;
+				break;
+			case 'accomodation' :
+				url = "/schedule/show-list/accomodation?page=" + accomodationPage;
+				break;
+			case 'shopping' :
+				url = "/schedule/show-list/shopping?page=" + shoppingPage;
+				break;
+			case 'restaurant' :
+				url = "/schedule/show-list/restaurant?page=" + restaurantPage;
+				break;
+			case 'favorite' :
+				url = "/schedule/show-list/favorite?page=" + favoritePage;
+				break;
+			default :
+				url = "/schedule/show-list/all?page=1";
+				break;
+		}
+		
 		fetch(url).then(res=>{
 			if(!res.ok){
 				throw new Error("네트워크 응답 오류");
 			}
-			
 			return res.text();
 		})
-		.then(list=>{
+		.then(data=>{
 			const output = document.getElementById('tab-output');
-			output.innerHTML = '';
-			// 장소 리스트 출력
-			
-			list.forEach(data=>{
-				// 최상위 card div
-				let cardElement = document.createElement('div');
-				cardElement.classList.add('card');
-				cardElement.classList.add('flex-row');
-				
-				// card-header
-				let cardHeader = document.createElement('div');
-				cardHeader.classList.add('card-header');
-				cardHeader.classList.add('border-0');
-				cardElement.appendChild(cardHeader);
-				
-				// 이미지
-				let cardImg = document.createElement('img');
-				cardImg.classList.add('thumbnail');
-				cardImg.src = data.thumbnailPath;
-				cardImg.onerror = function(){
-					cardImg.src = '/images/NoImage.jpg';
-				}
-				cardHeader.appendChild(cardImg);
-				
-				// card-body
-				let cardBody = document.createElement('div');
-				cardBody.classList.add('card-body');
-				cardBody.classList.add('p-5');
-				
-				// 명소 이름
-				let cardTitle = document.createElement('h4');
-				cardTitle.classList.add('card-title');
-				cardTitle.textContent = data.title;
-				cardBody.appendChild(cardTitle);
-				
-				// 지역
-				let cardText = document.createElement('p');
-				cardText.classList.add('card-text');
-				cardText.textContent = data.region1 + '>' + data.region2;
-				cardBody.appendChild(cardText);
-				
-				// 태그
-				let cardText2 = document.createElement('p');
-				cardText2.classList.add('card-text');
-				cardText2.classList.add('tag');
-				cardText2.textContent = data.tag;
-				cardBody.appendChild(cardText2);
-				
-				// 버튼
-				let button = document.createElement('button');
-				button.classList.add('btn');
-				button.classList.add('btn-orange');
-				button.classList.add('float-right');
-				
-				
-				
-				
-				
-				
-			});
-			
-			
+			output.innerHTML = data;	
+		
 		});
 		
 	}
 	
 	// 선택한 장소 리스트에 추가
-	function addList(idValue,titleValue,mapX,mapY){
+	function addList(idValue,titleValue,region1Value,region2Value,labelValue,mapX,mapY){
 		for (let i = 0 ; i < locations.length; i++) {
 	        if (locations[i].id === idValue) {
 	            alert("이미 일정에 있는 장소입니다.");
@@ -200,6 +249,9 @@
 		let item = {
 			id : idValue,
 			title : titleValue,
+			region1 : region1Value,
+			region2 : region2Value,
+			label : labelValue,
 			x : mapX,
 			y : mapY
 		};
@@ -326,10 +378,22 @@
 		}
 		
 	}
-	
+		
 	// 일정 저장
 	function saveSchedule(){
 		alert('저장');
+	}
+	
+	function test(){
+		fetch("/schedule/test")
+		.then(res=>{
+			if(!res.ok){
+				throw new Error("네트워크 응답 오류");
+			}
+			return res.text();
+		}).then(data=>{
+			console.log(data);
+		})
 	}
 	
 	

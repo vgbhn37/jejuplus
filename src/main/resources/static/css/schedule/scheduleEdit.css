@@ -35,8 +35,28 @@
 	cursor: pointer;
 }
 
-.thumbnail{
+.thumbnail {
 	width: 180px;
 	height: 140px;
 	margin: auto;
+}
+
+.nav-link {
+	cursor: pointer;
+}
+
+.page-link {
+	cursor: pointer;
+}
+
+.circle {
+
+	width: 25px;
+	height: 25px;
+	background-color: orange;
+	border-radius: 50%;
+	color: #fff;
+	text-align: center;
+	line-height: 25px;
+	font-size: 14px;
 }
