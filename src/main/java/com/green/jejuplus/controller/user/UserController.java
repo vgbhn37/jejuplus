@@ -1,6 +1,5 @@
 package com.green.jejuplus.controller.user;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +44,7 @@ import com.green.jejuplus.util.Define;
 import com.green.jejuplus.util.RandomCodeGenerator;
 import com.green.jejuplus.util.RandomPasswordGenerator;
 
-
+ 
 
 
 @Controller

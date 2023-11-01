@@ -47,6 +47,15 @@
 	<select id="findByUserDeleteCheck" resultType = "com.green.jejuplus.dto.user.UserDeleteDto">
 		SELECT * FROM tb_user WHERE username = #{username} and password=#{password}
 	</select>
+	
+	<select id="findUsers" resultType="com.green.jejuplus.dto.admin.AdminUserDto">
+        SELECT * FROM tb_user
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+    
+       <select id="count" resultType="int">
+  SELECT COUNT(*) FROM tb_user;
+</select>
 
 
 
@@ -56,7 +65,11 @@ update tb_user set email=#{email}, phone_number = #{phoneNumber}, fullname = #{f
 
 <update id = "updateEmail">
 update tb_user set email=#{email} where user_id = #{userId}
-</update>	
+</update>
+
+<update id = "userLevelUpdate">
+update tb_user set level_id=#{levelId} where username = #{username}
+</update>		
 
 	<update id = "updateUserPassword">
 update tb_user set password=#{password} where user_id = #{userId}
@@ -80,6 +93,10 @@ update tb_user set password=#{password} where user_id = #{userId}
 	
 <delete id = "userDelete">
 delete from tb_user where username = #{username} and password=#{password}
-</delete>	
+</delete>
+
+<delete id = "adminUserDelete">
+delete from tb_user where username = #{username}
+</delete>		
  
 </mapper>
