@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.green.jejuplus.handler.exception.CustomException;
+import com.green.jejuplus.handler.exception.UnAuthorizedException;
 
 /**
  *  예외 발생 시 (Json, Xml)
@@ -24,6 +25,16 @@ public class MyUserExceptionHandler {
 	
 	@ExceptionHandler(CustomException.class)
 	public String basicException(CustomException e) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("alert(' "+ e.getMessage() +" ');");
+		sb.append("history.back();");
+		sb.append("</script>");
+		return sb.toString();
+	}
+	
+	@ExceptionHandler(UnAuthorizedException.class)
+	public String AuthException(UnAuthorizedException e) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script>");
 		sb.append("alert(' "+ e.getMessage() +" ');");

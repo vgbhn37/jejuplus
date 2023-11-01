@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.green.jejuplus.dto.user.SignUpFormDto;
+import com.green.jejuplus.dto.user.UserDeleteDto;
 import com.green.jejuplus.dto.user.UserUpdateDto;
 import com.green.jejuplus.repository.model.User;
 
@@ -22,5 +23,10 @@ public interface UserRepository {
 	User findByUpdateEmail(int userId);
 	User findByPassword(int userId);
 	void updateUserPassword(User user);
-
+	User findByUserPassword(String username);
+	User findByUsernameEmail(@Param("username")String username, @Param("email") String email);
+	UserDeleteDto findByUserDelete(@Param("username")String username);
+	void userDelete(@Param("username")String username, @Param("password") String password);
+	UserDeleteDto findByUserDeleteCheck(@Param("username")String username, @Param("password") String password);
+	
 }

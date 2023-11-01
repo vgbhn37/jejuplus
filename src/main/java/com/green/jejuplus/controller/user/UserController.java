@@ -1,8 +1,11 @@
 package com.green.jejuplus.controller.user;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +35,7 @@ import com.green.jejuplus.dto.user.KakaoProfile;
 import com.green.jejuplus.dto.user.OAuthToken;
 import com.green.jejuplus.dto.user.SignInFormDto;
 import com.green.jejuplus.dto.user.SignUpFormDto;
+import com.green.jejuplus.dto.user.UserDeleteDto;
 import com.green.jejuplus.dto.user.UserUpdateDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.model.User;
@@ -37,6 +43,7 @@ import com.green.jejuplus.service.user.EmailService;
 import com.green.jejuplus.service.user.UserService;
 import com.green.jejuplus.util.Define;
 import com.green.jejuplus.util.RandomCodeGenerator;
+import com.green.jejuplus.util.RandomPasswordGenerator;
 
 
 
@@ -56,13 +63,18 @@ public class UserController {
 
 	@Autowired // DI 처리
 	private HttpSession session;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private JavaMailSender mailSender;
+
+
+
 	// 사용자 등록 폼을 표시하는 메서드
 	@GetMapping("/register")
-	public String showRegistrationForm() {
+	public String showRegistrationForm() {		
 		return "user/register";
 	}
 
@@ -73,6 +85,8 @@ public class UserController {
 			@RequestParam("password") String password,
 			@RequestParam("fullname") String fullname,
 			@RequestParam("phoneNumber") String phoneNumber,
+			@RequestParam("firstUsername") String firstUsername,
+			@RequestParam("firstPassword") String firstPassword,
 			@RequestParam("code") String code,
 			HttpSession session,
 			SignUpFormDto signUpFormDto) {
@@ -105,19 +119,47 @@ public class UserController {
 					HttpStatus.BAD_REQUEST);	
 		}
 
+		System.out.println("firstUsername : " + firstUsername);
+		System.out.println("username : " + username);
+		System.out.println("firstPassword : " + firstPassword);
+		System.out.println("password : " + password);
+		// 중복체크후 검사 !(a.equals(b)); 
+		if( !(firstUsername.equals(username)) ) {
+
+			throw new CustomException("입력하신 정보가 변경되어있습니다.",
+					HttpStatus.BAD_REQUEST);	
+		}
+		if( !(firstPassword.equals(password)) ) {
+			throw new CustomException("입력하신 비밀번호가 변경되어있습니다.",
+					HttpStatus.BAD_REQUEST);	
+		}
+
+
 
 
 		// 아이디 중복 확인
 		if (!userService.isUsernameUnique(username)) {
+			System.out.println("어디까지오냐1");
 			return ResponseEntity.badRequest().body("아이디가 이미 사용 중입니다.");
 		}
 
 		// 이메일 중복 확인
 		if (!userService.isEmailUnique(email)) {
+			System.out.println("어디까지오냐2");
 			return ResponseEntity.badRequest().body("이메일이 이미 사용 중입니다.");
+
 		}
 
+		int maxUsernameLength = 15;
+		int minUsernameLength = 6;
+		int maxPasswordLength = 20;
+		int minPasswordLength = 8;
 
+		if (username.length() > maxUsernameLength || username.length() < minUsernameLength ||
+				password.length() > maxPasswordLength || password.length() < minPasswordLength) {
+			System.out.println("어디까지오냐3");
+			return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);
+		}
 
 		if (savedCode != null && savedCode.equals(code)) {
 			// 인증 코드가 일치하는 경우, 사용자 정보를 데이터베이스에 저장
@@ -127,7 +169,7 @@ public class UserController {
 			signUpFormDto.setFullname(fullname);
 			signUpFormDto.setPhoneNumber(phoneNumber);
 			userService.registerUser(signUpFormDto);
-
+			System.out.println("어디까지오냐4");
 			return ResponseEntity.ok("Registration successful");
 		} else {
 			return ResponseEntity.badRequest().body("Verification failed");
@@ -161,59 +203,79 @@ public class UserController {
 			return ResponseEntity.ok("Verification failed");
 		}
 	}
+
 	// 아이디
 	@GetMapping("/check-username")
 	public ResponseEntity<String> checkUsername(@RequestParam("username") String username) {
 		if (userService.isUsernameUnique(username)) {
-			return ResponseEntity.ok("사용 가능한 아이디입니다.");
+			return ResponseEntity.ok("Username available");
 		} else {
 			return ResponseEntity.ok("이미 사용중인 아이디입니다.");
 		}
 	}
+
 	// 이메일
 	@GetMapping("/check-email")
 	public ResponseEntity<String> checkEmail(@RequestParam("email") String email) {
 		if (userService.isEmailUnique(email)) {
-			return ResponseEntity.ok("사용 가능한 이메일 입니다.");
+			return new ResponseEntity<>("succes", HttpStatus.OK);
 		} 
 
 		else {
-			return ResponseEntity.ok("이미 사용중인 이메일 입니다.");
+			return new ResponseEntity<>("duplicate", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
+	// 비밀번호
+	@GetMapping("/check-password")
+	public ResponseEntity<String> checkPassword(@RequestParam("password") String password) {
+		int maxPasswordLength = 20;
+		int minPasswordLength = 8;
+
+		if (password.length() > maxPasswordLength || password.length() < minPasswordLength) {
+			return new ResponseEntity<>("duplicate", HttpStatus.BAD_REQUEST);
+		}
+		return  ResponseEntity.ok("Password valid");
+	}
+
 	@PostMapping("/check-update-password/{userId}")
 	@ResponseBody
 	public ResponseEntity<Map<String, String>> checkAndUpdatePassword(@RequestBody Map<String, String> request, @PathVariable("userId") int userId) {
-	    User user = userService.getUserPassword(userId);
+		User user = userService.getUserPassword(userId);
 
-	    if (user != null) {
-	        String currentPassword = request.get("currentPassword");
-	        String newPassword = request.get("newPassword");
-	        
-	        if (passwordEncoder.matches(currentPassword, user.getPassword())) {
-	            // 현재 비밀번호가 일치할 경우 비밀번호를 업데이트합니다.
-	            user.setPassword(newPassword);
-	            userService.updateUserPassword(user); // 변경된 정보를 저장
-	            Map<String, String> response = new HashMap<>();
-	            response.put("status", "PasswordUpdated");
-	            return new ResponseEntity<>(response, HttpStatus.OK);
-	        } else {
-	            Map<String, String> response = new HashMap<>();
-	            response.put("status", "PasswordMismatch");
-	            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-	        }
-	    } else {
-	        Map<String, String> response = new HashMap<>();
-	        response.put("status", "UserNotFound");
-	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-	    }
+		if (user != null) {
+			String currentPassword = request.get("currentPassword");
+			String newPassword = request.get("newPassword");
+
+			if (passwordEncoder.matches(currentPassword, user.getPassword())) {
+				// 현재 비밀번호가 일치할 경우 비밀번호를 업데이트
+				user.setPassword(newPassword);
+				userService.updateUserPassword(user); // 변경된 정보를 저장
+				Map<String, String> response = new HashMap<>();
+				response.put("status", "PasswordUpdated");
+				System.out.println("컨트롤러 리스폰: " + response);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			} else {
+				Map<String, String> response = new HashMap<>();
+				response.put("status", "PasswordMismatch");
+				System.out.println("컨트롤러 비번틀릴때 리스폰: " + response);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
+		} else {
+			Map<String, String> response = new HashMap<>();
+			response.put("status", "UserNotFound");
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
 	}
 
 	// 로그인 페이지 요청
 	// http://localhost:80/user/sign-in
 	@GetMapping({"/sign-in", ""})
 	public String signIn() {
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		if(user != null) {
+			throw new CustomException("이미 로그인 중 입니다.", HttpStatus.BAD_REQUEST);
+		}
 		return "user/signIn";
 	}
 
@@ -229,6 +291,9 @@ public class UserController {
 				signInFormDto.getPassword().isEmpty()) {
 			throw new CustomException("password를 입력하시오", HttpStatus.BAD_REQUEST);
 		}
+		
+		
+
 		// 2. 서비스 -> 인증된 사용자 여부 확인
 		// principal <-- 접근 주체
 		User principal = userService.signIn(signInFormDto);
@@ -236,6 +301,8 @@ public class UserController {
 		// 3. 쿠키 + 세션 
 		session.setAttribute(Define.PRINCIPAL, principal);
 
+
+		
 		return "redirect:/main";
 	}
 
@@ -327,11 +394,16 @@ public class UserController {
 
 
 		User olderUser = userService.searchUsername(signUpFormDto.getUsername());
+
 		if(olderUser == null) {
 			// 사용자가 최초 소셜 로그인 사용자면 자동 회원 가입처리
+			User newUser = new User();
 			userService.registerUserKakao(signUpFormDto);
-			olderUser.setUsername(signUpFormDto.getUsername());
-			olderUser.setFullname(signUpFormDto.getFullname());
+			newUser.setUsername(signUpFormDto.getUsername());
+			newUser.setFullname(signUpFormDto.getFullname());
+			session.setAttribute(Define.PRINCIPAL,newUser);
+			System.out.println("signUpFormDto : " + signUpFormDto);
+			return "redirect:/main";
 
 		}
 		olderUser.setPassword(null);
@@ -345,12 +417,133 @@ public class UserController {
 		return "redirect:/main";
 
 	}
+	// 아이디찾기
+	@GetMapping("/find-username")
+	public String findUsername() {
+		return "/user/findUsername";
+	}
 
+
+	@PostMapping("/find-username")
+	@ResponseBody
+	public ResponseEntity<String> findUsername(@RequestBody String email) {
+		// 이메일 주소를 사용하여 사용자를 검색하고 아이디를 가져옵니다.
+		User user = userService.findUserByEmail(email);
+
+		if (user != null) {
+			// 사용자를 찾았을 경우 아이디를 반환합니다.
+			String username = user.getUsername();
+			emailService.sendUsername(email,username);
+			return new ResponseEntity<>(username, HttpStatus.OK);
+		} else {
+			// 사용자를 찾지 못한 경우 오류 메시지를 반환합니다.
+			return new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+		}
+	}
+
+	// 비밀번호 찾기
+	@GetMapping("/find-password")
+	public String userpassword() {
+		return "/user/findPassword";
+	}
+
+
+	@PostMapping("/check-id-email")
+	@ResponseBody
+	public ResponseEntity<String> checkIdAndEmail(@RequestParam(name="username") String username, @RequestParam(name="email") String email) {
+
+		User user = userService.findByUsernameEmail(username, email);
+		System.out.println("컨트롤러 유저: " + user);
+		System.out.println("컨트롤러 아이디: " + username);
+		System.out.println("컨트롤러 이메일: " + email);
+
+		if (user != null && user.getEmail().equals(email)) {
+			// 아이디와 이메일이 일치할 경우
+			System.out.println("여기오면혼난다");
+			return new ResponseEntity<>("Matched", HttpStatus.OK);
+		} else {
+			// 아이디와 이메일이 일치하지 않을 경우
+			System.out.println("여기옴?");
+			return new ResponseEntity<>("Not Matched", HttpStatus.BAD_REQUEST);
+		}
+	}	
+
+	@PostMapping("/find-password")
+	@ResponseBody
+	public ResponseEntity<String> findPassword(@RequestBody String email) {
+		// 이메일 주소를 사용하여 사용자를 검색
+		User user = userService.findUserByEmail(email);
+		System.out.println("컨트롤러 유저:" + user);
+		System.out.println("컨트롤러 이메일:" + email);
+
+		if (user != null) {
+			// 인증 코드 생성 (이 예시에서는 랜덤한 문자열로 생성)
+			String randomCode = RandomCodeGenerator.generateRandomCode();
+
+			// 사용자에게 이메일로 인증 코드 전송
+			session.setAttribute("randomCode", randomCode);
+
+			// 이메일로 코드 전송
+			emailService.sendVerificationCode(email, randomCode);
+
+			return new ResponseEntity<>(randomCode, HttpStatus.OK);
+		} else {
+			// 사용자를 찾지 못한 경우 오류 메시지를 반환
+			return new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PostMapping("/reset-password")
+	@ResponseBody
+	public ResponseEntity<String> resetPassword(@RequestParam String email) {
+		// 1. 이메일 주소를 사용하여 사용자를 검색합니다.
+
+		User user = userService.findUserByEmail(email);
+
+		if (user != null) {
+			// 2. 사용자를 찾았다면, 새로운 임시 비밀번호를 생성합니다.
+			String temporaryPassword = RandomPasswordGenerator.generateRandomPassword();
+
+			// 3. 사용자의 비밀번호를 임시 비밀번호로 업데이트합니다.
+			user.setPassword(temporaryPassword);
+
+			// 사용자 데이터베이스에 변경 사항을 저장합니다.
+			userService.updateUserPassword(user);
+
+			// 이메일 전송
+			try {
+				sendEmail(user.getEmail(), "임시 비밀번호 발급", "임시 비밀번호: " + temporaryPassword);
+			} catch (MessagingException e) {
+				return new ResponseEntity<>("이메일 전송 중 오류 발생", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
+			return new ResponseEntity<>("임시 비밀번호 발급 및 이메일 전송이 완료되었습니다.", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+		}
+	}
+
+	private void sendEmail(String to, String subject, String text) throws MessagingException {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+		helper.setTo(to);
+		helper.setSubject(subject);
+		helper.setText(text, true);
+
+		mailSender.send(message);
+	}
+
+
+	// 수정
 	@GetMapping("/userUpdate/{userId}")
 	public String updateForm(@PathVariable("userId") int userId,Model model) {
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		System.out.println("로그인확인:" + user);
 
+		if(user == null) {
+			return"redirect:/user/sign-in";
+		}
 
 		UserUpdateDto userDetailDto = userService.findUser(userId);
 		if(userDetailDto==null) {
@@ -360,6 +553,7 @@ public class UserController {
 		}
 		return "/user/update";
 	}
+
 
 	@PostMapping("/userUpdate/{userId}")
 	public String updateFormProc(@PathVariable("userId") int userId, UserUpdateDto userUpdateDto, Model model) {
@@ -387,7 +581,72 @@ public class UserController {
 			return new ResponseEntity<>("Email update failed", HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	// 탈퇴
+	@GetMapping("/userDelete")
+	public String userDelete() {
+		return "/user/delete";
+	}
+
+
+
+
+	@PostMapping("/userDelete")
+	public String userDeleteProc(UserDeleteDto userDeleteDto, Model model) {
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+
+		// 1. 유효성 검사
+		if(userDeleteDto.getUsername() == null || 
+				userDeleteDto.getUsername().isEmpty()) {
+			throw new CustomException("username을 입력하시오", HttpStatus.BAD_REQUEST);
+		}
+		if(userDeleteDto.getPassword() == null || 
+				userDeleteDto.getPassword().isEmpty()) {
+			throw new CustomException("password를 입력하시오", HttpStatus.BAD_REQUEST);
+		}
+
+
+
+		String username = userDeleteDto.getUsername();
+		String sessionUsername = user.getUsername();
+
+
+		System.out.println("세션꺼 아이디" + sessionUsername);
+
+
+		System.out.println(username);
+		UserDeleteDto name = userService.findUserDelete(username);
+
+		if(sessionUsername.equals(username)) {
+			String password = name.getPassword();		
+			System.out.println("해쉬 암호 가져오나?" + password);
+			UserDeleteDto usercheck = userService.findUserDeleteCheck(username,password);
+
+			if(usercheck != null && sessionUsername.equals(username)) {				
+				userService.userDelete(username,password);
+
+				// 세션 로그아웃 처리
+				session.invalidate();
+				// 모델에 메시지 추가
+				model.addAttribute("message", "사용자가 삭제되었습니다.");
+				// alert 창을 표시하는 페이지로 리다이렉트
+				return "redirect:/user/delete-confirmation";
+
+			} else {
+				throw new CustomException("아이디 비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			throw new CustomException("사용자가 다릅니다.", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping("/delete-confirmation")
+	public String deleteConfirmation() {
+		return "/user/deleteConfirmation";
+	}
+
 }
+
 
 
 

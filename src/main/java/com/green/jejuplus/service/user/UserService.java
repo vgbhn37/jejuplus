@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.green.jejuplus.dto.user.SignInFormDto;
 import com.green.jejuplus.dto.user.SignUpFormDto;
+import com.green.jejuplus.dto.user.UserDeleteDto;
 import com.green.jejuplus.dto.user.UserUpdateDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.interfaces.UserRepository;
@@ -40,6 +41,7 @@ public class UserService {
 	
 	@Transactional
 	public void registerUser(SignUpFormDto signUpFormDto) {		
+		
 			String rawPwd = signUpFormDto.getPassword();
 			String hashPwd = passwordEncoder.encode(rawPwd);
 			System.out.println("rawPwd : " + rawPwd);
@@ -145,6 +147,36 @@ public class UserService {
 		String hashPwd = passwordEncoder.encode(rawPwd);
 		user.setPassword(hashPwd);	
 		 userRepository.updateUserPassword(user);		
+	}
+
+	public User findUserByEmail(String email) {
+		User findUsername = userRepository.findByEmail(email);
+		return findUsername;
+	}
+
+	public User findByUsernameEmail(String username, String email) {
+		User findUsernameEamil = userRepository.findByUsernameEmail(username,email);
+		System.out.println("서비스 아이디: " + username);
+	    System.out.println("서비스 이메일: " + email);
+		return findUsernameEamil;
+	}
+
+	public UserDeleteDto findUserDelete(String username) {
+		
+		UserDeleteDto userDeleteDto = userRepository.findByUserDelete(username);
+		return userDeleteDto;
+	}
+
+	
+
+	public void userDelete(String username, String password) {
+		 userRepository.userDelete(username, password);
+
+	}
+
+	public UserDeleteDto findUserDeleteCheck(String username, String password) {
+		UserDeleteDto userDeleteDtocheck = userRepository.findByUserDeleteCheck(username, password);
+		return userDeleteDtocheck;
 	}
 	
 

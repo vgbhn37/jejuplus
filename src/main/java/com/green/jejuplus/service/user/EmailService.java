@@ -22,4 +22,14 @@ public class EmailService {
 
         javaMailSender.send(message);
     }
+    
+    public void sendUsername(String to, String username) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("jejuplus@google.com");
+        message.setTo(to);
+        message.setSubject("고객 아이디");
+        message.setText("고객님의 아이디는 " + username + "입니다.");
+
+        javaMailSender.send(message);
+    }
 }

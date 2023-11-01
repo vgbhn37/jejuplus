@@ -31,6 +31,22 @@
 	<select id="findByPassword" resultType = "com.green.jejuplus.repository.model.User">
 		SELECT * FROM tb_user WHERE user_id = #{userId}
 	</select>
+	
+	<select id="findByUserPassword" resultType = "com.green.jejuplus.repository.model.User">
+		SELECT * FROM tb_user WHERE username = #{username}
+	</select>
+	
+	<select id="findByUsernameEmail" resultType = "com.green.jejuplus.repository.model.User">
+		select * from tb_user where username= #{username} and email=#{email}
+	</select>
+	
+	<select id="findByUserDelete" resultType = "com.green.jejuplus.dto.user.UserDeleteDto">
+		SELECT * FROM tb_user WHERE username = #{username}
+	</select>
+	
+	<select id="findByUserDeleteCheck" resultType = "com.green.jejuplus.dto.user.UserDeleteDto">
+		SELECT * FROM tb_user WHERE username = #{username} and password=#{password}
+	</select>
 
 
 
@@ -52,15 +68,18 @@ update tb_user set password=#{password} where user_id = #{userId}
 	insert into
 		tb_user(username,level_id,password,fullname,email,phone_number,is_kakao)
 		value
-		( #{username}, 1,#{password}, #{fullname}, #{email}, #{phoneNumber},'N');
+		( #{username}, 1,#{password}, #{fullname}, #{email}, #{phoneNumber},'N')
 	</insert>
 	
 	<insert id = "insertKakaoUser">
 	insert into
 		tb_user(username,level_id,password,fullname,email,phone_number,is_kakao)
 		value
-		( #{username}, 1,#{password}, #{fullname}, #{email}, #{phoneNumber},'Y');
+		( #{username}, 1,#{password}, #{fullname}, #{email}, #{phoneNumber},'Y')
 	</insert>
 	
+<delete id = "userDelete">
+delete from tb_user where username = #{username} and password=#{password}
+</delete>	
  
 </mapper>
