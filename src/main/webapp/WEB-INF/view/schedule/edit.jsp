@@ -3,16 +3,9 @@
 <%@ include file="/WEB-INF/view/header.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
-	crossorigin="anonymous">
+
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d5568461ac8305d5d4737b9523509aed"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/schedule/scheduleEdit.css" />
 <!-- ------------------------------------------------------------- -->
 
@@ -27,7 +20,10 @@
 						${schedule.endDate }</h5>
 				</div>
 				<div class="col-5">
-					대충 달력위치 <br> <br> <br> <br>
+					<label for="date">일정의 날짜를 선택해주세요! <input type="date"
+						id="date" max="${schedule.endDate }" min="${schedule.startDate }"
+						value="${schedule.startDate }" onchange="changeDate()">
+					</label>
 				</div>
 			</div>
 			<div id="map" class="map" style="width: 90%; height: 500px;"></div>
@@ -98,7 +94,8 @@
 		<div class="sche-right col-4">
 			<div class="list-header row">
 				<div id="day" style="height: 40px;" class="col-6">
-					<h3>DAY 1</h3>
+					<span class="h3">DAY&nbsp;</span><span id="schedule-date"
+						class="h3">1</span>
 				</div>
 				<div class="col-6" style="height: 40px;">
 					<button class="btn btn-orange" style="width: 58px; height: 38px;"
@@ -109,15 +106,17 @@
 			<div class=notice>
 				※ 표시되는 거리는 직선거리 기준입니다.<br> ※ 거리를 클릭하시면 길찾기 페이지가 새 창으로 열립니다.
 			</div>
-			<div id="list-output" class="float-right"></div>
+			<div id="list-output" class="float-right">
+				<p>정해진 일정이 없어요. 일정을 추가해보세요!</p>
+			</div>
 		</div>
 	</div>
 	<!-- 모달 창 -->
 	<div id="myModal" class="modal">
 		<div class="modal-content">
 			<span class="close" id="closeModalButton" onclick="closeModal()">&times;</span>
-			<h3 id ="contents-title"></h3>
-			<textarea id ="contents-memo" placeholder="메모할 내용을 적어주세요."></textarea>
+			<h3 id="contents-title"></h3>
+			<textarea id="contents-memo" placeholder="메모할 내용을 적어주세요."></textarea>
 			<input type="hidden" id="contents-index" value="">
 		</div>
 	</div>
@@ -519,10 +518,29 @@
 		printList();
 	}
 	
+	/* 날짜 변경 시 */
+	function changeDate(){
+		const dateInput = document.getElementById('date');
+		const scheduleDate = document.getElementById('schedule-date');
+		const output = document.getElementById('list-output');
+		if(confirm('저장되지 않은 일정은 삭제됩니다. 날짜를 바꾸시겠습니까?')){
+			deleteMarkers();
+			polyline.setMap(null);
+			isFirst = true;
+			locations.length = 0;
+			let startDate = new Date(dateInput.getAttribute("min"));
+			let seletedDate = new Date(dateInput.value);
+			let diff = Math.abs(startDate.getTime() - seletedDate.getTime());
+			diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+			scheduleDate.textContent = diff+1;
+			output.innerHTML='<p>정해진 일정이 없어요. 일정을 추가해보세요!</p>'
+		};
+	}
+	
+
 	/* 모달 */
-	// 모달 창
-	const modal = document.getElementById("myModal");
-	// 모달 열기 버튼 클릭 시
+	const modal = document.getElementById("myModal");// 모달 창
+	/* 모달창 열기 */
 	function openModal(title,index) {
 	  modal.style.display = "block";
 	  let contentsTitle = document.getElementById('contents-title');
@@ -532,9 +550,9 @@
 	  contentsTitle.textContent = title;
 	  contentsIndex.value = index;
 	
-	  
 	}
-	// 모달 닫기 버튼 클릭 시
+	
+	/* 모달 닫기 버튼 눌렀을 시 */
 	function closeModal() {
 	  locations[document.getElementById('contents-index').value].memo = document.getElementById('contents-memo').value;
 	  
@@ -547,11 +565,8 @@
 	function saveSchedule(){
 		alert('저장');
 	}
-	
-	
-	
-	
 </script>
+
 
 <!-- ------------------------------------------------------------- -->
 <%@ include file="/WEB-INF/view/footer.jsp"%>
