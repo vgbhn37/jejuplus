@@ -95,27 +95,30 @@
 
 
 		</div>
-		<div class="sche-right col-4 row">
-			<div id="day" style="height: 40px;" class="col-6">
-				<h3>DAY 1</h3>
-			</div>
-			<div class="col-6" style="height: 40px;">
-				<button class="btn btn-orange" style="width: 58px; height: 38px;"
-					onclick="sorting()">정렬</button>
-				<button class="btn btn-primary" onclick="saveSchedule()">저장</button>
-			</div>
-			<div id="list-output">
-				<div class=card>
-					<div class="row">
-						<div class="col-2">
-							<div class=circle>1</div>
-						</div>
-						<div class="col-10">
-							<div class="card-text">언양닭칼국수</div>
-						</div>
-					</div>
+		<div class="sche-right col-4">
+			<div class="list-header row">
+				<div id="day" style="height: 40px;" class="col-6">
+					<h3>DAY 1</h3>
+				</div>
+				<div class="col-6" style="height: 40px;">
+					<button class="btn btn-orange" style="width: 58px; height: 38px;"
+						onclick="sorting()">정렬</button>
+					<button class="btn btn-primary" onclick="saveSchedule()">저장</button>
 				</div>
 			</div>
+			<div class=notice>
+				※ 표시되는 거리는 직선거리 기준입니다.<br> ※ 거리를 클릭하시면 길찾기 페이지가 새 창으로 열립니다.
+			</div>
+			<div id="list-output" class="float-right"></div>
+		</div>
+	</div>
+	<!-- 모달 창 -->
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<span class="close" id="closeModalButton" onclick="closeModal()">&times;</span>
+			<h3 id ="contents-title"></h3>
+			<textarea id ="contents-memo" placeholder="메모할 내용을 적어주세요."></textarea>
+			<input type="hidden" id="contents-index" value="">
 		</div>
 	</div>
 </div>
@@ -128,9 +131,9 @@
 	
 	/* 지도 */
 	let container = document.getElementById('map'); // 지도를 담을 영역의 DOM
-	let markers = []; // 마커를 담을 배열
 	let locations = []; // 선택한 장소 정보를 담을 배열
 	let distances = []; // 거리 정보를 담을 배열
+	let markers = []; // 마커 배열
 	let distance; // 하루 일정 동안 총 직선거리
 	let polyline; // 지도에 표시할 선
 	let isFirst = true; // 지도에 처음 선을 그리는지 여부
@@ -159,7 +162,7 @@
 
 
 	
-	// 페이지 저장 및 변경
+	/* 페이지 저장 및 변경(탭 내 이동 및 페이지 이동 시) */
 	function changePage(e){
 		let label = document.getElementById('label').value;
 	
@@ -190,7 +193,7 @@
 		showList(label);
 	}
 	
-	// 장소 리스트 보여주기
+	/* 컨텐츠 리스트 보여주기 */
 	function showList(label){
 		
 		let url = "";
@@ -227,7 +230,7 @@
 		.then(data=>{
 			
 			tabOutput.innerHTML = data;
-			location.href="#";
+			//location.href="#";
 		
 		}).catch((error)=>{
 			console.error(error);
@@ -235,7 +238,7 @@
 		
 	}
 	
-	// 검색 창 띄우기
+	/* 검색 창 띄우기 */
 	function showSearchWindow(){
 		
 		fetch('/schedule/call-search')
@@ -252,7 +255,7 @@
 		
 	}
 	
-	// 검색 카테고리와 검색어 저장
+	/* 검색 카테고리와 검색어 저장 (검색 탭 내 페이지 이동 시 카테고리와 검색어가 초기화되지 않게) */
 	function setSearch(){
 		category = document.getElementById('search-select').value;
 		keyword = document.getElementById('search-input').value;
@@ -260,7 +263,7 @@
 		searchList(1);
 	}
 	
-	// 검색 결과 출력
+	/* 검색 결과 출력 */
 	function searchList(page){
 		
 		const searchOutput = document.getElementById('search-output');
@@ -278,7 +281,7 @@
 	}
 	
 	
-	// 선택한 장소 리스트에 추가
+	/* 선택한 컨텐츠 리스트에 추가 */
 	function addList(idValue,titleValue,region1Value,region2Value,labelValue,mapX,mapY){
 		for (let i = 0 ; i < locations.length; i++) {
 	        if (locations[i].id === idValue) {
@@ -293,6 +296,7 @@
 			region1 : region1Value,
 			region2 : region2Value,
 			label : labelValue,
+			memo : "",
 			x : mapX,
 			y : mapY
 		};
@@ -305,26 +309,82 @@
 		drawLine(locations);
 	}
 	
-	// 리스트 출력
+	/* 일정 리스트 출력 */
 	function printList(){
 		const output = document.getElementById('list-output');
 		output.innerHTML = '';
-		locations.forEach(item=>{
-			// 선택한 리스트 출력
+		locations.forEach((item,index)=>{
+			const itemDiv = document.createElement('div');
+			itemDiv.classList.add('list-card');
+			output.appendChild(itemDiv);
 			
+			const rowDiv = document.createElement('div');
+			rowDiv.classList.add('row');
+			itemDiv.appendChild(rowDiv);
+			
+			const colDiv2 = document.createElement('div');
+			colDiv2.classList.add('col-2');
+			rowDiv.appendChild(colDiv2);
+			
+			const circle = document.createElement('div');
+			circle.classList.add('circle');
+			circle.textContent = index+1;
+			colDiv2.appendChild(circle);
+			
+			const colDiv7 = document.createElement('div');
+			colDiv7.classList.add('col-7');
+			colDiv7.textContent = item.title;
+			rowDiv.appendChild(colDiv7);
+			
+			const colDiv3 = document.createElement('div');
+			colDiv3.classList.add('col-3');
+			rowDiv.appendChild(colDiv3);
+			
+			const memoIcon = document.createElement('img');
+			memoIcon.src = '/images/schedule/writing.png';
+			memoIcon.classList.add('item-btn');
+			memoIcon.addEventListener('click',()=>{
+				openModal(item.title,index);
+			});
+			colDiv3.appendChild(memoIcon);
+			
+			const binIcon = document.createElement('img');
+			binIcon.src = '/images/schedule/bin.png';
+			binIcon.classList.add('item-btn');
+			binIcon.addEventListener('click',(index)=>{
+				removeList(index);
+			});
+			colDiv3.appendChild(binIcon);
+			
+			
+			
+			
+				
+			if(index>0){
+				const distance = document.createElement('div');
+				distance.classList.add('distance');
+				const distanceATag = document.createElement('a');
+				distanceATag.setAttribute("href","http://map.naver.com/index.nhn?slng=" + locations[index-1].x + "&slat=" + locations[index-1].y + 
+						"&stext="+ locations[index-1].title +"&elng="+ item.x +"&elat="+ item.y+"&pathType=0&showMap=true&etext="+ item.title+"&menu=route");
+				distanceATag.setAttribute("target","_blank");
+				distanceATag.textContent = getDistanceFromLatLonInKm(locations[index-1].y,locations[index-1].x,item.y,item.x).toFixed(2) + ' km';
+				distance.appendChild(distanceATag);
+				itemDiv.appendChild(distance);
+			}
 			
 		});
 	}
 	
-	// 드래그 드랍시 발생하는 이벤트 
+	/* 드래그 드랍 시 발생하는 이벤트 */
 	
 	
 	
-	// 지도에 선 그리기
+	/* 지도에 선 그리기 */
 	function drawLine(locations){
 		let linePath = [];
 		for (let i = 0; i < locations.length; i++) {
 			linePath.push(new kakao.maps.LatLng(locations[i].y, locations[i].x));
+			setMarker(i,locations[i].y,locations[i].x);
 		}
 	
 		// 지도에 표시할 선을 생성합니다
@@ -351,9 +411,36 @@
     // 지도 중심을 부드럽게 이동시킵니다
     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
     map.panTo(moveLatLon);            
-}        
+}      
 	
-	// 위도, 경도로 거리 계산
+	/* 지도 마커 표시 */
+	function setMarker(index, lat, lng){
+		var content = "<div class = 'circle' style='width :20px; height: 20px; text-align: center;'>" + (index+1) +"</div>";
+		
+
+		// 커스텀 오버레이가 표시될 위치입니다 
+		var position = new kakao.maps.LatLng(lat, lng);  
+
+		// 커스텀 오버레이를 생성합니다
+		var customOverlay = new kakao.maps.CustomOverlay({
+		    position: position,
+		    content: content   
+		});
+		
+		markers.push(customOverlay); // 마커 배열에 저장 (추후 삭제를 위함)
+		
+		customOverlay.setMap(map);	
+	}
+	
+	/* 지도 마커 삭제 */
+	function deleteMarkers(){
+		markers.forEach(marker=>{
+			marker.setMap(null);
+		});
+		markers.length=0;
+	}
+	
+	/* 위도, 경도로 거리 계산 */
 	function getDistanceFromLatLonInKm(lat1,lng1,lat2,lng2) {
 	    function deg2rad(deg) {
 	        return deg * (Math.PI/180)
@@ -367,7 +454,7 @@
 	    return d;
 	}
 	
-	// 선택한 아이템들로 동선 짜기
+	/* 선택한 컨텐츠들로 동선 짜기 */
 	function sorting() {
 		
 		if(confirm('일정 내 첫번째 장소를 기준으로 일정의 순서가 변경됩니다.')){
@@ -415,11 +502,47 @@
 		    drawLine(sortedArray); // 정렬된 배열으로 선을 그림
 		    panTo(sortedArray[0]); // 일정의 시작지점을 지도의 중앙으로
 		    locations=[...sortedArray]; // locations에 정렬된 Array복사
+		    printList(); // 정렬된 일정을 출력
 		 
 		}
-		
 	}
+	
+	/* 일정 리스트에서 삭제 */
+	function removeList(index){
 		
+		locations.splice(index,1);
+		deleteMarkers();
+		polyline.setMap(null);
+		if(locations.length!==0){
+			drawLine(locations);
+		}
+		printList();
+	}
+	
+	/* 모달 */
+	// 모달 창
+	const modal = document.getElementById("myModal");
+	// 모달 열기 버튼 클릭 시
+	function openModal(title,index) {
+	  modal.style.display = "block";
+	  let contentsTitle = document.getElementById('contents-title');
+	  let contentsIndex = document.getElementById('contents-index');
+	  let contentsMemo = document.getElementById('contents-memo');
+	  contentsMemo.value = locations[index].memo;	
+	  contentsTitle.textContent = title;
+	  contentsIndex.value = index;
+	
+	  
+	}
+	// 모달 닫기 버튼 클릭 시
+	function closeModal() {
+	  locations[document.getElementById('contents-index').value].memo = document.getElementById('contents-memo').value;
+	  
+	  document.getElementById('contents-memo').value = '';
+	  document.getElementById('contents-index').value = "";
+	  modal.style.display = "none";
+	}
+	
 	// 일정 저장
 	function saveSchedule(){
 		alert('저장');

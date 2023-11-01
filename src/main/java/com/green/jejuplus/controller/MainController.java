@@ -13,7 +13,7 @@ public class MainController {
 	HttpSession session;
 	
 	// main page (강중현)
-	@GetMapping("/main")
+	@GetMapping(value= {"main","/"})
 	public String main() {
 		
 		return "main";

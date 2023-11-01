@@ -14,6 +14,9 @@ import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.util.Define;
 import com.green.jejuplus.util.PagingDto;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ScheduleService {
 
@@ -33,23 +36,33 @@ public class ScheduleService {
 		
 		List<Contents> list = null;
 		
+		log.info(label);
 		switch (label) {
 
 		case "attraction":
 			list = scheduleRepository.findListByLabel(Define.ATTRACTION, paging);
+			break;
 		case "accomodation":
 			list = scheduleRepository.findListByLabel(Define.ACCOMODATION, paging);
+			break;
 		case "shopping":
 			list = scheduleRepository.findListByLabel(Define.SHOPPING, paging);
+			break;
 		case "restaurant":
 			list = scheduleRepository.findListByLabel(Define.RESTAURANT, paging);
+			break;
 		case "favorite":
 			list = scheduleRepository.findMyFavoriteList(user.getUserId(), paging);
+			break;
 		default:
 			list = scheduleRepository.findAllList(paging);
-		}
+			break;
+		}	
 		
 		addHashTag(list);
+		log.info(Integer.toString(list.size()));
+		log.info(Integer.toString(user.getUserId()));
+	
 		
 		return list;
 

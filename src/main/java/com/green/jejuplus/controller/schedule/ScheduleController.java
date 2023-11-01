@@ -25,8 +25,11 @@ import com.green.jejuplus.util.Define;
 import com.green.jejuplus.util.Pagination;
 import com.green.jejuplus.util.PagingDto;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/schedule")
+@Slf4j
 public class ScheduleController {
 
 	@Autowired
@@ -71,6 +74,7 @@ public class ScheduleController {
 			throw new CustomException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
 		}
 		
+		log.info(label);
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		Pagination pagination = new Pagination();
 		paging.setPage(page);
