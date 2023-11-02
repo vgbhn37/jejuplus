@@ -42,7 +42,7 @@ body {
 }
 
 .flight .flight-container h4 {
-    margin: 15px 15px;
+    margin: 10px 15px;
     font-size: 25px;
 }
 
@@ -98,7 +98,7 @@ body {
     width: 200px;
 }
 
-.arr-input {
+.arr-input{
     width: 100%;
     height: 40px;
     /* 들여쓰기 */
@@ -172,13 +172,17 @@ body {
 
 /* calender start */
 .calnender-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 25px;
+    margin: 15px 0;
+}
+.justify-content-center{
+	display: flex !important;
+	justify-content: center !important;
 }
 .calender-label {
     font-size: 25px;
+}
+.input-daterange{
+	margin: 0 50px;
 }
 
 .calender-input {
@@ -191,7 +195,7 @@ body {
     font-size: 16px !important;
     letter-spacing: 1px;
     position: relative;
-    width: 350px;
+    width: 200px;
     text-align: center;
 }
 
@@ -208,7 +212,7 @@ input:focus {
     border-radius: 0 !important;
     align-content: center !important;
     padding: 0 !important;
-    width: 625px !important;
+    width: 350px !important;
 }
 
 /*Weekday Heading*/
@@ -517,7 +521,6 @@ main .booking-container .mybooking .nav p.current span {
     background-color: #f8f8f8;
     border-radius: 10px;
     margin-bottom: 16px;
-    padding: 10px 10px;
 }
 .price-info {
     display: flex;

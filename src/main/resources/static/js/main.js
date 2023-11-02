@@ -18,12 +18,7 @@ $(document).ready(function () {
     });
 });
 
-// 사이드바 토글
-$(document).ready(function () {
-    $('#toggleButton').click(function () {
-        $('.sidebar').toggleClass('show-sidebar');
-    });
-});
+
 
 // 관리자
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/view/header.jsp" %>
+<%@ include file="/WEB-INF/view/air/header.jsp" %>
+
 <!-- air css -->
 <link rel="stylesheet" href="../../css/air/air.css" />
 <!-- js -->
@@ -22,18 +23,24 @@
 	                        <div class="dep-name">
 	                            <label for="dep-name">출발지</label>
 	                            <div class="dep-search">
-	                            <select>
-	                        		<option>${depAirportId}</option>
-	                        	</select>
-<!-- 	                                <i class="fas fa-map-marker-alt"></i> -->
-<!-- 	                                <i class="fas fa-times-circle"></i> -->
-<!-- 	                                <input -->
-<!-- 	                                    type="text" -->
-<!-- 	                                    class="dep-input" -->
-<!-- 	                                    id="dep-name" -->
-<!-- 	                                    name="depAirportId" -->
-<!-- 	                                    placeholder="출발지" -->
-<!-- 	                                /> -->
+	                            	<select class="dep-input" name="depAirportNm">
+	                            		<option>선택</option>
+	                            		<option value="NAARKPK">김해</option>
+										<option value="NAARKPC">제주</option>
+										<option value="NAARKJB">무안</option>
+										<option value="NAARKJJ">광주</option>
+										<option value="NAARKJK">군산</option>
+										<option value="NAARKJY">여수</option>
+										<option value="NAARKNW">원주</option>
+										<option value="NAARKNY">양양</option>
+										<option value="NAARKPS">사천</option>
+										<option value="NAARKPU">울산</option>
+										<option value="NAARKSI">인천</option>
+										<option value="NAARKSS">김포</option>
+										<option value="NAARKTH">포항</option>
+										<option value="NAARKTN">대구</option>
+										<option value="NAARKTU">청주</option>
+	                            	</select>
 	                            </div>
 	                        </div>
 	                        <!-- dep end -->
@@ -42,15 +49,24 @@
 	                        <div class="arr-name">
 	                            <label for="arr-name">도착지</label>
 	                            <div class="arr-search">
-	                                <i class="fas fa-map-marker-alt"></i>
-	                                <i class="fas fa-times-circle"></i>
-	                                <input
-	                                    type="text"
-	                                    class="arr-input"
-	                                    id="arr-name"
-	                                    name="arrAirportId"
-	                                    placeholder="도착지"
-	                                />
+	                            	<select class="arr-input" name="arrAirportNm">
+	                            		<option>선택</option>
+										<option value="NAARKPK">김해</option>
+										<option value="NAARKPC">제주</option>
+										<option value="NAARKJB">무안</option>
+										<option value="NAARKJJ">광주</option>
+										<option value="NAARKJK">군산</option>
+										<option value="NAARKJY">여수</option>
+										<option value="NAARKNW">원주</option>
+										<option value="NAARKNY">양양</option>
+										<option value="NAARKPS">사천</option>
+										<option value="NAARKPU">울산</option>
+										<option value="NAARKSI">인천</option>
+										<option value="NAARKSS">김포</option>
+										<option value="NAARKTH">포항</option>
+										<option value="NAARKTN">대구</option>
+										<option value="NAARKTU">청주</option>
+	                            	</select>
 	                            </div>
 	                        </div>
 	                        <!-- arr end -->
@@ -75,28 +91,29 @@
 							        </div>
 							    </div>
 							</div>
-
-
-
 	                        <!-- customer end -->
 	                    </div>
 	                    
 	                    <!-- 날짜 선택 -->
 	                    <div class="calnender-container px-1 px-sm-5 mx-auto">
-	                        <form autocomplete="off">
-	                            <div class="flex-row d-flex justify-content-center">
-	                                <div class="col-xl-5 col-lg-6 col-11 px-1">
-	                                    <div class="input-group input-daterange">
-	                                        <label class="calender-label">날짜 선택 : </label>
-	                                        <input type="text" name="daterange" class="calender-input" readonly />
-	                                    </div>
-	                                </div>
-	                            </div>
-	                        </form>
-	                    </div>
+						    <div class="flex-row d-flex justify-content-center">
+						        <div class="col-xl-5 col-lg-6 col-11 px-1">
+						            <div class="input-group">
+						                <label class="calender-label">가는날 : </label>
+						                <input type="text" name="depPlandTime" class="calender-input" readonly />
+						            </div>
+						        </div>
+						        <div class="col-xl-5 col-lg-6 col-11 px-1">
+						            <div class="input-group">
+						                <label class="calender-label">오는날 : </label>
+						                <input type="text" name="arrPlandTime" class="calender-input" readonly />
+						            </div>
+						        </div>
+						    </div>
+						</div>
 	                    <!-- 예약하기 버튼 -->
 	                    <div class="flight-find">
-	                        <button type="submit" class="flight-find-btn">예약하기</button>
+	                        <button type="submit" class="flight-find-btn" onclick="checkFlightSelection()">예약하기</button>
 	                    </div>
 	                    <!-- 예약하기 버튼 -->
                     </form>

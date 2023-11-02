@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/view/header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/WEB-INF/view/air/header.jsp" %>
 <!-- css -->
 <link rel="stylesheet" href="../../css/air/air.css" />
 <!-- js -->
@@ -26,11 +26,7 @@
                             <div class="flight-info-row">
                                 <div class="flight-info-column">
                                     <div class="flight-info-head">
-                                        <img
-                                            src="/img/air/jeju_air_logo.png"
-                                            alt="jeju_logo"
-                                            class="flight-logo"
-                                        />
+                                        <img src="/img/air/jeju_air_logo.png" alt="jeju_logo" class="flight-logo" />
                                         <p class="flight-brand">제주항공</p>
                                     </div>
                                     <div class="flight-info-body">

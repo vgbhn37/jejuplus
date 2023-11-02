@@ -5,44 +5,38 @@
 
 /* main 달력 start */
 $(document).ready(function() {
-	$(function() {
-		$('input[name="daterange"]').daterangepicker({
-			startDate: moment(),
-			endDate: moment(),
-			opens: 'center',
-			autoApply: true,
-			locale: {
-				format: 'YYYY-MM-DD',
-			},
-			minDate: moment(), // 이전 날짜 선택 방지
-		});
+	var depPlandTime_input = $('input[name="depPlandTime"]');
+	var arrPlandTime_input = $('input[name="arrPlandTime"]');
+
+	depPlandTime_input.daterangepicker({
+		singleDatePicker: true,
+		startDate: moment(),
+		opens: 'center',
+		autoApply: true,
+		locale: {
+			format: 'YYYY-MM-DD',  // "yyyy-mm-dd" 형식으로 설정
+		},
+		minDate: moment(), // 이전 날짜 선택 방지
+	});
+
+	arrPlandTime_input.daterangepicker({
+		singleDatePicker: true,
+		startDate: moment(),
+		opens: 'center',
+		autoApply: true,
+		locale: {
+			format: 'YYYY-MM-DD',  // "yyyy-mm-dd" 형식으로 설정
+		},
+		minDate: moment(), // 이전 날짜 선택 방지
+	});
+
+	// 가는날 선택 시 오는날과 연결
+	depPlandTime_input.on('apply.daterangepicker', function(ev, picker) {
+		arrPlandTime_input.data('daterangepicker').setStartDate(picker.startDate);
+		arrPlandTime_input.data('daterangepicker').setEndDate(picker.startDate);
 	});
 });
 /* main 달력 end */
-
-/* 사이드바 토글 start */
-$(document).ready(function() {
-	$('#toggleButton').click(function() {
-		$('.sidebar').toggleClass('show-sidebar');
-	});
-});
-/* 사이드바 토글 end */
-
-/* close start */
-$(function() {
-	$('input[name=dep-name]').keydown(function() {
-		if ($(this).val().trim() != '') {
-			$(this).next().css('display', 'block');
-		} else {
-			$(this).next().css('display', 'none');
-		}
-	});
-	$('.fa-times-circle').click(function() {
-		$(this).prev().val('');
-		$(this).css('display', 'none');
-	});
-});
-/* close end */
 
 /* 탑승객 숫자 start */
 document.addEventListener('DOMContentLoaded', function() {
@@ -57,13 +51,22 @@ document.addEventListener('DOMContentLoaded', function() {
 	const passengerCountElementsChild = document.querySelectorAll('.passengerCountChild');
 
 	// 초기 승객 수 설정
-	let passengerCountAdult = 1;
-	let passengerCountChild = 1;
+	let passengerCountAdult = 1; // 성인 기본값 1로 설정
+	let passengerCountChild = 0; // 어린이 기본값 0으로 설정
+
+	// 초기 승객 수를 업데이트
+	passengerCountElementsAdult.forEach((element) => {
+		element.textContent = passengerCountAdult;
+	});
+
+	passengerCountElementsChild.forEach((element) => {
+		element.textContent = passengerCountChild;
+	});
 
 	// 성인 승객 감소 버튼 클릭 시
 	decreaseButtonsAdult.forEach((button, index) => {
 		button.addEventListener('click', () => {
-			if (passengerCountAdult > 0) {
+			if (passengerCountAdult > 1 || (passengerCountAdult === 1 && passengerCountChild > 0)) {
 				passengerCountAdult--;
 				passengerCountElementsAdult[index].textContent = passengerCountAdult;
 			}
@@ -79,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				passengerCountElementsAdult[index].textContent = passengerCountAdult;
 				updateTotalPassengerCount();
 			} else {
-				alert('성인 및 어린이 승객의 합은 6명을 초과할 수 없습니다.');
+				alert('총 성인 및 어린이 승객 수는 6명을 초과할 수 없습니다.');
 			}
 		});
 	});
@@ -87,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	// 어린이 승객 감소 버튼 클릭 시
 	decreaseButtonsChild.forEach((button, index) => {
 		button.addEventListener('click', () => {
-			if (passengerCountChild > 0) {
+			if (passengerCountChild > 0 || (passengerCountChild === 0 && passengerCountAdult > 1)) {
 				passengerCountChild--;
 				passengerCountElementsChild[index].textContent = passengerCountChild;
 			}
@@ -103,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				passengerCountElementsChild[index].textContent = passengerCountChild;
 				updateTotalPassengerCount();
 			} else {
-				alert('성인 및 어린이 승객의 합은 6명을 초과할 수 없습니다.');
+				alert('총 성인 및 어린이 승객 수는 6명을 초과할 수 없습니다.');
 			}
 		});
 	});
@@ -111,10 +114,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	// 총 승객 수 업데이트 함수
 	function updateTotalPassengerCount() {
 		const totalPassengerCount = getTotalPassengerCount();
-		// 여기에서 필요한 작업을 수행하세요. 예를 들어, 6명을 초과하는지 확인하고 필요한 조치를 취할 수 있습니다.
-		// totalPassengerCount를 사용하여 원하는 동작을 수행하세요.
+		// 원하는 작업을 수행할 수 있습니다. 예를 들어, 6명 이상인 경우 필요한 조치를 취할 수 있습니다.
+		// totalPassengerCount를 사용하여 원하는 작업을 수행하세요.
 		if (totalPassengerCount < 1) {
-			alert('성인 및 어린이 승객 중 최소 1명 이상을 선택해야 합니다.');
+			alert('적어도 1명의 성인 승객과 1명의 어린이 승객을 선택해야 합니다.');
 		}
 	}
 
@@ -123,8 +126,103 @@ document.addEventListener('DOMContentLoaded', function() {
 		return passengerCountAdult + passengerCountChild;
 	}
 });
+
+
 /* 탑승객 숫자 end */
 
+/* 예약하기 버튼 */
+function checkFlightSelection() {
+	var depAirport = $('select[name="depAirportNm"]').val();
+	var arrAirport = $('select[name="arrAirportNm"]').val();
+
+	if (depAirport === '선택' || arrAirport === '선택') {
+		alert('출발지와 도착지를 선택해주세요.');
+	} else if (depAirport === arrAirport) {
+		alert('출발지와 도착지가 동일합니다. 예약할 수 없습니다.');
+	} else {
+		// 출발지와 도착지가 유효하며 동일하지 않은 경우 예약 프로세스를 진행할 수 있습니다.
+		// 여기에 필요한 예약 프로세스 코드를 추가하세요.
+		// 예를 들어, 서버로 데이터를 전송하거나 예약 페이지로 이동하는 등의 작업을 수행할 수 있습니다.
+	}
+}
+
+/* 결제버튼 start */
+// 카카오페이 외 라디오 버튼 클릭 안됨
+//$(document).ready(function() {
+//	// 결제 수단 라디오 버튼이 변경될 때 이벤트를 설정합니다.
+//	$('input[name="payment"]').on('change', function() {
+//		var selectedPayment = $(this).val();
+//
+//		// 만약 선택한 결제 수단이 '카카오페이'가 아닌 경우 알림을 표시
+//		if (selectedPayment !== '5') { // '5'는 카카오페이의 value 값
+//			alert('선택한 결제 수단은 현재 사용 불가능합니다. 다른 결제 수단을 선택해 주세요.');
+//			// 라디오 버튼을 초기 상태로 되돌림
+//			$('input[name="payment"][value="5"]').prop('checked', true); // 카카오페이를 선택한 상태로 되돌립니다.
+//		}
+//	});
+//
+//	// 결제하기 버튼 클릭 시 폼을 제출합니다.
+//	//$('.btnOrder').on('click', function() {
+//	// 여기에서 폼을 제출하는 로직을 작성하면 됩니다.
+//	// 예를 들어, 폼의 id가 'paymentForm'라면:
+//	// $('#paymentForm').submit();
+//	//});
+//});
+
+// 라디오 버튼 클릭은 되지만 결제하기 누르면 경고창 발생
+$(document).ready(function() {
+	// 결제하기 버튼 클릭 시 알림창을 표시합니다.
+	$('.btnOrder').on('click', function() {
+		var selectedPayment = $('input[name="payment"]:checked').val();
+
+		// 만약 선택한 결제 수단이 '카카오페이'가 아닌 경우 알림을 표시합니다.
+		if (selectedPayment !== '5') { // '5'는 카카오페이의 value 값입니다.
+			alert('선택한 결제 수단은 현재 사용 불가능합니다. 다른 결제 수단을 선택해 주세요.');
+		} else {
+			// 여기에서 폼을 제출하는 로직을 작성하면 됩니다.
+			// 예를 들어, 폼의 id가 'paymentForm'라면:
+			// $('#paymentForm').submit();
+		}
+	});
+});
+/* 결제버튼 end */
+
+
+/* 구매자와 동일 체크 */
+// 구매자 정보 입력 요소들
+const buyerLastNameInput = document.querySelector('.info-body input:nth-child(1)');
+const buyerFirstNameInput = document.querySelector('.info-body input:nth-child(3)');
+const buyerPhoneInput = document.querySelector('.info-body input:nth-child(5)');
+const buyerEmailInput = document.querySelector('.info-body input:nth-child(7)');
+
+// 탑승객 정보 입력 요소들
+const passengerLastNameInput = document.querySelector('.info-body input:nth-child(11)');
+const passengerFirstNameInput = document.querySelector('.info-body input:nth-child(13)');
+const passengerPhoneInput = document.querySelector('.info-body input:nth-child(15)');
+const passengerEmailInput = document.querySelector('.info-body input:nth-child(17)');
+
+// "구매자와 동일" 체크박스
+const sameInfoCheckbox = document.querySelector('.same-info');
+
+// 체크박스 상태가 변경될 때 실행되는 함수
+function handleCheckboxChange() {
+	if (sameInfoCheckbox.checked) {
+		// 구매자 정보를 탑승객 정보로 복사
+		passengerLastNameInput.value = buyerLastNameInput.value;
+		passengerFirstNameInput.value = buyerFirstNameInput.value;
+		passengerPhoneInput.value = buyerPhoneInput.value;
+		passengerEmailInput.value = buyerEmailInput.value;
+	} else {
+		// 체크박스가 해제되면 탑승객 정보 입력란을 비움
+		passengerLastNameInput.value = '';
+		passengerFirstNameInput.value = '';
+		passengerPhoneInput.value = '';
+		passengerEmailInput.value = '';
+	}
+}
+
+// 체크박스 상태 변경을 감지하는 이벤트 리스너 추가
+sameInfoCheckbox.addEventListener('change', handleCheckboxChange);
 
 
 
