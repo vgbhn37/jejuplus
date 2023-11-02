@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.green.jejuplus.dto.ReviewDto;
+import com.green.jejuplus.dto.contents.ReviewDto;
 
 @Mapper
 public interface ReviewRepository {
@@ -13,6 +13,8 @@ public interface ReviewRepository {
 
 	int insertReview(ReviewDto reviewDto);
 	
+	int updateReview(ReviewDto reviewDto);
+
 	void deleteReview(Integer reviewId);
 	
 

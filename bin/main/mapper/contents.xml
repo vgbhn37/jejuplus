@@ -4,37 +4,41 @@
 
 <mapper namespace="com.green.jejuplus.repository.interfaces.ContentsRepository"> 
 
-	<select id="findTouristAreaList" resultType="com.green.jejuplus.dto.TouristAreaListDto">
+	<select id="findTouristAreaList" resultType="com.green.jejuplus.dto.contents.TouristAreaListDto">
 		select * from tb_contents where contents_label = #{contentsLabel}
 	</select>
 	
-	<select id="showTouristAreaDetail" resultType="com.green.jejuplus.dto.TouristAreaDetailDto">
+	<select id="showTouristAreaDetail" resultType="com.green.jejuplus.dto.contents.TouristAreaDetailDto">
 		select * from tb_contents where contents_id = #{contentsId}
 	</select>
 
-	<select id="findRestaurantList" resultType="com.green.jejuplus.dto.RestaurantListDto">
+	<select id="findRestaurantList" resultType="com.green.jejuplus.dto.contents.RestaurantListDto">
 		select * from tb_contents where contents_label = #{contentsLabel}
 	</select>
 	
-	<select id="showRestaurantDetail" resultType="com.green.jejuplus.dto.RestaurantDetailDto">
+	<select id="showRestaurantDetail" resultType="com.green.jejuplus.dto.contents.RestaurantDetailDto">
 		select * from tb_contents where contents_id = #{contentsId}
 	</select>
 	
-	<select id="findLodgingList" resultType="com.green.jejuplus.dto.LodgingListDto">
+	<select id="findLodgingList" resultType="com.green.jejuplus.dto.contents.LodgingListDto">
 		select * from tb_contents where contents_label = #{contentsLabel}
 	</select>
 	
-	<select id="showLodgingDetail" resultType="com.green.jejuplus.dto.LodgingDetailDto">
+	<select id="showLodgingDetail" resultType="com.green.jejuplus.dto.contents.LodgingDetailDto">
 		select * from tb_contents where contents_id = #{contentsId}
 	</select>
 	
-	<select id="findShoppingList" resultType="com.green.jejuplus.dto.ShoppingListDto">
+	<select id="findShoppingList" resultType="com.green.jejuplus.dto.contents.ShoppingListDto">
 		select * from tb_contents where contents_label = #{contentsLabel}
 	</select>
 
-	<select id="showShoppingDetail" resultType="com.green.jejuplus.dto.ShoppingDetailDto">
+	<select id="showShoppingDetail" resultType="com.green.jejuplus.dto.contents.ShoppingDetailDto">
 		select * from tb_contents where contents_id = #{contentsId}
 	</select>
+	
+<!-- 	<select id="selectFavoriteList" resultType="com.green.jejuplus.dto.contents.FavoriteDto">
+
+	</select> -->
 	
 
 </mapper>

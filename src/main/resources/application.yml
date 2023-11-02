@@ -35,4 +35,11 @@ mybatis:
   - classpath:mapper/**.xml
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.green.jejuplus.repository.model
+  
+  
+  
+logging:
+  level:
+    org.mybatis.spring: debug

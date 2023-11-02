@@ -12,17 +12,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.green.jejuplus.dto.ShoppingDetailDto;
-import com.green.jejuplus.dto.ShoppingListDto;
-import com.green.jejuplus.dto.LodgingDetailDto;
-import com.green.jejuplus.dto.LodgingListDto;
-import com.green.jejuplus.dto.RestaurantDetailDto;
-import com.green.jejuplus.dto.RestaurantListDto;
-import com.green.jejuplus.dto.ReviewDto;
-import com.green.jejuplus.dto.TouristAreaDetailDto;
-import com.green.jejuplus.dto.TouristAreaListDto;
-import com.green.jejuplus.service.ContentsService;
-import com.green.jejuplus.service.ReviewService;
+import com.green.jejuplus.dto.contents.FavoriteDto;
+import com.green.jejuplus.dto.contents.FavoriteRequestDto;
+import com.green.jejuplus.dto.contents.LodgingDetailDto;
+import com.green.jejuplus.dto.contents.LodgingListDto;
+import com.green.jejuplus.dto.contents.RestaurantDetailDto;
+import com.green.jejuplus.dto.contents.RestaurantListDto;
+import com.green.jejuplus.dto.contents.ReviewDto;
+import com.green.jejuplus.dto.contents.ShoppingDetailDto;
+import com.green.jejuplus.dto.contents.ShoppingListDto;
+import com.green.jejuplus.dto.contents.TouristAreaDetailDto;
+import com.green.jejuplus.dto.contents.TouristAreaListDto;
+import com.green.jejuplus.repository.model.Favorite;
+import com.green.jejuplus.repository.model.User;
+import com.green.jejuplus.service.contents.ContentsService;
+import com.green.jejuplus.service.contents.FavoriteService;
+import com.green.jejuplus.service.contents.ReviewService;
+import com.green.jejuplus.util.Define;
 
 
 @Controller
@@ -35,6 +41,8 @@ public class ContentsController {
 	private ContentsService contentsService;
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private FavoriteService favoriteServie;
 
 	
 	// 관광지 리스트	
@@ -47,11 +55,19 @@ public class ContentsController {
 	
 	// 관광지 상세보기
 	@GetMapping("/touristAreaDetail/{contentsId}")
-	public String touristAreaDetail(@PathVariable("contentsId") int contentsId, Model model) {
+	public String touristAreaDetail(@PathVariable("contentsId") int contentsId, Model model, FavoriteRequestDto favoriteRequestDto) {
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		TouristAreaDetailDto touristAreaDetail = contentsService.touristAreaDetail(contentsId);
 		List<ReviewDto> review = reviewService.showReview(contentsId);
+		
+		if (principal != null) {
+			boolean isFavorite = favoriteServie.selectFavorite(principal.getUserId(), contentsId);
+			model.addAttribute("isFavorite", isFavorite);
+		}
+
 		model.addAttribute("touristAreaDetail", touristAreaDetail);
 		model.addAttribute("review",review);
+		
 		return "contents/touristAreaDetail";
 	}
 	

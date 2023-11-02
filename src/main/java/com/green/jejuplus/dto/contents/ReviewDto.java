@@ -1,13 +1,14 @@
-package com.green.jejuplus.repository.model;
+package com.green.jejuplus.dto.contents;
 
 import java.sql.Timestamp;
 
 import lombok.Data;
 
 @Data
-public class Review {
+public class ReviewDto {
 	private Integer reviewStar;
 	private Integer reviewId;
+	private String username;
 	private Integer contentsId;
 	private Integer userId;
 	private String reviewContent;
