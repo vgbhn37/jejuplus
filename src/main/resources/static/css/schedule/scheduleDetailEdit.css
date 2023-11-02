@@ -139,6 +139,7 @@
 	margin-left: 30px;
 	text-align: center;
 	position: relative;
+	cursor: grab;
 	/* 자식 요소 위치 설정을 위해 부모 요소를 relative로 설정 */
 }
 
@@ -216,6 +217,12 @@
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+/* input type="date */ 
+input[type="date"]::-webkit-calander-picker-indicator,
+input[type="date"]::-webkit-inner-spin-button {
+  display: none; /* 삭제 버튼 숨김 */
 }
 
 
