@@ -19,7 +19,6 @@
 	display: block;
 	overflow: hidden;
 	text-overflow: ellipsis;
-
 }
 
 .btn-orange {
@@ -219,10 +218,9 @@
   cursor: pointer;
 }
 
-/* input type="date */ 
-input[type="date"]::-webkit-calander-picker-indicator,
-input[type="date"]::-webkit-inner-spin-button {
-  display: none; /* 삭제 버튼 숨김 */
+#calendar {
+	margin-right: 20px;
+	cursor: pointer;
 }
 
 

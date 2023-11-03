@@ -7,15 +7,20 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.green.jejuplus.dto.schedule.ScheduleDetailDto;
+import com.green.jejuplus.dto.schedule.ScheduleItemDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.model.Contents;
 import com.green.jejuplus.repository.model.Schedule;
@@ -44,7 +49,7 @@ public class ScheduleController {
 		return "/schedule/list";
 	}
 
-	@GetMapping("/edit/{scheduleId}")
+	@GetMapping("/detail/edit/{scheduleId}")
 	public String edit(@PathVariable("scheduleId") Integer scheduleId, Model model) {
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		Schedule schedule = scheduleService.findScheduleById(scheduleId);
@@ -62,7 +67,7 @@ public class ScheduleController {
 		model.addAttribute("list", list);
 		model.addAttribute("label", "all");
 
-		return "/schedule/edit";
+		return "/schedule/editDetail";
 	}
 
 	@GetMapping("/show-list/{label}")
@@ -74,7 +79,6 @@ public class ScheduleController {
 			throw new CustomException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
 		}
 		
-		log.info(label);
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		Pagination pagination = new Pagination();
 		paging.setPage(page);
@@ -119,5 +123,32 @@ public class ScheduleController {
 		
 		return "/schedule/searchList";
 	}
+	
+	@PostMapping("/detail/save")
+	@ResponseBody
+	public ResponseEntity<String> saveDatail(@RequestBody List<ScheduleDetailDto> list){
+		
+		scheduleService.deleteScheduleDetailByDay(list.get(0));
+		
+		String result = scheduleService.insertScheduleDetail(list);
+		
+		if(result.equals("success")) {
+			return ResponseEntity.ok().body(result);
+		} else {
+			return ResponseEntity.badRequest().body(result);
+		}
+	
+	}
+	
+	@GetMapping("/detail/request")
+	@ResponseBody
+	public ResponseEntity<List<ScheduleItemDto>> requestDetailList(@RequestParam("scheduleId")Integer scheduleId, @RequestParam("itemDay")Integer itemDay){
+		
+		List<ScheduleItemDto> list = scheduleService.requestList(scheduleId, itemDay);
+		
+		return ResponseEntity.ok().body(list);
+	}
+	
+
 	
 }

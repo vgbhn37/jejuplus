@@ -3,7 +3,7 @@
 스케쥴의 세부 일정 정하는 페이지
 */
 let scheduleDetailEdit = {
-
+	
 	container: document.getElementById('map'), // 지도 컨테이너
 	locations: [], // 선택한 장소 정보를 담을 배열
 	distances: [], // 거리 정보를 담을 배열
@@ -30,6 +30,7 @@ let scheduleDetailEdit = {
 	init: function() {
 		const sortingBtn = document.getElementById('sorting-btn');
 		const savingBtn = document.getElementById('saving-btn');
+		
 		sortingBtn.addEventListener('click', () => {
 			this.sortingScheduleDetail();
 		});
@@ -37,25 +38,23 @@ let scheduleDetailEdit = {
 			this.saveScheduleDetail();
 		});
 
-		let dateInput = document.getElementById('date');
-		dateInput.addEventListener('click', function() {
-			// 제거할 버튼 요소를 선택
-			let clearButton = dateInput.nextSibling.nextSibling;
-
-			// 버튼을 숨김
-			console.log(clearButton);
-			clearButton.style.display = 'none';
-			//todayButton.style.display = 'none';
-		});
 		this.map = new kakao.maps.Map(this.container, this.options); //지도 생성 및 객체 리턴
 		this.printContentsList('all');
+		
+		this.requestLocations(1);
+
+
+
 	},
 
 	/*캘린더에서 날짜를 변환했을 때*/
-	changeDate: function() {
+	changeDate: function(changedDate) {
 		const dateInput = document.getElementById('date');
-		const scheduleDate = document.getElementById('schedule-date');
+		const startDateValue = document.getElementById('start-date').value;
+		const scheduleDate = document.getElementById('schedule-day');
 		const output = document.getElementById('list-output');
+		
+
 		if (confirm('저장되지 않은 일정은 삭제됩니다. 날짜를 바꾸시겠습니까?')) {
 			this.deleteMarkers();
 			if (!this.isFirst) {
@@ -63,14 +62,60 @@ let scheduleDetailEdit = {
 			}
 			this.isFirst = true;
 			this.locations.length = 0;
-			let startDate = new Date(dateInput.getAttribute("min"));
-			let seletedDate = new Date(dateInput.value);
+			let startDate = new Date(startDateValue);
+			let seletedDate = new Date(changedDate);
 			let diff = Math.abs(startDate.getTime() - seletedDate.getTime());
 			diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
 			scheduleDate.textContent = diff + 1;
+			dateInput.value = changedDate;
+			
 			output.innerHTML = '';
+			this.requestLocations(diff+1);
+			
+			return true;
 
-		};
+		} else {	
+			return false;
+		}
+
+		;
+	},
+
+	/* 날짜를 변경했을 시 DB에 저장되어있는 상세일정 불러오기*/
+	requestLocations: function(day) {
+		
+		this.locations.length = 0;
+		const scheduleId = document.getElementById('schedule-id');
+
+		let url = '/schedule/detail/request?scheduleId=' + scheduleId.value + '&itemDay=' + day;
+		fetch(url).then(res => {
+			if (!res.ok) {
+				throw new Error('네트워크 응답 오류');
+			}
+			return res.json();
+		}).then(list => {
+			if (list.length > 0) {
+				list.forEach(data => {
+					let item = {
+						id: data.contentsId,
+						title: data.title,
+						region1: data.region1,
+						region2: data.region2,
+						label: data.label,
+						memo: data.itemMemo,
+						x: data.longitude,
+						y: data.latitude
+					};
+
+					this.locations.push(item);
+				});
+				this.printScheduleList();
+				this.drawLine(this.locations);
+				this.moveMapCenter(this.locations[0]);
+			}
+
+		})
+
 	},
 
 	/* 해당 장소를 맵의 중앙에 세팅 */
@@ -313,6 +358,7 @@ let scheduleDetailEdit = {
 
 		const output = document.getElementById('list-output');
 		output.innerHTML = '';
+		
 		this.locations.forEach((item, index) => {
 			const itemDiv = document.createElement('div');
 			itemDiv.classList.add('list-card');
@@ -438,11 +484,51 @@ let scheduleDetailEdit = {
 		}
 
 	},
-
+	/* 일정 저장 */
 	saveScheduleDetail: function() {
-		alert('저장');
+		if (this.locations.length == 0) {
+			alert('해당 날짜의 일정이 없습니다.');
+			return;
+		}
+
+		let details = [];
+		let itemDay = document.getElementById('schedule-day').textContent;
+		let scehduleId = document.getElementById('schedule-id').value;
+		this.locations.forEach((item, index) => {
+
+			let scheduleDetail = {
+				contentsId: item.id,
+				scheduleId: scehduleId,
+				itemMemo: item.memo,
+				itemDay: itemDay,
+				itemSequence: index + 1
+			}
+			details.push(scheduleDetail);
+		});
+
+
+		let options = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(details)
+		};
+		console.log(options.body);
+		fetch('/schedule/detail/save', options)
+			.then(res => {
+				if (!res.ok) {
+					throw new Error('일정 저장에 실패했습니다.');
+				}
+
+				alert(`${itemDay}일 차 일정이 저장되었습니다.`);
+			}).catch(error => {
+				alert(error.message);
+			});
+
 	},
 
+	/* 일정 항목 삭제 */
 	removeList: function(index) {
 		this.locations.splice(index, 1);
 		this.deleteMarkers();
@@ -468,7 +554,7 @@ function handleDragStart(e) {
 	e.dataTransfer.setData('text/html', this.innerHTML);
 }
 
-function handleDragEnter(e) {
+function handleDragEnter() {
 	this.classList.add('over');
 }
 

@@ -45,6 +45,20 @@
 	<select id="findCountBySearchTag">
 		select count(*) from tb_contents where tag like concat('%',#{search},'%')
 	</select>
+	<select id="findScheduleDetailByDay" resultType="com.green.jejuplus.dto.schedule.ScheduleItemDto">
+		select c.contents_id, title ,region1, region2, contents_label, item_memo, latitude, longitude
+		from tb_item i join tb_contents c on i.contents_id = c.contents_id where schedule_id = #{scheduleId} and item_day = #{itemDay}
+		order by item_sequence 
+	</select>
+	
+	
+	<insert id="insertScheduleDetail">
+		insert into tb_item (contents_id, schedule_id, item_memo, item_day, item_sequence)
+		values (#{contentsId},#{scheduleId},#{itemMemo},#{itemDay},#{itemSequence}) 
+	</insert>
+	<delete id = "deleteScheduleDetailByDay">
+		delete from tb_item where schedule_id = #{scheduleId} and item_day = #{itemDay}
+	</delete>
 	
 
 

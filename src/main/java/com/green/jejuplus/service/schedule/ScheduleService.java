@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.green.jejuplus.dto.schedule.ScheduleDetailDto;
+import com.green.jejuplus.dto.schedule.ScheduleItemDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.interfaces.ScheduleRepository;
 import com.green.jejuplus.repository.model.Contents;
@@ -118,8 +120,30 @@ public class ScheduleService {
 	}
 
 	public Schedule findScheduleById(Integer scheduleId) {
-
+		
 		return scheduleRepository.findScheduleById(scheduleId);
+	}
+	
+	public String insertScheduleDetail(List<ScheduleDetailDto> scheduleDetailDto) {
+		
+		for (ScheduleDetailDto dto : scheduleDetailDto) {
+			int result = scheduleRepository.insertScheduleDetail(dto);
+			if(result!= 1) {
+				return "fail";
+			}
+		}
+		
+		return "success";
+	}
+	
+	public void deleteScheduleDetailByDay(ScheduleDetailDto scheduleDetailDto) {
+		
+		scheduleRepository.deleteScheduleDetailByDay(scheduleDetailDto);
+	}
+	
+	public List<ScheduleItemDto> requestList(Integer scheduleId, Integer itemDay){
+		
+		return scheduleRepository.findScheduleDetailByDay(scheduleId, itemDay);
 	}
 	
 	//해쉬태그(#)를 붙여줌
