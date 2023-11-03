@@ -98,13 +98,13 @@
 	                    <div class="calnender-container px-1 px-sm-5 mx-auto">
 						    <div class="flex-row d-flex justify-content-center">
 						        <div class="col-xl-5 col-lg-6 col-11 px-1">
-						            <div class="input-group">
+						            <div class="input-group-m1">
 						                <label class="calender-label">가는날 : </label>
 						                <input type="text" name="depPlandTime" class="calender-input" readonly />
 						            </div>
 						        </div>
 						        <div class="col-xl-5 col-lg-6 col-11 px-1">
-						            <div class="input-group">
+						            <div class="input-group-m2">
 						                <label class="calender-label">오는날 : </label>
 						                <input type="text" name="arrPlandTime" class="calender-input" readonly />
 						            </div>

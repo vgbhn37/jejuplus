@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OpenApiAirService {
-    public static String OpenApiAir(String depAirportId, String arrAirportId, String depPlandTime, String arrPlandTime) throws IOException {
+    public String OpenApiAir(String depAirportId, String arrAirportId, String depPlandTime, String arrPlandTime) throws IOException {
 //    	System.out.println("depAirportId : 1. "+depAirportId);
 //    	System.out.println("depPlandTime : 2. "+depPlandTime);
     	

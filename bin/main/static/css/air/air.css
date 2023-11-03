@@ -176,7 +176,7 @@ body {
 }
 .justify-content-center{
 	display: flex !important;
-	justify-content: center !important;
+	justify-content: space-evenly !important;
 }
 .calender-label {
     font-size: 25px;

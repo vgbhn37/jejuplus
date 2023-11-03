@@ -19,9 +19,6 @@ import com.green.jejuplus.dto.air.AirPlanDTO;
 import com.green.jejuplus.dto.air.CustomerDTO;
 import com.green.jejuplus.service.air.OpenApiAirService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 @RequestMapping("/air")
 public class AirController {

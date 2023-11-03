@@ -8,19 +8,6 @@
 		<section class="hero">
 			<h1>어디로 갈까요?</h1>
 			<p>당신이 꿈꾸는 제주를 저렴하면서도 간편하고 풍성하게!</p>
-
-			<div class="container px-1 px-sm-5 mx-auto">
-				<form autocomplete="off">
-					<div class="flex-row d-flex justify-content-center">
-						<div class="col-xl-5 col-lg-6 col-11 px-1">
-							<div class="input-group input-daterange">
-								<label class="">날짜 선택 : </label> <input type="text"
-									name="daterange" class="calender-input" readonly />
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
 		</section>
 
 		<!-- 인기 투어 패키지 start -->
