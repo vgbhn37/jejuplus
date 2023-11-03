@@ -10,17 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-public class AdminUserDto {
-	int userId;
-	int levelId;
-	String username; 
-	String password; 
-	String fullname;
-	String email;
-	String phoneNumber; 
-	String isKakao;
-	String pageSize;
-	String offset;
-	String category;
-	
+public class AdminPlaceDto {
+ String test;
 }

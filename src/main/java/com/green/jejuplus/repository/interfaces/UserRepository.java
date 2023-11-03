@@ -26,7 +26,7 @@ public interface UserRepository {
 	User findByUpdateEmail(int userId);
 	User findByPassword(int userId);
 	void updateUserPassword(User user);
-	User findByUserPassword(String username);
+	User findByUserPassword(@Param("username") String username);
 	User findByUsernameEmail(@Param("username")String username, @Param("email") String email);
 	UserDeleteDto findByUserDelete(@Param("username")String username);
 	void userDelete(@Param("username")String username, @Param("password") String password);
@@ -36,6 +36,8 @@ public interface UserRepository {
 	int count();
 	void adminUserDelete(@Param("username")String username);
 	void userLevelUpdate(User user);
+	List<AdminUserDto> searchUsers(@Param("category") String category, @Param("search") String search, @Param("pageSize") int pageSize, @Param("offset") int offset);
+	int countWithSearch(@Param("category") String category, @Param("search") String search);
 	}
 	
 

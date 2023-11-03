@@ -170,26 +170,7 @@ to {
 				<div class="section__content section__content--p30">
 					<div class="container-fluid">
 						<div class="header-wrap">
-							<form class="form-header" action="" method="GET">
-								<div class="form-group">
-									<select name="category" class="form-control">
-										<option value="all">모두보기</option>
-										<option value="username">아이디</option>
-										<option value="email">이메일</option>
-										<option value="fullname">이름</option>
-										<option value="phoneNumber">전화번호</option>										
-									</select>
-								</div>
-								<div class="form-group">
-									<input class="au-input au-input--xl" type="text" name="search"
-										placeholder="Search..." />
-								</div>
-								<button class="au-btn--submit" type="submit">
-									<i class="zmdi zmdi-search"></i>
-								</button>
-							</form>
-
-
+							<p>Jeju Plus</p>
 						</div>
 					</div>
 				</div>
@@ -217,87 +198,83 @@ to {
 								<!-- DATA TABLE -->
 								<h3 class="title-5 m-b-35">User table</h3>
 
-							
+								<!--
+								<form class="form-header" action="" method="POST">
+
+									<input class="" type="text" name="search" placeholder="">
+									<button class="au-btn--submit" type="submit">
+										<i class="zmdi zmdi-search"></i>
+									</button>
+
+								</form>
+								-->
 
 								<div class="table-responsive table-responsive-data2">
 									<table class="table table-data2">
-										<thead>
-											<tr>
-												<th>아이디</th>
-												<th>이메일</th>
-												<th>이름</th>
-												<th>전화번호</th>
-												<th>카카오여부</th>
-												<th>권한</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var="user" items="${users}">
-												<tr class="spacer"></tr>
-												<tr class="tr-shadow">
-													<td><span id="username">${user.username}</span><input
-														type="hidden" id="usernameInput" value="${user.username}"></td>
-													<td><span class="block-email">${user.email}</span></td>
-													<td>${user.fullname}</td>
-													<td class="desc">${user.phoneNumber}</td>
-													<td><span class="status--denied">${user.isKakao}</span>
-													</td>
-													<td id="userLevel-${user.username}">${user.levelId}</td>
-													<td>
-														<div class="table-data-feature">
+										<ul class="nav justify-content-between">
+											<li class="nav-item"><a class="nav-link"
+												onclick="showList('all')">전체</a></li>
+											<li class="nav-item"><a class="nav-link"
+												onclick="showList('attraction')">관광지</a></li>
+											<li class="nav-item"><a class="nav-link"
+												onclick="showList('accomodation')">숙박</a></li>
+											<li class="nav-item"><a class="nav-link"
+												onclick="showList('shopping')">쇼핑</a></li>
+											<li class="nav-item"><a class="nav-link"
+												onclick="showList('restaurant')">음식점</a></li>
+											<li class="nav-item"><a class="nav-link"
+												onclick="showList('favorite')">찜한 곳</a></li>
+											<li class="nav-item"><a class="nav-link"
+												onclick="showSearchWindow()">검색</a></li>
+										</ul>
 
-
-															<button class="item delete-user" data-toggle="tooltip"
-																data-placement="top" title=""
-																data-original-title="사용자삭제">
-																<i class="zmdi zmdi-delete"></i>
-															</button>
-															<button class="item change-level" data-toggle="tooltip"
-																data-placement="top"
-																data-target="#changeLevelModal-${user.username}"
-																title="관리자권한승급">
-																<i class="zmdi zmdi-edit"></i>
-															</button>
-
-															<!-- Modal for changing level -->
-															<div class="modal fade"
-																id="changeLevelModal-${user.username}" tabindex="-1"
-																role="dialog"
-																aria-labelledby="changeLevelModalLabel-${user.username}"
-																aria-hidden="true" data-backdrop="false">
-																<div class="modal-dialog" role="document">
-																	<div class="modal-content">
-																		<div class="modal-header">
-																			<h5 class="modal-title"
-																				id="changeLevelModalLabel-${user.username}">Change
-																				Level</h5>
-																			<button type="button" class="close"
-																				data-dismiss="modal" aria-label="Close">
-																				<span aria-hidden="true">&times;</span>
-																			</button>
-																		</div>
-																		<div class="modal-body">
-																			<!-- Add your buttons with specific functions here -->
-																			<button class="btn btn-primary"
-																				onclick="changeUserLevel('${user.levelId}', '2', '${user.username}')">관리자
-																				권한</button>
-
-																			<button class="btn btn-primary"
-																				onclick="changeUserLevel('${user.levelId}', '1', '${user.username}')">일반유저
-																				권한</button>
-
-																			<button class="btn btn-primary"
-																				onclick="changeUserLevel('${user.levelId}', '3', '${user.username}')">VIP
-																				권한</button>
-
-
-
-																		</div>
-																	</div>
-																</div>
-															</div>
+										<div id="tab-output">
+											<c:forEach var="item" items="${list}">
+												<div class="card flex-row">
+													<div class="card-header border-0">
+														<img src="${item.thumbnailPath}" class="thumbnail"
+															onerror="this.src='/images/NoImage.jpg'">
+													</div>
+													<div class="card-body p-3">
+														<h4 class="card-title">${item.title}</h4>
+														<p class="card-text">${item.region1 }>${item.region2}</p>
+														<p class="card-text tag">${item.tag }</p>
+														<button class="btn btn-orange float-right"
+															onclick="addList(${item.contentsId},'${item.title}','${item.region1}','${item.region2}','${item.contentsLabel}',${item.longitude},${item.latitude})">일정추가</button>
+													</div>
+												</div>
 											</c:forEach>
+
+											<div class="paging">
+												<div class="text-center clearfix">
+													<ul class="pagination" id="pagination">
+														<c:if test="${pagination.prev}">
+															<li class="page-item"><a class="page-link"
+																onclick="changePage(event)"
+																data-page="${pagination.beginPage-1}">Prev</a></li>
+														</c:if>
+														<c:forEach var="num" begin="${pagination.beginPage}"
+															end="${pagination.endPage}">
+															<li
+																class="${pagination.paging.page == num ? 'page-item active' : ''}"><a
+																class="page-link" onclick="changePage(event)"
+																data-page="${num}">${num}</a></li>
+														</c:forEach>
+
+														<c:if test="${pagination.next}">
+															<li class="page-item"><a class="page-link"
+																onclick="changePage(event)"
+																data-page="${pagination.endPage+1}">Next</a></li>
+														</c:if>
+													</ul>
+													<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->
+													<input type="hidden" id="label" name="label"
+														value="${label}">
+												</div>
+											</div>
+										</div>
+
+
 
 										</tbody>
 									</table>
