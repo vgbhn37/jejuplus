@@ -138,21 +138,36 @@
 		<div id="introduction">" ${touristAreaDetail.introduction} "</div>
 		<br><br>
 		<div id="tag">${touristAreaDetail.tag}</div>
+		<div><input type="hidden" value="${touristAreaDetail.contentsLabel}" id="contentsLabel"></div>
 		<br><br>
 		<hr><br>
 		<table id="icon">
 			<tr>
-				<td><img src="/images/좋아요.png" class="icon"></td>
+				<td>
+					<c:if test="${principal != null}">
+						<c:choose>
+							<c:when test="${isRecommend}">
+								<img src="/images/좋아요2.png" class="icon" id="recommend" >
+							</c:when>
+							<c:otherwise>
+								<img src="/images/좋아요.png" class="icon" id="unrecommend">
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+					<c:if test="${principal == null}">
+						<img src="/images/좋아요.png" class="icon">
+					</c:if>
+				</td>
 				<td><a href="#insertReview"><img src="/images/리뷰.png" class="icon"></a></td>
 				<td>
 					<input type="hidden" id="userId" value="${principal.userId}">
 					<c:if test="${principal != null}">
 						<c:choose>
 							<c:when test="${isFavorite}">
-								<img src="/images/저장2.png" class="favorite_heart" id="favorite" >
+								<img src="/images/저장2.png" class="icon" id="favorite" >
 							</c:when>
 							<c:otherwise>
-								<img src="/images/저장.png" class="favorite_heart" id="unfavorite">
+								<img src="/images/저장.png" class="icon" id="unfavorite">
 							</c:otherwise>
 						</c:choose>
 					</c:if>
@@ -219,7 +234,7 @@
 					</td>
 					<td>
 						<div><input type="hidden" value="${review.reviewId}" id="reviewId"></div>
-						<div>${principal.username}</div>
+						<div>${review.username}</div>
 					</td>
 					<td>
 						<div>${review.createdAt}</div>

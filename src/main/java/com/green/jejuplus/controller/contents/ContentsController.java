@@ -42,27 +42,37 @@ public class ContentsController {
 	@Autowired
 	private ReviewService reviewService;
 	@Autowired
-	private FavoriteService favoriteServie;
+	private FavoriteService favoriteService;
 
+	// 찜 리스트
+	@GetMapping("/favoriteList")
+	public String favoriteList(Model model) {
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		List<FavoriteDto> favoriteList = contentsService.selectFavotiteList(principal.getUserId());
+		model.addAttribute("favoriteList", favoriteList);
+		return "contents/favoriteList";
+	}
 	
 	// 관광지 리스트	
 	@GetMapping("/touristAreaList")
 	public String touristAreaList(Model model) {
-		List<TouristAreaListDto> touristAreaList = contentsService.findTouristArea("관광지");
+		List<TouristAreaListDto> touristAreaList = contentsService.findTouristArea("관광지");		
 		model.addAttribute("touristAreaList", touristAreaList);
 		return "contents/touristAreaList";
 	}
 	
 	// 관광지 상세보기
 	@GetMapping("/touristAreaDetail/{contentsId}")
-	public String touristAreaDetail(@PathVariable("contentsId") int contentsId, Model model, FavoriteRequestDto favoriteRequestDto) {
+	public String touristAreaDetail(@PathVariable("contentsId") int contentsId, Model model) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		TouristAreaDetailDto touristAreaDetail = contentsService.touristAreaDetail(contentsId);
 		List<ReviewDto> review = reviewService.showReview(contentsId);
 		
 		if (principal != null) {
-			boolean isFavorite = favoriteServie.selectFavorite(principal.getUserId(), contentsId);
+			boolean isFavorite = favoriteService.selectFavorite(principal.getUserId(), contentsId);
+//			boolean isRecommend = contentsService.selectRecommend(principal.getUserId(), contentsId);
 			model.addAttribute("isFavorite", isFavorite);
+//			model.addAttribute("isRecommend", isRecommend);
 		}
 
 		model.addAttribute("touristAreaDetail", touristAreaDetail);
@@ -103,19 +113,32 @@ public class ContentsController {
 		return "contents/lodgingDetail";
 	}
 	
+	
 	// 쇼핑 리스트
 	@GetMapping("/shoppingList")
 	public String shoppingList(Model model) {
 		List<ShoppingListDto> shoppingList = contentsService.findShopping("쇼핑");
 		model.addAttribute("shoppingList", shoppingList);
 		return "contents/shoppingList";
-	}
+	} 
 	
 	// 쇼핑 상세보기
 	@GetMapping("/shoppingDetail/{contentsId}")
 	public String shoppingDetail(@PathVariable("contentsId") int contentsId, Model model) {
-		ShoppingDetailDto shoppingDetail = contentsService.shoppingDetail(contentsId);		
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		ShoppingDetailDto shoppingDetail = contentsService.shoppingDetail(contentsId);
+		List<ReviewDto> review = reviewService.showReview(contentsId);
+		
+		if (principal != null) {
+			boolean isFavorite = favoriteService.selectFavorite(principal.getUserId(), contentsId);
+//			boolean isRecommend = contentsService.selectRecommend(principal.getUserId(), contentsId);
+			model.addAttribute("isFavorite", isFavorite);
+//			model.addAttribute("isRecommend", isRecommend);
+		}
+
 		model.addAttribute("shoppingDetail", shoppingDetail);
+		model.addAttribute("review",review);
+		
 		return "contents/shoppingDetail";
 	}
 	

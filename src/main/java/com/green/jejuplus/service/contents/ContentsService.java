@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.green.jejuplus.dto.contents.FavoriteDto;
@@ -17,6 +18,7 @@ import com.green.jejuplus.dto.contents.ShoppingListDto;
 import com.green.jejuplus.dto.contents.TouristAreaDetailDto;
 import com.green.jejuplus.dto.contents.TouristAreaListDto;
 import com.green.jejuplus.repository.interfaces.ContentsRepository;
+import com.green.jejuplus.repository.model.Favorite;
 
 @Service
 public class ContentsService {
@@ -76,4 +78,13 @@ public class ContentsService {
 	public List<FavoriteDto> selectFavotiteList(Integer userId) {
 		return contentsRepository.selectFavoriteList(userId);
 	}
+
+//	public boolean selectRecommend(int userId, int contentsId) {
+//		if (contentsRepository.selectRecommend(Favorite.builder().userId(userId).contentsId(contentsId).build()) != null) {
+//			return true;
+//		}
+//		return false;
+//	}
+
+
 }

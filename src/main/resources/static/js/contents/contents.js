@@ -15,6 +15,20 @@ let contents = {
 				this.unfavorite();
 			});
 		}
+		const unrecommend = document.querySelector("#unrecommend");
+		if (unrecommend != null) {
+			unrecommend.addEventListener("click", () => {
+				this.recommend();
+			});
+		}
+
+		const recommend = document.querySelector("#recommend");
+
+		if (recommend != null) {
+			recommend.addEventListener("click", () => {
+				this.unrecommend();
+			});
+		}
 
 		document.querySelector("#insertReviewBtn").addEventListener("click", () => {
 			this.insertReview();
@@ -31,10 +45,11 @@ let contents = {
 	favorite: function() {
 		let favorite = {
 			userId: document.getElementById("userId").value,
-			contentsId: document.getElementById("contentsId").value
+			contentsId: document.getElementById("contentsId").value,
+			contentsLabel: document.getElementById("contentsLabel").value
 		};
 
-		fetch("/api/contents/touristAreaDetail/" + favorite.contentsId + "/favorite", {
+		fetch("/api/contents/"+ favorite.contentsLabel + "/" + favorite.contentsId + "/favorite", {
 			method: "POST",
 			body: JSON.stringify(favorite),
 			headers: {
@@ -49,10 +64,11 @@ let contents = {
 
 	unfavorite: function() {
 		let unfavorite = {
-			contentsId: document.getElementById("contentsId").value
+			contentsId: document.getElementById("contentsId").value,
+			contentsLabel: document.getElementById("contentsLabel").value
 		};
 		console.log(unfavorite.contentsId);
-		fetch("/api/favorite/touristAreaDetail/" + unfavorite.contentsId + "/unfavorite", {
+		fetch("/api/contents/"+ unfavorite.contentsLabel + "/" + unfavorite.contentsId + "/unfavorite", {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -63,16 +79,55 @@ let contents = {
 			window.location.reload();
 		});
 	},
+	
+	recommend: function() {
+		let recommend = {
+			userId: document.getElementById("userId").value,
+			contentsId: document.getElementById("contentsId").value,
+			contentsLabel: document.getElementById("contentsLabel").value
+		};
+
+		fetch("/api/contents/"+ recommend.contentsLabel + "/" + recommend.contentsId + "/recommend", {
+			method: "POST",
+			body: JSON.stringify(recommend),
+			headers: {
+				"Content-Type": "application/json",
+			}
+		}).then(response => {
+			const msg = (response.ok) ? "추천되었습니다." : "추천 등록 실패";
+			alert(msg);
+			window.location.reload();
+		});
+	},
+
+	unrecommend: function() {
+		let unrecommend = {
+			contentsId: document.getElementById("contentsId").value
+		};
+		console.log(unrecommend.contentsId);
+		fetch("/api/contents/"+ unrecommend.contentsLabel + "/" + unrecommend.contentsId + "/unrecommend", {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			}
+		}).then(response => {
+			const msg = (response.ok) ? "추천이 취소되었습니다." : "추천 삭제 실패";
+			alert(msg);
+			window.location.reload();
+		});
+	},
 
 	insertReview: function() {
 
 		let review = {
 			reviewStar: document.querySelector('input[name="reviewStar"]:checked').value,
 			reviewContent: document.getElementById("reviewContent").value,
-			contentsId: document.getElementById("contentsId").value
+			contentsId: document.getElementById("contentsId").value,
+			contentsLabel: document.getElementById("contentsLabel").value
 		};
-
-		fetch("/api/contents/touristAreaDetail/" + review.contentsId + "/review", {
+		console.log(contentsLabel);
+		
+		fetch("/api/contents/"+ review.contentsLabel + "/" + review.contentsId + "/review", {
 			method: "POST",
 			body: JSON.stringify(review),
 			headers: {

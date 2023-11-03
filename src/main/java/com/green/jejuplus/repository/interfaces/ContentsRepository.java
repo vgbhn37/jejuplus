@@ -14,6 +14,8 @@ import com.green.jejuplus.dto.contents.ShoppingDetailDto;
 import com.green.jejuplus.dto.contents.ShoppingListDto;
 import com.green.jejuplus.dto.contents.TouristAreaDetailDto;
 import com.green.jejuplus.dto.contents.TouristAreaListDto;
+import com.green.jejuplus.repository.model.Contents;
+import com.green.jejuplus.repository.model.Favorite;
 
 @Mapper
 public interface ContentsRepository {
@@ -27,4 +29,5 @@ public interface ContentsRepository {
 	public List<ShoppingListDto> findShoppingList(String contentsLabel);
 	public ShoppingDetailDto showShoppingDetail(int contentsId);
 	public List<FavoriteDto> selectFavoriteList(@Param("userId") Integer userId);
+	public Contents selectRecommend(Contents contents);
 }

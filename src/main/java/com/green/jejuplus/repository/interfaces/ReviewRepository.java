@@ -16,6 +16,5 @@ public interface ReviewRepository {
 	int updateReview(ReviewDto reviewDto);
 
 	void deleteReview(Integer reviewId);
-	
 
 }

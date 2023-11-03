@@ -12,6 +12,7 @@ public class ShoppingDetailDto {
 	private String longitude;
 	private String phoneNo;
 	private String title;
+	private String tag;
 	private String introduction;
 	private String imgPath;
 	private int recommended;

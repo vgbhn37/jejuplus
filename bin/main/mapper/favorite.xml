@@ -4,6 +4,7 @@
 
 <mapper namespace="com.green.jejuplus.repository.interfaces.FavoriteRepository">
 
+
 	<insert id="insertFavorite">
 		insert into tb_favorite(user_id, contents_id)
 		values(#{userId},#{contentsId})

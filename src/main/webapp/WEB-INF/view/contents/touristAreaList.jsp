@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/view/header.jsp"%>
 <style>
+	body {
+		background-color: white;
+	}
 	#touristArea {
 		font-size: 50px;
 		text-align: center;
@@ -94,7 +97,7 @@
 				<div id="tag">${contents.tag}</div>
 				<div id="icon">
 					<div><img src="/images/좋아요.png" class="icon">1234</div>
-					<div><img src="/images/리뷰.png" class="icon">1234</div>
+					<div><img src="/images/리뷰.png" class="icon">${contents.reviewCnt}</div>
 				</div>
 				<div><input type="hidden" value="${contents.contentsLabel}"></div>
 				<input type="button" onclick="location.href='/contents/touristAreaDetail/${contents.contentsId}'" value="자세히보기" id="btn">

@@ -12,4 +12,5 @@ public class ShoppingListDto {
 	private String region2;
 	private String tag;
 	private int recommended;
+	private int reviewCnt;
 }
