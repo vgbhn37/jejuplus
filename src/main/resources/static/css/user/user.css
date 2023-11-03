@@ -1,0 +1,136 @@
+/* 전체 페이지 스타일 */
+* {
+    text-decoration: none;
+    color: black;
+}
+ul,
+li,
+ol {
+    list-style: none;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* 헤더 start */
+header {
+    background-color: white;
+    color: black;
+    padding: 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a img {
+    height: 40px;
+}
+
+.menu ul {
+    list-style: none;
+}
+
+.menu li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: black;
+}
+
+/* 날씨 */
+.app {
+    display: inline-block;
+    position: relative;
+}
+.sidebar {
+    /* position: fixed; */
+    position: absolute;
+    margin: 50px 50px 0 0;
+    right: 0;
+    display: none;
+    height: 450px;
+    width: 400px;
+
+    border: 1px solid red;
+}
+.show-sidebar {
+    display: block;
+}
+
+/* 로그인 */
+.signin-body{
+width:600px;
+margin-top:5%;
+}
+
+
+.signin-body > input[type='text'],input[type='password'] {
+  width:100%;
+}
+
+.signin-body > .signin-location-btn {
+display:flex;
+justify-content: center;
+ gap: 2em;
+ margin-top:10%;
+ margin-bottom:5%;
+
+}
+
+.signin-body > .signin-location-btn > .siginin-findusername-btn:hover {
+text-decoration: underline;
+cursor : pointer;
+font-weight:bold;
+}
+
+.signin-body > .signin-location-btn > .siginin-findpassword-btn:hover {
+text-decoration: underline;
+cursor : pointer;
+font-weight:bold;
+}
+
+.signin-body > button {
+width:60%;
+height:auto;
+margin-left:20%;
+margin-top:5%;
+}
+
+/* 회원가입 */
+.register-body{
+width:600px;
+margin-top:5%;
+}
+.register-body > label {
+margin-top: 4%;
+}
+.register-body > .form-inline input[type='text'],.form-inline input[type='password'] {
+  width:100%;
+}
+.register-space {
+  width: 4px;
+  height: auto;
+  display: inline-block;
+}
+.register-body> .register-button {
+float:right;
+}
+#register-final{
+text-align: right;
+}
+#register-final-button{
+width:30%;
+display :inline-block;
+height: 50px;
+margin-bottom: 10%;
+
+}
+
