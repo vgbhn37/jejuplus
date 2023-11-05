@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.jejuplus.dto.schedule.ScheduleDetailDto;
+import com.green.jejuplus.dto.schedule.ScheduleDto;
 import com.green.jejuplus.dto.schedule.ScheduleItemDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.model.Contents;
@@ -34,7 +36,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/schedule")
-@Slf4j
 public class ScheduleController {
 
 	@Autowired
@@ -43,9 +44,16 @@ public class ScheduleController {
 	@Autowired
 	HttpSession session;
 
-	@GetMapping("/list")
-	public String list() {
-
+	@GetMapping("/list/{userId}")
+	public String list(@PathVariable("userId")Integer userId ,Model model) {
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		if(!userId.equals(user.getUserId())) {
+			throw new CustomException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
+		}
+		
+		List<Schedule> list = scheduleService.findScheduleByUserId(userId);
+		model.addAttribute("scheduleList", list);
+		
 		return "/schedule/list";
 	}
 
@@ -53,6 +61,11 @@ public class ScheduleController {
 	public String edit(@PathVariable("scheduleId") Integer scheduleId, Model model) {
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		Schedule schedule = scheduleService.findScheduleById(scheduleId);
+		
+		if(user.getUserId()!=(int)schedule.getUserId()) {
+			throw new CustomException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
+		}
+		
 		PagingDto paging = new PagingDto();
 		Pagination pagination = new Pagination();
 		pagination.setPaging(paging);
@@ -147,6 +160,23 @@ public class ScheduleController {
 		List<ScheduleItemDto> list = scheduleService.requestList(scheduleId, itemDay);
 		
 		return ResponseEntity.ok().body(list);
+	}
+	
+	@PostMapping("/insert")
+	@ResponseBody
+	@Transactional
+	public ResponseEntity<Integer> insertSchedule(@RequestBody ScheduleDto scheduleDto){
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		if(!scheduleDto.getUserId().equals(user.getUserId())) {
+			throw new CustomException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
+		}
+		scheduleService.insertSchedule(scheduleDto);
+		Integer newScheId = scheduleService.findNewestScheduleIdByUserId(user.getUserId());
+		if(newScheId==null) {
+			throw new CustomException("일정 추가 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	
+		return ResponseEntity.ok().body(newScheId);
 	}
 	
 

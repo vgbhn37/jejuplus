@@ -95,8 +95,8 @@
 
 
 
-<script src='/js/schedule/scheduleDetailEditRefactor.js'></script>
-<script src='/js/schedule/scheduleCalendar.js'></script>
+<script src='/js/schedule/scheduleDetailEdit.js'></script>
+<script src='/js/schedule/scheduleDetailCalendar.js'></script>
 
 
 

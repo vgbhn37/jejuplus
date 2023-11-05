@@ -50,11 +50,20 @@
 		from tb_item i join tb_contents c on i.contents_id = c.contents_id where schedule_id = #{scheduleId} and item_day = #{itemDay}
 		order by item_sequence 
 	</select>
-	
+	<select id="findScheduleByUserId" resultType="Schedule">
+		select * from tb_schedule where user_id = #{userId}
+	</select>
+	<select id="findNewestScheduleIdByUserId" resultType="Integer">
+		select * from tb_schedule where user_id = #{userId} order by schedule_id desc limit 1;
+	</select>
 	
 	<insert id="insertScheduleDetail">
 		insert into tb_item (contents_id, schedule_id, item_memo, item_day, item_sequence)
 		values (#{contentsId},#{scheduleId},#{itemMemo},#{itemDay},#{itemSequence}) 
+	</insert>
+	<insert id="insertSchedule">
+		insert into tb_schedule (user_id, title, start_date, end_date)
+		values (#{userId},#{title},#{startDate},#{endDate})	
 	</insert>
 	<delete id = "deleteScheduleDetailByDay">
 		delete from tb_item where schedule_id = #{scheduleId} and item_day = #{itemDay}

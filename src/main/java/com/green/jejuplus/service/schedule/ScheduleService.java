@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.green.jejuplus.dto.schedule.ScheduleDetailDto;
+import com.green.jejuplus.dto.schedule.ScheduleDto;
 import com.green.jejuplus.dto.schedule.ScheduleItemDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.interfaces.ScheduleRepository;
@@ -124,6 +125,11 @@ public class ScheduleService {
 		return scheduleRepository.findScheduleById(scheduleId);
 	}
 	
+	public List<Schedule> findScheduleByUserId(Integer UserId){
+		
+		return scheduleRepository.findScheduleByUserId(UserId);
+	}
+	
 	public String insertScheduleDetail(List<ScheduleDetailDto> scheduleDetailDto) {
 		
 		for (ScheduleDetailDto dto : scheduleDetailDto) {
@@ -144,6 +150,20 @@ public class ScheduleService {
 	public List<ScheduleItemDto> requestList(Integer scheduleId, Integer itemDay){
 		
 		return scheduleRepository.findScheduleDetailByDay(scheduleId, itemDay);
+	}
+	
+	public void insertSchedule(ScheduleDto scheduleDto) {
+		
+		int result = scheduleRepository.insertSchedule(scheduleDto);
+		if(result!=1) {
+			throw new CustomException("일정 추가에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	public Integer findNewestScheduleIdByUserId(Integer userId) {
+		
+		return scheduleRepository.findNewestScheduleIdByUserId(userId);
 	}
 	
 	//해쉬태그(#)를 붙여줌

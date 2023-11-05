@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.green.jejuplus.dto.schedule.ScheduleDetailDto;
+import com.green.jejuplus.dto.schedule.ScheduleDto;
 import com.green.jejuplus.dto.schedule.ScheduleItemDto;
 import com.green.jejuplus.repository.model.Contents;
 import com.green.jejuplus.repository.model.Schedule;
@@ -27,6 +28,9 @@ public interface ScheduleRepository {
 	public int findCountBySearchTitle(String search);
 	public int findCountBySearchTag(String search);
 	public List<ScheduleItemDto> findScheduleDetailByDay(@Param("scheduleId")Integer scheduleId, @Param("itemDay")Integer itemDay);
+	public List<Schedule> findScheduleByUserId(Integer UserId);
+	public int insertSchedule(ScheduleDto scheduleDto);
+	public Integer findNewestScheduleIdByUserId(Integer userId);
 	
 	//insert
 	public int insertScheduleDetail(ScheduleDetailDto scheduleDetailDto);
