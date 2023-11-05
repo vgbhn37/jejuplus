@@ -41,4 +41,6 @@ mybatis:
 logging:
   level:
     org.mybatis.spring: debug
+    
+UPLOAD_DIRECTORY: C:/workspace/spring/jejuplus/src/main/resources/static/images/promotion
 

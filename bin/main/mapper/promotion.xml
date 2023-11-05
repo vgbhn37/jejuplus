@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- resources/mapper/PromotionMapper.xml -->
+<mapper namespace="com.green.jejuplus.repository.interfaces.PromotionRepository">
+    
+    <select id="getPromotions" resultType="com.green.jejuplus.dto.admin.AdminPromotionDto">
+       select * from tb_promotion;
+
+    </select>
+    
+     <select id="getImageUrlsByPromotionId" resultType="java.lang.String">
+        SELECT img_path imgPath FROM tb_promotionimg WHERE promotion_id = #{promotionId}
+    </select>
+    
+     <select id="findPromotions" parameterType="map" resultType="com.green.jejuplus.dto.admin.AdminPromotionDto">
+        SELECT *
+        FROM tb_promotion
+        LIMIT #{promotionsPerPage} OFFSET #{offset}
+    </select>
+    
+    <select id="searchPromotions" resultType="com.green.jejuplus.dto.admin.AdminPromotionDto">
+        SELECT * FROM tb_promotion
+        WHERE title LIKE '%' || #{search} || '%'
+        LIMIT #{pageSize}
+        OFFSET #{offset}
+    </select>
+    
+      <select id="count" resultType="int">
+  		SELECT COUNT(*) FROM tb_promotion;
+	</select>
+    
+     <select id="countPromotionsWithSearch" resultType="int" parameterType="string">
+        SELECT COUNT(*) FROM tb_promotion
+        WHERE title LIKE CONCAT('%', #{search}, '%')
+    </select>
+
+    
+    
+    
+   <insert id="savePromotion" useGeneratedKeys="true" keyProperty="promotionId">
+    INSERT INTO tb_promotion (title, introduce, content, start_date, end_date)
+    VALUES (#{title}, #{introduce}, #{content}, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH))
+</insert>
+
+    
+     <insert id="savePromotionImg">
+        INSERT INTO tb_promotionimg (img_path, promotion_id)
+        VALUES (#{filename}, #{promotionId})
+    </insert>
+</mapper>

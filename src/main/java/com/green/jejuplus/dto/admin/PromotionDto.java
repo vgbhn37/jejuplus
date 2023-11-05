@@ -10,6 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-public class AdminPlaceDto {
- String test;
+public class PromotionDto {
+	int promotionId;
+	String title;
+	String introduce;
+	String content;
+	String start_date;
+	String end_date;
 }

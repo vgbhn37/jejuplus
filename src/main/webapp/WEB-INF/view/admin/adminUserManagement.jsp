@@ -142,11 +142,14 @@ to {
 				<nav class="navbar-sidebar">
 					<ul class="list-unstyled navbar__list">
 
-						<li class="active"><a href="/admin/adminUserManagement">
+							<li class="active"><a href="/admin/adminUserManagement">
 								<i class="fas fa-table"></i>User
 						</a></li>
-						<li class="active"><a href="/admin/adminPlaceManagement">
-								<i class="fas fa-table"></i>Place
+						<li class="active"><a href="/admin/adminPromotionManagement"> <i
+								class="fas fa-table"></i>Promotion
+						</a></li>
+						<li class="active"><a href="/admin/insertPromotion"> <i
+								class="fas fa-table"></i>Promotion Write
 						</a></li>
 
 					</ul>
@@ -177,7 +180,7 @@ to {
 										<option value="username">아이디</option>
 										<option value="email">이메일</option>
 										<option value="fullname">이름</option>
-										<option value="phoneNumber">전화번호</option>										
+										<option value="phoneNumber">전화번호</option>
 									</select>
 								</div>
 								<div class="form-group">
@@ -217,7 +220,7 @@ to {
 								<!-- DATA TABLE -->
 								<h3 class="title-5 m-b-35">User table</h3>
 
-							
+
 
 								<div class="table-responsive table-responsive-data2">
 									<table class="table table-data2">
@@ -348,6 +351,7 @@ to {
 	</div>
 
 	<script>
+
 		$(document)
 				.ready(
 						function() {
@@ -484,7 +488,8 @@ to {
 	<script src="/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
 	<script src="/vendor/chartjs/Chart.bundle.min.js"></script>
 	<script src="/vendor/select2/select2.min.js">
-    </script>
+		
+	</script>
 
 	<!-- Main JS-->
 	<script src="/js/main.js"></script>
