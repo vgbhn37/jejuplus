@@ -10,18 +10,19 @@
     </select>
     
      <select id="getImageUrlsByPromotionId" resultType="java.lang.String">
-        SELECT img_path imgPath FROM tb_promotionimg WHERE promotion_id = #{promotionId}
+        SELECT img_path imgPath FROM tb_promotionimg WHERE promotion_id = #{promotionId} limit 1
     </select>
     
      <select id="findPromotions" parameterType="map" resultType="com.green.jejuplus.dto.admin.AdminPromotionDto">
         SELECT *
         FROM tb_promotion
+        ORDER BY start_date DESC
         LIMIT #{promotionsPerPage} OFFSET #{offset}
     </select>
     
     <select id="searchPromotions" resultType="com.green.jejuplus.dto.admin.AdminPromotionDto">
         SELECT * FROM tb_promotion
-        WHERE title LIKE '%' || #{search} || '%'
+        WHERE title LIKE CONCAT('%', #{search}, '%')
         LIMIT #{pageSize}
         OFFSET #{offset}
     </select>
@@ -48,4 +49,13 @@
         INSERT INTO tb_promotionimg (img_path, promotion_id)
         VALUES (#{filename}, #{promotionId})
     </insert>
+    
+    <delete id = "adminPromotionDelete">
+delete from tb_promotion where promotion_id = #{promotionId}
+</delete>		
+
+<delete id = "adminPromotionImgDelete">
+delete from tb_promotionimg where promotion_id = #{promotionId}
+</delete>		
+
 </mapper>

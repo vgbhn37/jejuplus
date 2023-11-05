@@ -145,8 +145,8 @@ to {
 						<li class="active"><a href="/admin/adminUserManagement">
 								<i class="fas fa-table"></i>User
 						</a></li>
-						<li class="active"><a href="/admin/adminPromotionManagement"> <i
-								class="fas fa-table"></i>Promotion
+						<li class="active"><a href="/admin/adminPromotionManagement">
+								<i class="fas fa-table"></i>Promotion
 						</a></li>
 						<li class="active"><a href="/admin/insertPromotion"> <i
 								class="fas fa-table"></i>Promotion Write
@@ -177,7 +177,7 @@ to {
 								action="/admin/adminPromotionManagement" method="GET">
 								<div class="form-group">
 									<input class="au-input au-input--xl" type="text" name="search"
-										placeholder="Search..." />
+										placeholder="업체이름을 입력해주세요" />
 								</div>
 								<button class="au-btn--submit" type="submit">
 									<i class="zmdi zmdi-search"></i>
@@ -216,11 +216,12 @@ to {
 										</thead>
 										<tbody>
 											<c:forEach var="promotion" items="${promotions}">
+											
 												<tr>
 													<!-- Display Images for the Current Promotion -->
 													<td><img src="${promotion.imageUrl}"
 														alt="Promotion Image" class="img-fluid"
-														style="max-width: 200px;"></td>
+														style="max-width: 100px;"></td>
 
 													<!-- Other Promotion Details -->
 													<td>${promotion.title}</td>
@@ -228,7 +229,15 @@ to {
 													<td>${promotion.startDate}</td>
 													<td>${promotion.endDate}</td>
 													<td>
-														<!-- Add actions or buttons here if needed -->
+													 <input type="hidden" class="promotionIdInput" value="${promotion.promotionId}">
+														<div class="table-data-feature">
+															<button class="item delete-promotion"
+																data-toggle="tooltip" data-placement="top" title=""
+																data-original-title="업체삭제">
+																<i class="zmdi zmdi-delete"></i>
+
+															</button>
+														</div>
 													</td>
 												</tr>
 											</c:forEach>
@@ -281,6 +290,40 @@ to {
 	</div>
 	</div>
 	</div>
+<script>
+$(document).ready(function() {
+    // 버튼 클릭 이벤트 처리
+    $(".delete-promotion").on("click", function() {
+        var $row = $(this).closest("tr"); 
+        var promotionId = $row.find(".promotionIdInput").val(); 
+
+        if (confirm("삭제하시겠습니까?")) {
+            $.ajax({
+                type: 'POST',
+                url: '/admin/adminPromotionDelete/' + promotionId,
+                data: {
+                    "promotionId": promotionId
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data && data.result === "success") {
+                        alert("업체 광고 정보가 삭제되었습니다.");
+                        $row.remove(); 
+                    } else {
+                        alert("서버에서 빈 응답이 돌아왔습니다. 삭제에 실패했습니다.");
+                    }
+                },
+                error: function(xhr) {
+                    alert("삭제에 실패했습니다.");
+                }
+            });
+        } else {
+            // 사용자가 취소한 경우 아무 작업도 필요하지 않습니다.
+        }
+    });
+});
+
+</script>
 
 
 

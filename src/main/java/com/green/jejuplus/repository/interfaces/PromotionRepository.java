@@ -29,4 +29,8 @@ public interface PromotionRepository {
 
 	int count();
 
+	void adminPromotionDelete(int promotionId);
+
+	void adminPromotionImgDelete(int promotionId);
+
 }
