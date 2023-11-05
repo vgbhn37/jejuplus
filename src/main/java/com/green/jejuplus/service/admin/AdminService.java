@@ -191,5 +191,13 @@ public class AdminService {
 		return promotionRepository.count();
 	}
 
+	@Transactional
+	public void promotionDelete(int promotionId) {
+		System.out.println("서비스 프로모션 아이디 " + promotionId);
+		promotionRepository.adminPromotionImgDelete(promotionId);
+		promotionRepository.adminPromotionDelete(promotionId);
+		
+	}
+
 
 }

@@ -179,6 +179,21 @@ public class AdminController {
 
 	    return "/admin/adminPromotionManagement";
 	}
+	
+	// 업체 삭제
+	@PostMapping("/adminPromotionDelete/{promotionId}")
+	@ResponseBody
+	public Map<String, String> adminPromotionDelete(@PathVariable("promotionId") int promotionId) {
+		Map<String, String> response = new HashMap<>();
+		System.out.println("컨트롤러 프로모션 아이디 확인 : " + promotionId);
+		try {
+			adminService.promotionDelete(promotionId);
+			response.put("result", "success");
+		} catch (Exception e) {
+			response.put("result", "error");
+		}
+		return response;
+	}
 
 
 

@@ -98,6 +98,10 @@ to {
 	color: #000;
 	border-radius: 5px;
 }
+.button-container {
+        text-align: right; /* 텍스트를 오른쪽으로 정렬 */
+        margin-top: 10px; /* 필요한 경우 상단 여백 추가 */
+ }
 </style>
 </head>
 <body class="animsition" style="animation-duration: 900ms; opacity: 1;">
@@ -143,11 +147,11 @@ to {
 				<nav class="navbar-sidebar">
 					<ul class="list-unstyled navbar__list">
 
-							<li class="active"><a href="/admin/adminUserManagement">
+						<li class="active"><a href="/admin/adminUserManagement">
 								<i class="fas fa-table"></i>User
 						</a></li>
-						<li class="active"><a href="/admin/adminPromotionManagement"> <i
-								class="fas fa-table"></i>Promotion
+						<li class="active"><a href="/admin/adminPromotionManagement">
+								<i class="fas fa-table"></i>Promotion
 						</a></li>
 						<li class="active"><a href="/admin/insertPromotion"> <i
 								class="fas fa-table"></i>Promotion Write
@@ -207,27 +211,41 @@ to {
 
 									<form action="/admin/insertPromotion" method="post"
 										enctype="multipart/form-data" id="myForm">
-										<div>
-											<p style="display: inline; margin-right: 10px;">제목:</p>
-											<input type="text" name="title" id="titleField">
+										<div class="form-group">
+											<label for="title">제목:</label> <input type="text"
+												name="title" id="titleField" class="form-control"
+												placeholder="제목을 입력하세요">
 										</div>
-										<div>
-											<p style="display: inline; margin-right: 10px;">소개:</p>
-											<input type="text" name="introduce" id="introduceField">
+										<div class="form-group">
+											<label for="introduce">소개:</label> <input type="text"
+												name="introduce" id="introduceField" class="form-control"
+												placeholder="간단한 소개글을 입력하세요(45자 이내)">
 										</div>
-										<div>
-											<p>본문:</p>
-											<textarea id="content" name="content" rows="20" cols="10"
-												placeholder="내용을 입력하세요" style="width: 100%"></textarea>
+										<div class="form-group">
+											<label for="content">본문:</label>
+											<textarea id="content" name="content" rows="6"
+												class="form-control" placeholder="내용을 입력하세요"></textarea>
 										</div>
-										<div>
-											<p>이미지 업로드</p>
-											<input type="file" name="images" id="imageField" multiple>
+										<div class="form-group">
+											<label for="images">대표사진 업로드:</label> <input type="file"
+												name="images" id="imageField" multiple
+												class="form-control-file">
 										</div>
-										<div>
-											<button type="submit">올리기</button>
+										<div class="form-group">
+											<label for="images">이미지 업로드:</label> <input type="file"
+												name="images" id="imageField" multiple
+												class="form-control-file">
+										</div>
+										<div class="form-group">
+											<label for="images">이미지 업로드:</label> <input type="file"
+												name="images" id="imageField" multiple
+												class="form-control-file">
+										</div>
+										<div class="button-container">
+											<button type="submit" class="btn btn-primary">올리기</button>
 										</div>
 									</form>
+
 
 
 
@@ -298,10 +316,11 @@ document.querySelector('#myForm').addEventListener('submit', function (e) {
     .then(response => {
         if (response.ok) {
             // Form submission was successful
-            alert('Form submitted successfully');
+            alert('광고가 업로드 되었습니다.');
+            window.location.href='/admin/adminPromotionManagement';
         } else {
             // Form submission failed
-            alert('Form submission failed');
+            alert('작성하지 않은 곳이 있는지 다시 한번 확인해주세요');
         }
     })
     .catch(error => {
