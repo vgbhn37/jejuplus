@@ -35,7 +35,11 @@ public interface ScheduleRepository {
 	//insert
 	public int insertScheduleDetail(ScheduleDetailDto scheduleDetailDto);
 	
+	//update
+	public int updateSchedule(Schedule schedule);
+	
 	//delete
 	public void deleteScheduleDetailByDay(ScheduleDetailDto scheduleDetailDto);
+	public void deleteSchedule(Integer scheduleId);
 	
 }

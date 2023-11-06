@@ -11,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +34,6 @@ import com.green.jejuplus.util.Define;
 import com.green.jejuplus.util.Pagination;
 import com.green.jejuplus.util.PagingDto;
 
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/schedule")
@@ -178,6 +179,27 @@ public class ScheduleController {
 	
 		return ResponseEntity.ok().body(newScheId);
 	}
+	
+	@PutMapping("/modify")
+	@ResponseBody
+	public ResponseEntity<String> modifySchedule(@RequestBody Schedule schedule){
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		if(!schedule.getUserId().equals(user.getUserId())) {
+			throw new CustomException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
+		}
+		scheduleService.updateSchedule(schedule);
+		
+		return ResponseEntity.ok().body("success");
+	}
+	
+	@DeleteMapping("/delete/{scheduleId}")
+	public ResponseEntity<String> deleteSchedule(@PathVariable("scheduleId")Integer scheduleId){
+		
+		scheduleService.deleteSchedule(scheduleId);
+		
+		return ResponseEntity.ok().body("success");
+	}
+	
 	
 
 	

@@ -23,9 +23,19 @@
 			<h3>${principal.username} 님의 제주 여행</h3>
 		</div>
 		<div class="col-4 float-right">
-			<button id="sche-modal" class="btn btn-primary">일정 등록</button>
+			<button class="btn btn-primary open-add-modal">일정 등록</button>
 		</div>
 	</div>
+	<c:choose>
+	<c:when test="${scheduleList.size()==0} ">
+	<div class="list-body" style="min-height: 400px">
+		<img class="error-logo" src="/images/logo_dark.png">
+		<h5>아직 등록 된 일정이 없어요.</h5>
+		<h5>첫 일정을 등록하시겠어요?</h5>
+		<button class="btn btn-orange open-add-modal">일정 등록</button>
+	</div>
+	</c:when>
+	<c:otherwise>
 	<div class="list-body">
 		<c:forEach var="item" items="${scheduleList }">
 			<div class="card">
@@ -38,14 +48,18 @@
 						<img src="/images/schedule/list-calendar.png">
 						${item.startDate } ~ ${item.endDate }
 					</p>
+					<button id ="open-modify-modal" class="btn btn-warning" onclick="openModifyModal(${item.scheduleId},'${item.title}','${item.startDate }','${item.endDate }')">수정</button>
+					<button id ="sche-delete"class="btn btn-secondary" onclick="scheduleList.deleteSche(${item.scheduleId})">삭제</button>
 				</div>
 			</div>
 		</c:forEach>
 	</div>
+	</c:otherwise>
+	</c:choose>
 	<!-- 모달 창 -->
-	<div id="myModal" class="modal">
+	<div id="add-modal" class="modal">
 		<div class="modal-content">
-			<span class="close" id="closeModalButton" onclick="closeModal()">&times;</span>
+			<span class="close" id="close-add-modal">&times;</span>
 			<h5>새 여행 일정 등록</h5>
 			<input type="text" id="schedule-title"
 				placeholder="이번 스케쥴의 이름을 입력해주세요."
@@ -62,8 +76,26 @@
 			</div>
 		</div>
 	</div>
+	<div id="modify-modal" class="modal">
+		<div class="modal-content">
+			<span class="close" id="close-modify-modal">&times;</span>
+			<h5>스케쥴 일정 수정</h5>
+			<input type="text" id="modify-sche-title"
+				style="width: 457px; height: 50px; margin-bottom: 30px;" />
+			<p>
+				<img src='/images/schedule/calendar.png' id='sche-modify-calendar'> <input
+					type="text" id="sche-start-modify" placeholder="시작일"
+					style="width: 180px;" readonly> <input type="text"
+					id="sche-end-modify" placeholder="종료일"
+					style="width: 180px; margin-left: 20px;" readonly>
+			</p>
+			<div class = "float-right">
+			<button id="sche-modify" class="btn btn-primary" style="width: 100px;">일정 수정</button>
+			</div>
+		</div>
+	</div>
 	<!-- 일정 추가 시 같이 서버에 넘길 로그인 된 회원 식별자값 -->
-	<input type="hidden" id="user-id"  value="${principal.userId }">
+	<input type="hidden" id="user-id" value="${principal.userId }">
 </div>
 
 <script src="/js/schedule/scheduleList.js"></script>
