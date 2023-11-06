@@ -22,17 +22,18 @@
 	}
 	#title {
 		text-alight:center;
-		font-size: 60px;
+		font-size: 50px;
 		font-weight:bold;
 		margin-top: 50px;
 	}
 	#introduction {
-		color: orange;
-		font-size: 25px;
+		color: #f37021;
+		font-size: 18px;
+		font-weight: bold;
 		margin: auto;
 	}
 	#tag {
-		font-size: 18px;
+		font-size: 15px;
 		color:grey;
 
 	}
@@ -52,9 +53,9 @@
 		margin: auto;
 		width: 1000px;
 		height: 30px;
-		background: #fdf0e5;
-		border: 1.5px solid orange;
-		color: orange;
+		background: rgb(243, 112, 33, 0.1);
+		border: 1.5px solid #f37021;
+		color: #f37021;
 		font-size: 15px;
 		font-weight: bold;
 	}
@@ -134,23 +135,23 @@
 	<div id="box">		
 		<br>
 		<div id="title">${touristAreaDetail.title}</div>
-		<br><br>
+		<br>
 		<div id="introduction">" ${touristAreaDetail.introduction} "</div>
-		<br><br>
+		<br>
 		<div id="tag">${touristAreaDetail.tag}</div>
 		<div><input type="hidden" value="${touristAreaDetail.contentsLabel}" id="contentsLabel"></div>
-		<br><br>
-		<hr><br>
+		<br>
+		<hr>
 		<table id="icon">
 			<tr>
 				<td>
 					<c:if test="${principal != null}">
 						<c:choose>
-							<c:when test="${isRecommend}">
-								<img src="/images/좋아요2.png" class="icon" id="recommend" >
+							<c:when test="${isRecommended}">
+								<img src="/images/좋아요2.png" class="icon" id="recommended" >
 							</c:when>
 							<c:otherwise>
-								<img src="/images/좋아요.png" class="icon" id="unrecommend">
+								<img src="/images/좋아요.png" class="icon" id="unrecommended">
 							</c:otherwise>
 						</c:choose>
 					</c:if>
@@ -172,7 +173,7 @@
 						</c:choose>
 					</c:if>
 					<c:if test="${principal == null}">
-						<img src="/images/저장.png" class="favorite_heart">
+						<img src="/images/저장.png" class="icon">
 					</c:if>
 				</td>
 			</tr>
@@ -182,14 +183,14 @@
 				<td>저장하기</td>
 			</tr>
 		</table>
-		<br><hr>
+		<hr>
 		<br><br>
 		<div class="subTitle">상세정보</div>
-		<br><br>
+		<br>
 		<div>
 			<div id=map>지도</div>
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	23d4bf3926d523313e54a46d82cbb016"></script>
-		</div><br><br>
+		</div><br>
 		<div id="infomation">
 			<div>기본정보</div>
 			<hr>

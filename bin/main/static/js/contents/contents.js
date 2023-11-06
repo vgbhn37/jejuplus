@@ -15,18 +15,18 @@ let contents = {
 				this.unfavorite();
 			});
 		}
-		const unrecommend = document.querySelector("#unrecommend");
-		if (unrecommend != null) {
-			unrecommend.addEventListener("click", () => {
-				this.recommend();
+		const unrecommended = document.querySelector("#unrecommended");
+		if (unrecommended != null) {
+			unrecommended.addEventListener("click", () => {
+				this.recommended();
 			});
 		}
 
-		const recommend = document.querySelector("#recommend");
+		const recommended = document.querySelector("#recommended");
 
-		if (recommend != null) {
-			recommend.addEventListener("click", () => {
-				this.unrecommend();
+		if (recommended != null) {
+			recommended.addEventListener("click", () => {
+				this.unrecommended();
 			});
 		}
 
@@ -80,16 +80,16 @@ let contents = {
 		});
 	},
 	
-	recommend: function() {
-		let recommend = {
+	recommended: function() {
+		let recommended = {
 			userId: document.getElementById("userId").value,
 			contentsId: document.getElementById("contentsId").value,
 			contentsLabel: document.getElementById("contentsLabel").value
 		};
 
-		fetch("/api/contents/"+ recommend.contentsLabel + "/" + recommend.contentsId + "/recommend", {
+		fetch("/api/contents/"+ recommended.contentsLabel + "/" + recommended.contentsId + "/recommended", {
 			method: "POST",
-			body: JSON.stringify(recommend),
+			body: JSON.stringify(recommended),
 			headers: {
 				"Content-Type": "application/json",
 			}
@@ -100,12 +100,13 @@ let contents = {
 		});
 	},
 
-	unrecommend: function() {
-		let unrecommend = {
-			contentsId: document.getElementById("contentsId").value
+	unrecommended: function() {
+		let unrecommended = {
+			contentsId: document.getElementById("contentsId").value,
+			contentsLabel: document.getElementById("contentsLabel").value
 		};
-		console.log(unrecommend.contentsId);
-		fetch("/api/contents/"+ unrecommend.contentsLabel + "/" + unrecommend.contentsId + "/unrecommend", {
+		console.log(unrecommended.contentsId);
+		fetch("/api/contents/"+ unrecommended.contentsLabel + "/" + unrecommended.contentsId + "/unrecommended", {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",

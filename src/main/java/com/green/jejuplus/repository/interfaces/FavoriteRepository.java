@@ -8,9 +8,7 @@ import com.green.jejuplus.repository.model.Favorite;
 public interface FavoriteRepository {
 	
 	public int insertFavorite(Favorite favorite);
-
 	public Favorite selectFavorite(Favorite favorite);
-
 	public int deleteFavorite(Favorite favorite);
 
 }

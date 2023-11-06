@@ -44,8 +44,7 @@
 	<header>
 		<nav>
 			<div class="logo">
-				<a href="/main"> <img src="/images/logo_sample.jpg" alt="로고" />
-				</a>
+				<a href="/main"> <img src="/images/제주플러스2.png" alt="로고" /></a>
 			</div>
 		
 			<ul class="menu">

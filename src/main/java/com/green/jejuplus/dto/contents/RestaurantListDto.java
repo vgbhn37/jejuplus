@@ -13,4 +13,5 @@ public class RestaurantListDto {
 	private String tag;
 	private int recommended;
 	private int reviewCnt;
+	private int recommendedCnt;
 }
