@@ -15,7 +15,7 @@
 	                <form action="/air/index" method="post">
 	                    <h4>항공권</h4>
 	                    <div class="flight-type">
-	                        <label for="round-trip"><input type="radio" name="flight-type" id="round-trip" />왕복</label>
+	                        <label for="round-trip"><input type="radio" name="flight-type" id="round-trip" checked/>왕복</label>
 	                        <label for="oneway"><input type="radio" name="flight-type" id="oneway" />편도</label>
 	                    </div>
 	                    <div class="flight-search">

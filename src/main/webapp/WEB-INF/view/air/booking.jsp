@@ -5,6 +5,10 @@
 <link rel="stylesheet" href="../../css/air/air.css" />
 <!-- js -->
 <script src="../../js/air/air.js"></script>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
 <!-- main -->
 <main>
 	<div class="booking-container">
@@ -172,17 +176,17 @@
 								<div class="customer-info-row">
 									<div class="customer-info">
 										<label for="info-name">이름 (한글)</label>
-										<input type="text" class="customer-info-input" placeholder="홍길동" />
+										<input type="text" class="customer-info-input" name="customer-name" placeholder="홍길동" />
 									</div>
 								</div>
 								<div class="customer-info-row">
 									<div class="customer-info">
 										<label for="info-name">전화번호</label>
-										<input type="text" class="customer-info-input" placeholder="010-1234-5678"/>
+										<input type="text" class="customer-info-input" name="customer-phone" placeholder="010-1234-5678"/>
 									</div>
 									<div class="customer-info">
 										<label for="info-name">이메일</label>
-										<input type="text" class="customer-info-input" placeholder="example@example.com"/>
+										<input type="text" class="customer-info-input" name="customer-email" placeholder="example@example.com"/>
 									</div>
 								</div>
 							</div>
@@ -196,7 +200,18 @@
 							</div>
 							<div class="info-body">
 								<label for="same-info" class="same-info">
-									<input type="checkbox" id="same-info" class="same-info" />구매자와 동일
+									<tr>
+										<td>
+											<label>
+												<input type="radio" name="info" id="same">
+												<span>구매자와 동일</span>
+											</label>
+											<label>
+												<input type="radio" name="info" id="new" checked>
+												<span>직접 입력</span>
+											</label>
+										</td>
+									</tr>
 								</label>
 								<div class="customer-info-row">
 									<div class="customer-info">
@@ -271,7 +286,7 @@
 								</div>
 								<div class="final-price-info">
 									<p class="final-price">총 금액</p>
-									<p class="final-price">120,000 원</p>
+									<p class="final-price" name="totalPrice">120,000 원</p>
 								</div>
 								<div class="final-price-plus">항공료+유류할증료+세금 포함</div>
 							</div>
@@ -287,21 +302,21 @@
 								<div class="orderBox">
 									<div class="paymentList">
 										<input type="radio" id="chk1" name="payment" value="1" checked="checked" />
-											<label for="chk1">카드결제</label>
-											<input type="radio" id="chk2" name="payment" value="2" />
-											<label for="chk2">실시간계좌이체</label>
-											<input type="radio" id="chk3" name="payment" value="3" />
-											<label for="chk3">무통장입금</label>
-											<input type="radio" id="chk4" name="payment" value="4" />
-											<label for="chk4">휴대폰결제</label>
-											<input type="radio" id="chk5" name="payment" value="5" />
-											<label for="chk5">카카오페이</label>
-											<input type="radio" id="chk6" name="payment" value="6" />
-											<label for="chk6">네이버페이</label>
+										<label for="chk1">카드결제</label>
+										<input type="radio" id="chk2" name="payment" value="2" />
+										<label for="chk2">실시간계좌이체</label>
+										<input type="radio" id="chk3" name="payment" value="3" />
+										<label for="chk3">무통장입금</label>
+										<input type="radio" id="chk4" name="payment" value="4" />
+										<label for="chk4">휴대폰결제</label>
+										<input type="radio" id="chk5" name="payment" value="5" />
+										<label for="chk5">카카오페이</label>
+										<input type="radio" id="chk6" name="payment" value="6" />
+										<label for="chk6">네이버페이</label>
 									</div>
 								</div>
 							</div>
-							<button type="submit" class="btnOrder">결제하기</button>
+							<button type="button" class="btnOrder" onclick="requestPay()">결제하기</button>
 						</div>
 						<!-- 결제수단 end -->
 					</div>
@@ -310,5 +325,44 @@
 		</div>
 	</div>
 </main>
+<script>
+	var IMP = window.IMP;
+	IMP.init("imp88272048");
 
+	// 필요한 DOM 요소
+	const amountElement = document.querySelector('p[name="totalPrice"]');
+
+	// 금액에서 "원"을 제거하고 숫자 부분만 추출
+	const amountText = amountElement.textContent;
+	const amount = parseInt(amountText.replace(/[^\d]/g, ''));
+
+	function requestPay() {
+		IMP.request_pay({
+			pg : "kakaopay",
+			pay_method : "card",
+			merchant_uid : "ORD20183-822", // 주문번호
+			name : "제주플러스",
+			amount : amount, // 가격
+		}, function(rsp) {
+			console.log("결제 rsp : 2." + JSON.stringify(rsp));
+			if (rsp.success) {
+				var msg = '결제가 완료되었습니다.';
+				msg += '결제 금액 : ' + rsp.paid_amount;
+				// 결제가 성공한 경우, 폼을 자동으로 제출 (submit)
+				if (rsp.success) {
+					var formElement = document.getElementById("paymentForm");
+					if (formElement) {
+						formElement.submit();
+					} else {
+						alert("폼 엘리먼트를 찾을 수 없습니다.");
+					}
+				}
+			} else {
+				var msg = '결제에 실패하였습니다.';
+				msg += '에러내용 : ' + rsp.error_msg;
+			}
+			alert(msg);
+		});
+	}
+</script>
 <%@ include file="/WEB-INF/view/footer.jsp"%>

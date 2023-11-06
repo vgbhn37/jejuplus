@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.jejuplus.dto.air.AirPlanDTO;
 import com.green.jejuplus.dto.air.CustomerDTO;
+import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.service.air.OpenApiAirService;
+import com.green.jejuplus.util.Define;
 
 @Controller
 @RequestMapping("/air")
@@ -25,16 +27,22 @@ public class AirController {
 
 	@Autowired
 	private OpenApiAirService openApiAirService;
+	
+	@Autowired
+	private HttpSession session;
 
 	// main page (강중현)
 	@GetMapping("/index")
 	public String index() throws Exception {
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		System.out.println("principal"+principal);
+		
 
 		return "air/index";
 	}
 
 	@PostMapping("/index")
-	public String indexProc(AirPlanDTO airPlanDTO, HttpSession session) throws Exception {
+	public String indexProc(AirPlanDTO airPlanDTO) throws Exception {
 
 		// 출발지와 도착지가 '선택'으로 설정된 경우에 페이지 이동 금지
 		if (airPlanDTO.getDepAirportNm() == null || airPlanDTO.getArrAirportNm() == null
@@ -61,7 +69,7 @@ public class AirController {
 
 	// 예약 및 결제 페이지
 	@GetMapping("/booking")
-	public String booking(Model model, HttpSession session) throws Exception {
+	public String booking(Model model) throws Exception {
 		// session에 담긴 데이터를 받음
 		AirPlanDTO airPlanDTO = (AirPlanDTO) session.getAttribute("airPlanDTO");
 
@@ -148,7 +156,7 @@ public class AirController {
 
 	// 결제 완료 페이지
 	@GetMapping("/bookingcomplete")
-	public String bookingcomplete(Model model, HttpSession session) {
+	public String bookingcomplete(Model model) {
 		
 		
         
