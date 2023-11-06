@@ -32,6 +32,8 @@ public class WebConfig implements WebMvcConfigurer{
 			.excludePathPatterns("/error/**"); 
 			
 			registry.addInterceptor(amdinInterceptor).addPathPatterns("/admin/**");
+			
+			
 		}
 		
 	@Bean // IoC 관리 대상 -> 싱글톤 
