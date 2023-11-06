@@ -1,5 +1,6 @@
 package com.green.jejuplus.repository.interfaces;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -33,4 +34,13 @@ public interface PromotionRepository {
 
 	void adminPromotionImgDelete(int promotionId);
 
+	Promotion findByPromotionDetail(int promotionId);
+
+	List<PromotionImg> findByPromotionImg(int promotionId);
+
+	List<Promotion> findByEndDateBefore(LocalDate currentDate);
+
+	void deleteImgByPromotionId(int promotionId);
+
+	void deleteAll(int promotiondId);
 }

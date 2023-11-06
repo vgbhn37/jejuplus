@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.green.jejuplus.dto.MainRestaurantDto;
+import com.green.jejuplus.dto.admin.AdminPromotionDto;
 import com.green.jejuplus.dto.admin.AdminUserDto;
 import com.green.jejuplus.repository.interfaces.MainRepository;
 
@@ -23,6 +24,11 @@ public class MainService {
 	public List<MainRestaurantDto> findPlace() {
 		List<MainRestaurantDto> place = mainRepository.findPlaceAll();
 		return place;
+	}
+
+	public List<AdminPromotionDto> findPromotion() {
+		List<AdminPromotionDto> promotion = mainRepository.findPromotionAll();
+		return null;
 	}
 
 }

@@ -35,7 +35,17 @@
         SELECT COUNT(*) FROM tb_promotion
         WHERE title LIKE CONCAT('%', #{search}, '%')
     </select>
-
+    <select id="findByPromotionDetail" resultType="com.green.jejuplus.repository.model.Promotion">
+    SELECT * FROM tb_promotion WHERE promotion_id = #{promotionId}
+    </select>
+    
+    <select id="findByPromotionImg" resultType="com.green.jejuplus.repository.model.PromotionImg">
+    SELECT * FROM tb_promotionimg WHERE promotion_id = #{promotionId}
+    </select>
+    
+     <select id="findByEndDateBefore" resultType="com.green.jejuplus.repository.model.Promotion">
+    SELECT * FROM tb_promotion WHERE end_date  <![CDATA[<]]> #{currentDate}
+    </select>
     
     
     
@@ -56,6 +66,17 @@ delete from tb_promotion where promotion_id = #{promotionId}
 
 <delete id = "adminPromotionImgDelete">
 delete from tb_promotionimg where promotion_id = #{promotionId}
-</delete>		
+</delete>	
+
+<delete id ="deleteImgByPromotionId">
+delete from tb_promotionimg where promotion_id = #{promotionId}
+</delete>	
+
+<delete id="deleteAll" parameterType="list">
+    DELETE FROM tb_promotion
+    WHERE promotion_id = #{promotionId}
+</delete>
+
+
 
 </mapper>

@@ -90,6 +90,7 @@ public class AdminController {
 		return "/admin/adminUserManagement";
 	}
 
+	// 유저삭제
 	@PostMapping("/adminUserDelete/{username}")
 	@ResponseBody
 	public Map<String, String> adminUserDelete(@PathVariable("username") String username) {
@@ -102,7 +103,7 @@ public class AdminController {
 		}
 		return response;
 	}
-
+	// 권한 변경
 	@PostMapping("/updateUserLevel")
 	public  ResponseEntity<Map<String, String>> updateUserLevel(@RequestParam("username") String username, @RequestParam("newLevelId") int newLevelId) {
 
@@ -138,6 +139,7 @@ public class AdminController {
 			@RequestParam("content") String content,
 			@RequestParam("images") MultipartFile[] images) {
 		adminService.insertPromotion(title, introduce, content, images);
+
 		return "redirect:/admin/adminPromotionManagement"; // 성공 페이지로 리다이렉트
 	}
 	

@@ -12,12 +12,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class UserDeleteDto {
-	private String userId;
-	private	int levelId;
-	private String username; 
-	private String password; 
-	private String fullname; 
-	private String email;
-	private String phoneNumber; 
-	private String isKakao;
+	 String userId;
+	 int levelId;
+	 String username; 
+	 String password; 
+	 String fullname; 
+	 String email;
+	 String phoneNumber; 
+	 String isKakao;
 }

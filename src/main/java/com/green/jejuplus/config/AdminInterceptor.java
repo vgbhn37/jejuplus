@@ -17,24 +17,24 @@ import com.green.jejuplus.util.Define;
 
 @Component
 public class AdminInterceptor implements HandlerInterceptor{
-//	@Override
-//	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-//			throws Exception {
-//		System.out.println("preHandle() 메서드 호출");
-//		HttpSession session = request.getSession(); 
-//				        
-//		User principal = (User)session.getAttribute(Define.PRINCIPAL);
-//		if(principal == null || principal.getLevelId() != 2) {
-//			throw new CustomException("관리자만 접근가능합니다.",
-//					HttpStatus.UNAUTHORIZED);
-//		}
-//		return true;
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		System.out.println("preHandle() 메서드 호출");
+		HttpSession session = request.getSession(); 
+			        
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		if(principal == null || principal.getLevelId() != 2) {
+			throw new CustomException("관리자만 접근가능합니다.",
+					HttpStatus.UNAUTHORIZED);
+		}
+		return true;
 	}
 	
-//	@Override
-//	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-////			ModelAndView modelAndView) throws Exception {
-////		// TODO Auto-generated method stub
-////		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-//	}
-//}
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
+		// TODO Auto-generated method stub
+		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+	}
+}

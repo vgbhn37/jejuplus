@@ -15,8 +15,42 @@
 
 
 	</section>
+	
+	<!-- 광고 start -->
+	<div class="main-packages-body">
+		<!-- 왼쪽 화살표 버튼 -->
+		<button class="slide-prev" id="slide-prev-3">
+			<i class="bi bi-caret-left-fill"></i>
+		</button>
+		<section class="tour-packages">
+			<div>
+				<h2>광고</h2>
+			</div>
 
-	<!-- 인기 투어 패키지 start -->
+			<div class="carousel-container">
+				<div class="packageContainer" id="multiple-items-3">
+					<!-- 슬라이드 내용 -->
+					<c:forEach var="promotions" items="${promotions}">
+						<div class="package" style="width:300px;">
+							<img src="${promotions.imageUrl}" alt="sample" />
+							<h3>${promotions.title}</h3>
+							<p>${promotions.introduce}</p>
+							<a href="/user/promotionDetail/${promotions.promotionId}">자세히 보기</a>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+		</section>
+		<!-- 오른쪽 화살표 버튼 -->
+		<button class="slide-next" id="slide-next-3">
+			<i class="bi bi-caret-right-fill "></i>
+		</button>
+	</div>
+	<!-- 맛집 end -->
+	
+	
+
+	<!-- 맛집 start -->
 	<div class="main-packages-body">
 		<!-- 왼쪽 화살표 버튼 -->
 		<button class="slide-prev" id="slide-prev">
@@ -28,10 +62,10 @@
 			</div>
 
 			<div class="carousel-container">
-				<div class="packageContainer" id="multiple-items">
+				<div class="packageContainer" id="multiple-items" >
 					<!-- 슬라이드 내용 -->
-					<c:forEach var="restaurantDto" items="${restaurantDto}">
-						<div class="package">
+					<c:forEach var="restaurantDto" items="${restaurantDto}" >
+						<div class="package" >
 							<img src="${restaurantDto.imgPath}" alt="sample" />
 							<h3>${restaurantDto.title}</h3>
 							<p>${restaurantDto.tag}</p>
@@ -47,7 +81,7 @@
 		</button>
 	</div>
 
-	<!-- 인기 투어 패키지 start -->
+	<!-- 인기 관광지 start -->
 	<div class="main-packages-body">
 		<!-- 왼쪽 화살표 버튼 -->
 		<button class="slide-prev" id="slide-prev-2">
@@ -95,6 +129,23 @@
 
 
 $(document).ready(function() {
+	// 광고 슬라이더
+    $('#multiple-items-3').slick({
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 2,
+        autoplay : true,      // 자동 스크롤 사용 여부
+        autoplaySpeed : 3000
+    });
+    $('#slide-prev-3').click(function() {
+        $('#multiple-items-3').slick('slickPrev');
+    });
+
+    // "다음" 버튼 클릭 시 슬라이드 오른쪽으로 이동
+    $('#slide-next-3').click(function() {
+        $('#multiple-items-3').slick('slickNext');
+    });
+	
 	// 맛집 슬라이더
     $('#multiple-items').slick({
         infinite: true,
@@ -129,6 +180,8 @@ $(document).ready(function() {
     $('#slide-next-2').click(function() {
         $('#multiple-items-2').slick('slickNext');
     });
+    
+    
     
     
 });

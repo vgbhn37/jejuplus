@@ -1,6 +1,8 @@
 package com.green.jejuplus.service.user;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +14,10 @@ import com.green.jejuplus.dto.user.SignUpFormDto;
 import com.green.jejuplus.dto.user.UserDeleteDto;
 import com.green.jejuplus.dto.user.UserUpdateDto;
 import com.green.jejuplus.handler.exception.CustomException;
+import com.green.jejuplus.repository.interfaces.PromotionRepository;
 import com.green.jejuplus.repository.interfaces.UserRepository;
+import com.green.jejuplus.repository.model.Promotion;
+import com.green.jejuplus.repository.model.PromotionImg;
 import com.green.jejuplus.repository.model.User;
 
 
@@ -28,6 +33,9 @@ public class UserService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	PromotionRepository promotionRepository;
 
 
 
@@ -58,10 +66,15 @@ public class UserService {
 
 	
 	public boolean isUsernameUnique(String username) {
-        // 아이디가 중복되지 않았는지 확인
-        User existingUser = userRepository.findByUsername(username);
-        return existingUser == null; // 중복되지 않으면 true, 중복되면 false 반환
-    }
+	    // 아이디가 중복되지 않았는지 확인
+	    User existingUser = userRepository.findByUsername(username);
+
+	    // 정규 표현식을 사용하여 아이디에 한글이 포함되는지 검사
+	    boolean isKorean = username.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*");
+
+	    return existingUser == null && !isKorean; // 중복되지 않고, 한글이 포함되지 않으면 true 반환
+	}
+
 
     public boolean isEmailUnique(String email) {
         // 이메일이 중복되지 않았는지 확인
@@ -177,6 +190,16 @@ public class UserService {
 	public UserDeleteDto findUserDeleteCheck(String username, String password) {
 		UserDeleteDto userDeleteDtocheck = userRepository.findByUserDeleteCheck(username, password);
 		return userDeleteDtocheck;
+	}
+
+	public Promotion findByPromotionDetail(int promotionId) {
+		Promotion promotion = promotionRepository.findByPromotionDetail(promotionId);
+		return promotion;
+	}
+
+	public List<PromotionImg> findImagesByPromotionId(int promotionId) {
+		List<PromotionImg> images = promotionRepository.findByPromotionImg(promotionId);
+		return images;
 	}
 	
 

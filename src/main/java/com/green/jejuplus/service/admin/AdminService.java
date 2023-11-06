@@ -42,6 +42,7 @@ public class AdminService {
 	@Value("${UPLOAD_DIRECTORY}")
 	private String uploadDirectory;
 
+	// 유저 리스트 페이징
 	public List<AdminUserDto> getUsers(int page, int pageSize) {
 		// 페이지 번호와 페이지 크기를 이용하여 오프셋(offset) 계산
 		int offset = (page - 1) * pageSize;
@@ -53,16 +54,17 @@ public class AdminService {
 		// 가져온 사용자 목록 반환
 		return users;
 	}
-
+	
+	// 총 유저수
 	public int getTotalUsers() {
 		return userRepository.count();
 	}
-
+	// 유저 삭제
 	public void userDelete(String username) {
 		userRepository.adminUserDelete(username);
 
 	}
-
+   // 권한변경
 	public void updateUserLevel(String username, int newLevelId) {
 		// Retrieve the user by username from the repository
 		System.out.println("서비스에서 확인:" + username);
@@ -83,7 +85,7 @@ public class AdminService {
 		}
 
 	}
-
+	// 검색유저
 	public List<AdminUserDto> searchUsers(String category, String search, int page, int pageSize) {
 		// 페이지 번호와 페이지 크기를 이용하여 오프셋(offset) 계산
 		int offset = (page - 1) * pageSize;
@@ -94,7 +96,7 @@ public class AdminService {
 		// 검색된 사용자 목록 반환
 		return users;
 	}
-
+	// 검색 결과
 	public int getTotalUsersWithSearch(String category, String search) {
 		// 데이터베이스에서 검색 조건에 맞는 총 사용자 수를 가져옴
 		int totalUsers = userRepository.countWithSearch(category, search);
@@ -125,19 +127,23 @@ public class AdminService {
 		}
 	}
 
-
+	// 광고 추가
 	public void insertPromotion(String title, String introduce, String content, MultipartFile[] images) {
 		Promotion promotion = Promotion.builder()
 				.title(title)
 				.introduce(introduce)
 				.content(content)
 				.build();
-
+		System.out.println("컨트롤러 title : " + title);
+		System.out.println("컨트롤러 introduce : " + introduce);
+		System.out.println("컨트롤러 content : " + content);
+		System.out.println("컨트롤러 images : " + images);
 		// 프로모션 정보를 저장
 		promotionRepository.savePromotion(promotion);
 
 		// 이미지 정보를 별도로 저장
 		for (MultipartFile imageFile : images) {
+			if(imageFile != null && !imageFile.isEmpty()){
 			uploadImage(imageFile); // 이미지 파일을 업로드하고 저장
 			String imageFilename = "/images/promotion/" + imageFile.getOriginalFilename();
 			String imagePath = uploadDirectory +'/'+ imageFilename;
@@ -149,6 +155,7 @@ public class AdminService {
 					.build();
 
 			promotionRepository.savePromotionImg(image);
+			}
 		}
 	}  
 

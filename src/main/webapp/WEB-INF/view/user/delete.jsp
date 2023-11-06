@@ -6,18 +6,7 @@
 <!-- header.jsp  -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- start main.jsp -->
-<style>
-.delete-user-body{
-width:600px;
-margin-top:10%;
 
-}
-.delete-user-body > #delete-user-btn{
-float:right;
-margin-bottom:20%;
-}
-
-</style>
 <main>
 <div class="d-flex justify-content-center">
 
@@ -40,7 +29,7 @@ margin-bottom:20%;
 		
 		<br>
 		<br>
-    <button type="submit" class="btn bg-warning mb-2" id="delete-user-btn">회원탈퇴</button>
+    <button type="submit" class="btn mb-2" id="delete-user-btn">회원탈퇴</button>
 </div>
 </form>
 </div>
@@ -48,10 +37,7 @@ margin-bottom:20%;
  
 </main>
 
-<script type="text/javascript">
-$("#delete-user-btn").click(function() {
-	alert("탈퇴가 완료되었습니다.");
-}
-</script>
+
+<script src='/js/user/delete.js'></script>
 <!-- footer.jsp  -->
 <%@ include file="/WEB-INF/view/footer.jsp"%>

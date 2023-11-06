@@ -1,76 +1,9 @@
-/* 전체 페이지 스타일 */
-* {
-    text-decoration: none;
-    color: black;
-}
-ul,
-li,
-ol {
-    list-style: none;
-}
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-/* 헤더 start */
-header {
-    background-color: white;
-    color: black;
-    padding: 20px;
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo a img {
-    height: 40px;
-}
-
-.menu ul {
-    list-style: none;
-}
-
-.menu li {
-    display: inline;
-    margin-right: 20px;
-}
-
-.menu a {
-    text-decoration: none;
-    color: black;
-}
-
-/* 날씨 */
-.app {
-    display: inline-block;
-    position: relative;
-}
-.sidebar {
-    /* position: fixed; */
-    position: absolute;
-    margin: 50px 50px 0 0;
-    right: 0;
-    display: none;
-    height: 450px;
-    width: 400px;
-
-    border: 1px solid red;
-}
-.show-sidebar {
-    display: block;
-}
 
 /* 로그인 */
 .signin-body{
 width:600px;
 margin-top:5%;
 }
-
 
 .signin-body > input[type='text'],input[type='password'] {
   width:100%;
@@ -82,7 +15,6 @@ justify-content: center;
  gap: 2em;
  margin-top:10%;
  margin-bottom:5%;
-
 }
 
 .signin-body > .signin-location-btn > .siginin-findusername-btn:hover {
@@ -102,6 +34,10 @@ width:60%;
 height:auto;
 margin-left:20%;
 margin-top:5%;
+background-color: #F37021;
+border: 1px solid transparent;
+color: white;
+border-radius: 5px;
 }
 
 /* 회원가입 */
@@ -109,28 +45,251 @@ margin-top:5%;
 width:600px;
 margin-top:5%;
 }
+
 .register-body > label {
 margin-top: 4%;
 }
+
 .register-body > .form-inline input[type='text'],.form-inline input[type='password'] {
   width:100%;
 }
+
 .register-space {
   width: 4px;
   height: auto;
   display: inline-block;
 }
+
 .register-body> .register-button {
 float:right;
+height: 40px;
+background-color: #F37021;
+border: 1px solid transparent;
+border-radius: 5px;
 }
+
+.register-body> .register-button:hover{
+filter: brightness(1.5);
+}
+
 #register-final{
 text-align: right;
 }
+
 #register-final-button{
 width:30%;
 display :inline-block;
 height: 50px;
 margin-bottom: 10%;
-
+background-color: #F37021;
+border: 1px solid transparent;
+cursor:pointer;
+color: white;
 }
+#register-final-button:hover{
+filter: brightness(1.5);
+}
+
+/* 아이디찾기 */
+.find-username-body{
+width:600px;
+margin-top:20%;
+}
+
+.find-username-body > input[type='text'] {
+  width:100%;
+}
+.find-username-body > button {
+width:60%;
+height:50px;
+margin-top:10%;
+margin-bottom: 40%;
+margin-left:20%;
+background-color: #F37021;
+border: 1px solid transparent;
+cursor:pointer;
+color: white;
+}
+.find-username-body > button:hover{
+	filter: brightness(1.5);
+}
+
+
+.find-password-body{
+width:600px;
+margin-top:10%;
+}
+
+/* 비밀번호 찾기 */
+.find-password-body> .form-group > button {
+float:right;
+margin-bottom:20%;
+background-color: #F37021;
+border: 1px solid transparent;
+cursor:pointer;
+color: white;
+}
+.find-password-body> .form-group > button:hover{
+	filter: brightness(1.5);
+}
+
+.find-password-space {
+  width: 4px;
+  height: auto;
+  display: inline-block;
+}
+
+.find-password-body> .form-group  > .find-passord-btn{
+float:right;
+margin-bottom:20%;
+}
+.find-password-body> .form-group  > .find-passord-btn > #verifyCodeButton{
+background-color: #F37021;
+border: 1px solid transparent;
+cursor:pointer;	
+color: white;
+}
+.find-password-body> .form-group  > .find-passord-btn > #verifyCodeButton:hover{
+	filter: brightness(1.5);
+}
+
+.find-password-body> .form-group  > .find-passord-btn > #reset-password-button{
+background-color: #F37021;
+border: 1px solid transparent;
+cursor:pointer;	
+color: white;
+}
+.find-password-body> .form-group  > .find-passord-btn > #reset-password-button:hover{
+	filter: brightness(1.5);
+}
+
+/* 사용자 정보 수정*/
+.userUpdate-body{
+width:600px;
+}
+
+.userUpdate-body > label {
+margin-top: 7%;
+}
+
+.userUpdate-body > .form-inline input[type='text'],.form-inline input[type='password'] {
+  width:100%;
+}
+
+.userUpdate-body > button {
+width:60%;
+height:60px;
+margin-left:20%;
+margin-top: 5%;
+background-color: #F37021;
+border: 1px solid transparent;
+cursor:pointer;	
+color: white;
+}
+
+.userUpdate-body > .email-password-btn {
+float:right;
+background-color: #F37021;
+border: 1px solid transparent;
+cursor:pointer;	
+color: white;
+}
+
+.userUpdate-body > .email-password-btn {
+float:right;
+}
+.userUpdate-body > .email-password-btn > .updateEmailButton
+
+
+.userUpdate-body > #verificationCodeSection > label {
+margin-top: 7%;
+}
+
+.userUpdate-body > #verificationCodeSection > .form-inline input[type='text'] {
+  width:100%;
+}
+
+#registrationForm .user-btn {
+		float:right;
+		height: 40px;
+		background-color: #F37021;
+		border: 1px solid transparent;
+		border-radius: 5px;
+		color:white;
+	}
+
+#registrationForm .user-btn:hover {
+	filter: brightness(1.5);
+	}
+
+
+.userUpdate-body > #verificationCodeSection >  .email-password-btn {
+float:right;
+}
+
+#user-delete-location-btn{
+margin-left:42%;
+}
+
+#user-delete-location-btn:hover{
+text-decoration: underline;
+cursor : pointer;
+font-weight:bold;
+}
+
+/* 회원 탈퇴 */
+.delete-user-body{
+width:600px;
+margin-top:10%;
+}
+
+.delete-user-body > #delete-user-btn{
+float:right;
+margin-bottom:20%;
+background-color: #F37021;
+border: 1px solid transparent;
+border-radius: 5px;
+color:white;
+}
+
+.delete-user-body > #delete-user-btn:hover{
+	filter: brightness(1.5);
+}
+/* 광고 상세보기 */
+   h3 {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .promotionDetail-page {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    .promotionDetail-label {
+        font-weight: bold;
+    }
+
+    .promotionDetail-image-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        max-width: 300px;
+    }
+
+    .promotionDetail-image-wrapper img {
+        max-width: 300px;
+    }
+
+    .promotionDetail-form-control {
+        width: 100%;
+        margin: 5px 0;
+        border: none; /* Remove the border */
+        padding: 5px; /* Add padding for a bit of spacing */
+        background-color: transparent; /* Remove background color */
+    }
 

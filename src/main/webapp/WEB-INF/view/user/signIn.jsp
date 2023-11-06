@@ -4,50 +4,7 @@
 <%@ include file="/WEB-INF/view/header.jsp"%>
 <!-- header.jsp  -->
 <link rel="stylesheet" href="/css/user/user.css" />
-<style>
-.signin-body{
-width:600px;
-margin-top:5%;
-}
 
-
-.signin-body > input[type='text'],input[type='password'] {
-  width:100%;
-}
-
-.signin-body > .signin-location-btn {
-display:flex;
-justify-content: center;
- gap: 2em;
- margin-top:10%;
- margin-bottom:5%;
-
-}
-
-.signin-body > .signin-location-btn > .siginin-findusername-btn:hover {
-text-decoration: underline;
-cursor : pointer;
-font-weight:bold;
-}
-
-.signin-body > .signin-location-btn > .siginin-findpassword-btn:hover {
-text-decoration: underline;
-cursor : pointer;
-font-weight:bold;
-}
-
-.signin-body > button {
-width:60%;
-height:auto;
-margin-left:20%;
-margin-top:5%;
-}
-
-
-
-
-
-</style>
 <!-- start main.jsp -->
 <main>
 	
@@ -55,9 +12,7 @@ margin-top:5%;
 			<form action="/user/sign-in" method="post">
 			<h2 style = "text-align: center; margin-top:5%;">로그인</h2>
 			
-			<div class="signin-body">
-			
-			
+			<div class="signin-body">					
 				<div class="form-group">
 					<label for="username">아이디 :</label> 
 					<input type="text" id="username" class="form-control mb-2 mr-sm-2" placeholder="Enter username" name="username">
@@ -91,16 +46,8 @@ margin-top:5%;
 				</a>
 					
 					</div>
-			</form>
-			
-		
+			</form>		
 	</div>	
-
-	
-
-
-
-
 </main>
 <!-- footer.jsp  -->
 <%@ include file="/WEB-INF/view/footer.jsp"%>

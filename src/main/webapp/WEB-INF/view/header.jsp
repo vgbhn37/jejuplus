@@ -65,7 +65,7 @@
 				
 				
 				<c:if test="${principal.levelId >= 2 }">
-			    	<div><a class="common-black-font" href="/admin/adminUserManagement">관리자페이지</a></div>
+			    	<li><a class="common-black-font" href="/admin/adminUserManagement">관리자</a></li>
 			    	</c:if>
 			    	</c:otherwise>
 			    	</c:choose>
