@@ -27,6 +27,7 @@ import com.green.jejuplus.repository.model.Favorite;
 import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.service.contents.ContentsService;
 import com.green.jejuplus.service.contents.FavoriteService;
+import com.green.jejuplus.service.contents.RecommendedService;
 import com.green.jejuplus.service.contents.ReviewService;
 import com.green.jejuplus.util.Define;
 
@@ -43,6 +44,8 @@ public class ContentsController {
 	private ReviewService reviewService;
 	@Autowired
 	private FavoriteService favoriteService;
+	@Autowired
+	private RecommendedService recommendedService;
 
 	// 찜 리스트
 	@GetMapping("/favoriteList")
@@ -70,9 +73,9 @@ public class ContentsController {
 		
 		if (principal != null) {
 			boolean isFavorite = favoriteService.selectFavorite(principal.getUserId(), contentsId);
-//			boolean isRecommend = contentsService.selectRecommend(principal.getUserId(), contentsId);
+			boolean isRecommended = recommendedService.selectRecommended(principal.getUserId(), contentsId);
 			model.addAttribute("isFavorite", isFavorite);
-//			model.addAttribute("isRecommend", isRecommend);
+			model.addAttribute("isRecommended", isRecommended);
 		}
 
 		model.addAttribute("touristAreaDetail", touristAreaDetail);

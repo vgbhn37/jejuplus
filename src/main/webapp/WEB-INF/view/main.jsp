@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/view/header.jsp"%>
 <!-- main css -->
-
-	
 <link rel="stylesheet" href="/css/main.css" />
 
 <!-- main -->
 <main>
 
 	<section class="hero">
-		<h1>어디로 갈까요?</h1>
-		<p>당신이 꿈꾸는 제주를 저렴하면서도 간편하고 풍성하게!</p>
+	<%@ include file="/WEB-INF/view/header.jsp"%>
+		<h1>제주를 더하다, 제주플러스</h1>
+		<p>항공권 예약부터 일정까지 제주여행을 더 간편하게!</p>
+		<input type="button" onclick="location.href='/main'" value="버튼활용" id="main_btn">
 
 
 	</section>
