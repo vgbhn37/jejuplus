@@ -13,7 +13,7 @@
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d5568461ac8305d5d4737b9523509aed"></script>
-<link rel="stylesheet" href="/css/schedule/scheduleDetailEdit.css" />
+<link rel="stylesheet" href="/css/schedule/scheduleDetailShow.css" />
 <!-- ------------------------------------------------------------- -->
 
 
@@ -27,56 +27,30 @@
 						${schedule.endDate }</h5>
 				</div>
 				<div class="col-2">
-					<button id="edit-compl" class="btn btn-orange">편집완료</button>
+					<a class="btn btn-orange"
+						href="/schedule/detail/edit/${schedule.scheduleId}"
+						style="width: 58px; height: 38px;">편집</a>
 				</div>
 				<div class="col-5">
-					<img src = '/images/schedule/calendar.png' id ='calendar'><input type="text" id="date" name="schedule-date" value="${schedule.startDate}" readonly>
+					<img src='/images/schedule/calendar.png' id='calendar'><input
+						type="text" id="date" name="schedule-date"
+						value="${schedule.startDate}" readonly>
 				</div>
 			</div>
 			<div id="map" class="map" style="width: 90%; height: 500px;"></div>
-		
-
-			<ul class="nav justify-content-between">
-				<li class="nav-item"><a class="nav-link"
-					onclick="scheduleDetailEdit.printContentsList('all')">전체</a></li>
-				<li class="nav-item"><a class="nav-link"
-					onclick="scheduleDetailEdit.printContentsList('attraction')">관광지</a></li>
-				<li class="nav-item"><a class="nav-link"
-					onclick="scheduleDetailEdit.printContentsList('accomodation')">숙박</a></li>
-				<li class="nav-item"><a class="nav-link"
-					onclick="scheduleDetailEdit.printContentsList('shopping')">쇼핑</a></li>
-				<li class="nav-item"><a class="nav-link"
-					onclick="scheduleDetailEdit.printContentsList('restaurant')">음식점</a></li>
-				<li class="nav-item"><a class="nav-link"
-					onclick="scheduleDetailEdit.printContentsList('favorite')">찜한 곳</a></li>
-				<li class="nav-item"><a class="nav-link"
-					onclick="scheduleDetailEdit.printSearchWindow()">검색</a></li>
-			</ul>
-			<!-- 컨텐츠 리스트가 표시될 div -->
-			<div id="tab-output">
-				
-			</div>
-
-
+			<div id="contents-output"></div>
 		</div>
 		<div class="sche-right col-4">
 			<div class="list-header row">
 				<div id="day" style="height: 40px;" class="col-6">
-					<span class="h3">DAY&nbsp;</span><span id="schedule-day"
-						class="h3">1</span>
+					<span class="h3">DAY&nbsp;</span><span id="schedule-day" class="h3">1</span>
 				</div>
-				<div class="col-6" style="height: 40px;">
-					<button id="sorting-btn" class="btn btn-orange"
-						style="width: 58px; height: 38px;">정렬</button>
-					<button id="saving-btn" class="btn btn-primary">저장</button>
-				</div>
+				<div class="col-6" style="height: 40px;"></div>
 			</div>
 			<div class=notice>
 				※ 표시되는 거리는 직선거리 기준입니다.<br> ※ 거리를 클릭하시면 길찾기 페이지가 새 창으로 열립니다.
 			</div>
-			<div id="list-output" class="float-right">
-				
-			</div>
+			<div id="list-output" class="float-right"></div>
 		</div>
 	</div>
 	<!-- 모달 창 -->
@@ -98,8 +72,8 @@
 
 
 
-<script src='/js/schedule/scheduleDetailEdit.js'></script>
-<script src='/js/schedule/scheduleDetailEditCalendar.js'></script>
+<script src='/js/schedule/scheduleDetailShow.js'></script>
+<script src='/js/schedule/scheduleDetailShowCalendar.js'></script>
 
 
 

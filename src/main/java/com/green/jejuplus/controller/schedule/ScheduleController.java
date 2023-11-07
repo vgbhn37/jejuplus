@@ -63,7 +63,7 @@ public class ScheduleController {
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		Schedule schedule = scheduleService.findScheduleById(scheduleId);
 		
-		if(user.getUserId()!=(int)schedule.getUserId()) {
+		if(!schedule.getUserId().equals(user.getUserId())) {
 			throw new CustomException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
 		}
 		
@@ -82,6 +82,22 @@ public class ScheduleController {
 		model.addAttribute("label", "all");
 
 		return "/schedule/editDetail";
+	}
+	
+	@GetMapping("/detail/show/{scheduleId}")
+	public String show(@PathVariable("scheduleId")Integer scheduleId, Model model) {
+		
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		Schedule schedule = scheduleService.findScheduleById(scheduleId);
+		
+		if(!schedule.getUserId().equals(user.getUserId())) {
+			throw new CustomException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
+		}
+		
+		model.addAttribute("schedule", schedule);
+		
+		
+		return "/schedule/showDetail";
 	}
 
 	@GetMapping("/show-list/{label}")
@@ -200,6 +216,14 @@ public class ScheduleController {
 		return ResponseEntity.ok().body("success");
 	}
 	
+	@GetMapping("/contentsDetail/{contentsId}")
+	@ResponseBody
+	public ResponseEntity<Contents> findContentsDetail(@PathVariable("contentsId")Integer contentsId) {
+		
+		Contents contents = scheduleService.findContentsById(contentsId);
+		
+		return ResponseEntity.ok().body(contents);	
+	}
 	
 
 	

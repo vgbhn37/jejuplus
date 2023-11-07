@@ -1,5 +1,5 @@
 .container {
-	margin-top: 5%;
+	margin-top: 50px;
 }
 
 .map {
@@ -215,6 +215,12 @@
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+.list-item-region {
+	color: grey;
+	font-size: 13px;
+	margin-top: -10px;
 }
 
 #calendar {

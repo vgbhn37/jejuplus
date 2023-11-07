@@ -31,6 +31,7 @@ public interface ScheduleRepository {
 	public List<Schedule> findScheduleByUserId(Integer UserId);
 	public int insertSchedule(ScheduleDto scheduleDto);
 	public Integer findNewestScheduleIdByUserId(Integer userId);
+	public Contents findContentsById(Integer contentsId);
 	
 	//insert
 	public int insertScheduleDetail(ScheduleDetailDto scheduleDetailDto);

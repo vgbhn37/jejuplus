@@ -56,6 +56,9 @@
 	<select id="findNewestScheduleIdByUserId" resultType="Integer">
 		select * from tb_schedule where user_id = #{userId} order by schedule_id desc limit 1;
 	</select>
+	<select id="findContentsById" resultType="Contents">
+		select * from tb_contents where contents_id = #{contentsId}
+	</select>
 	
 	<insert id="insertScheduleDetail">
 		insert into tb_item (contents_id, schedule_id, item_memo, item_day, item_sequence)

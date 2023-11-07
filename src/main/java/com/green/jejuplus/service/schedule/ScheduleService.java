@@ -184,6 +184,14 @@ public class ScheduleService {
 		scheduleRepository.deleteSchedule(scheduleId);
 	}
 	
+	public Contents findContentsById(Integer contentsId) {
+		Contents contents = scheduleRepository.findContentsById(contentsId);
+		if(contents==null) {
+			throw new CustomException("컨텐츠를 찾아오는 데 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return contents;
+	}
+	
 	//해쉬태그(#)를 붙여줌
 	public void addHashTag(List<Contents> list) {
 
