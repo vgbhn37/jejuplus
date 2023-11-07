@@ -1,6 +1,6 @@
 
 /*
-스케쥴의 세부 일정 정하는 페이지
+스케쥴의 세부 일정 수정 페이지
 */
 let scheduleDetailEdit = {
 	
@@ -30,12 +30,19 @@ let scheduleDetailEdit = {
 	init: function() {
 		const sortingBtn = document.getElementById('sorting-btn');
 		const savingBtn = document.getElementById('saving-btn');
+		const editcomplBtn = document.getElementById('edit-compl');
+		let scheduleId = document.getElementById('schedule-id').value;
 		
 		sortingBtn.addEventListener('click', () => {
 			this.sortingScheduleDetail();
 		});
 		savingBtn.addEventListener('click', () => {
 			this.saveScheduleDetail();
+		});
+		editcomplBtn.addEventListener('click', ()=>{
+			if(confirm('저장되지 않은 일정은 삭제됩니다. 확인 버튼을 누르시면 편집을 종료합니다.')){
+				location.href ="/schedule/detail/show/"+scheduleId;
+			}
 		});
 
 		this.map = new kakao.maps.Map(this.container, this.options); //지도 생성 및 객체 리턴
@@ -386,7 +393,7 @@ let scheduleDetailEdit = {
 
 			const colDiv7 = document.createElement('div');
 			colDiv7.classList.add('col-7');
-			colDiv7.textContent = item.title;
+			colDiv7.innerHTML = "<p>"+ item.title + "</p>" + "<p class='list-item-region'>" + item.region1 +  ">" + item.region2 + "</p>";
 			rowDiv.appendChild(colDiv7);
 
 			const colDiv3 = document.createElement('div');

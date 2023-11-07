@@ -56,6 +56,9 @@
 	<select id="findNewestScheduleIdByUserId" resultType="Integer">
 		select * from tb_schedule where user_id = #{userId} order by schedule_id desc limit 1;
 	</select>
+	<select id="findContentsById" resultType="Contents">
+		select * from tb_contents where contents_id = #{contentsId}
+	</select>
 	
 	<insert id="insertScheduleDetail">
 		insert into tb_item (contents_id, schedule_id, item_memo, item_day, item_sequence)
@@ -65,6 +68,15 @@
 		insert into tb_schedule (user_id, title, start_date, end_date)
 		values (#{userId},#{title},#{startDate},#{endDate})	
 	</insert>
+	
+	<update id="updateSchedule">
+		update tb_schedule set title = #{title}, start_date = #{startDate}, end_date = #{endDate}
+		where schedule_id = #{scheduleId}
+	</update>
+	
+	<delete id = "deleteSchedule">
+		delete from tb_schedule where schedule_id = #{scheduleId}
+	</delete>
 	<delete id = "deleteScheduleDetailByDay">
 		delete from tb_item where schedule_id = #{scheduleId} and item_day = #{itemDay}
 	</delete>

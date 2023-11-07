@@ -38,7 +38,7 @@ public class MyUserExceptionHandler {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script>");
 		sb.append("alert(' "+ e.getMessage() +" ');");
-		sb.append("history.back();");
+		sb.append("location.href='/user/sign-in'");
 		sb.append("</script>");
 		return sb.toString();
 	}

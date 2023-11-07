@@ -122,7 +122,12 @@ public class ScheduleService {
 
 	public Schedule findScheduleById(Integer scheduleId) {
 		
-		return scheduleRepository.findScheduleById(scheduleId);
+		Schedule schedule = scheduleRepository.findScheduleById(scheduleId);
+		if(schedule==null) {
+			throw new CustomException("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+		}
+		
+		return schedule;
 	}
 	
 	public List<Schedule> findScheduleByUserId(Integer UserId){
@@ -164,6 +169,27 @@ public class ScheduleService {
 	public Integer findNewestScheduleIdByUserId(Integer userId) {
 		
 		return scheduleRepository.findNewestScheduleIdByUserId(userId);
+	}
+	
+	public void updateSchedule(Schedule schedule) {
+		
+		int result = scheduleRepository.updateSchedule(schedule);
+		if(result!=1) {
+			throw new CustomException("일정 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	public void deleteSchedule(Integer scheduleId) {
+		scheduleRepository.deleteSchedule(scheduleId);
+	}
+	
+	public Contents findContentsById(Integer contentsId) {
+		Contents contents = scheduleRepository.findContentsById(contentsId);
+		if(contents==null) {
+			throw new CustomException("컨텐츠를 찾아오는 데 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return contents;
 	}
 	
 	//해쉬태그(#)를 붙여줌
