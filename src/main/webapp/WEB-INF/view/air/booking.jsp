@@ -5,10 +5,8 @@
 <link rel="stylesheet" href="../../css/air/air.css" />
 <!-- js -->
 <script src="../../js/air/air.js"></script>
-
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-
 <!-- main -->
 <main>
 	<div class="booking-container">
@@ -94,6 +92,72 @@
 							</div>
 						</div>
 						<!-- 항공권 정보 end -->
+						<!-- 구매자 정보 start -->
+						<div class="info-wrap">
+							<div class="info-header">
+								<p class="info-title">구매자 정보</p>
+							</div>
+							<div class="info-body">
+								<div class="customer-info-row">
+									<div class="customer-info">
+										<label for="info-name">이름 (한글)</label>
+										<input type="text" class="customer-info-input" name="customer-name" placeholder="홍길동" />
+									</div>
+								</div>
+								<div class="customer-info-row">
+									<div class="customer-info">
+										<label for="info-name">전화번호</label>
+										<input type="text" class="customer-info-input" name="customer-phone" placeholder="010-1234-5678"/>
+									</div>
+									<div class="customer-info">
+										<label for="info-name">이메일</label>
+										<input type="text" class="customer-info-input" name="customer-email" placeholder="example@example.com"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 구매자 정보 end -->
+						<!-- 탑승객 정보 start -->
+						<div class="info-wrap">
+							<div class="info-header">
+								<p class="info-title">탑승객 1</p>
+							</div>
+							<div class="info-body">
+								<label for="same-info" class="same-info">
+									<tr>
+										<td>
+											<label>
+												<input type="radio" name="info" id="same">
+												<span>구매자와 동일</span>
+											</label>
+											<label>
+												<input type="radio" name="info" id="new" checked>
+												<span>직접 입력</span>
+											</label>
+										</td>
+									</tr>
+								</label>
+								<div class="customer-info-row">
+									<div class="customer-info">
+										<label for="info-name">이름 (한글)</label>
+										<input type="text" name="username" class="customer-info-input" placeholder="홍길동" />
+									</div>
+								</div>
+								<div class="customer-info-row">
+									<div class="customer-info">
+										<label for="info-name">전화번호</label>
+										<input type="text" name="phone" class="customer-info-input" placeholder="010-1234-5678"/>
+									</div>
+									<div class="customer-info">
+										<label for="info-name">이메일</label>
+										<input type="text" name="email" class="customer-info-input" placeholder="example@example.com"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 탑승객 정보 end -->
+					</div>
+					<div class="right-info">
 						<!-- 항공권 취소 환불 정책 start -->
 						<div class="info-wrap">
 							<div class="info-header">
@@ -167,73 +231,6 @@
 							</div>
 						</div>
 						<!-- 항공권 취소 환불 정책 end -->
-						<!-- 구매자 정보 start -->
-						<div class="info-wrap">
-							<div class="info-header">
-								<p class="info-title">구매자 정보</p>
-							</div>
-							<div class="info-body">
-								<div class="customer-info-row">
-									<div class="customer-info">
-										<label for="info-name">이름 (한글)</label>
-										<input type="text" class="customer-info-input" name="customer-name" placeholder="홍길동" />
-									</div>
-								</div>
-								<div class="customer-info-row">
-									<div class="customer-info">
-										<label for="info-name">전화번호</label>
-										<input type="text" class="customer-info-input" name="customer-phone" placeholder="010-1234-5678"/>
-									</div>
-									<div class="customer-info">
-										<label for="info-name">이메일</label>
-										<input type="text" class="customer-info-input" name="customer-email" placeholder="example@example.com"/>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 구매자 정보 end -->
-	
-						<!-- 탑승객 정보 start -->
-						<div class="info-wrap">
-							<div class="info-header">
-								<p class="info-title">탑승객 1</p>
-							</div>
-							<div class="info-body">
-								<label for="same-info" class="same-info">
-									<tr>
-										<td>
-											<label>
-												<input type="radio" name="info" id="same">
-												<span>구매자와 동일</span>
-											</label>
-											<label>
-												<input type="radio" name="info" id="new" checked>
-												<span>직접 입력</span>
-											</label>
-										</td>
-									</tr>
-								</label>
-								<div class="customer-info-row">
-									<div class="customer-info">
-										<label for="info-name">이름 (한글)</label>
-										<input type="text" name="username" class="customer-info-input" placeholder="홍길동" />
-									</div>
-								</div>
-								<div class="customer-info-row">
-									<div class="customer-info">
-										<label for="info-name">전화번호</label>
-										<input type="text" name="phone" class="customer-info-input" placeholder="010-1234-5678"/>
-									</div>
-									<div class="customer-info">
-										<label for="info-name">이메일</label>
-										<input type="text" name="email" class="customer-info-input" placeholder="example@example.com"/>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 탑승객 정보 end -->
-					</div>
-					<div class="right-info">
 						<!-- 가격 안내 start -->
 						<div class="info-wrap">
 							<div class="info-header">
@@ -301,7 +298,7 @@
 							<div class="info-body">
 								<div class="orderBox">
 									<div class="paymentList">
-										<input type="radio" id="chk1" name="payment" value="1" checked="checked" />
+										<input type="radio" id="chk1" name="payment" value="1" />
 										<label for="chk1">카드결제</label>
 										<input type="radio" id="chk2" name="payment" value="2" />
 										<label for="chk2">실시간계좌이체</label>
@@ -309,7 +306,7 @@
 										<label for="chk3">무통장입금</label>
 										<input type="radio" id="chk4" name="payment" value="4" />
 										<label for="chk4">휴대폰결제</label>
-										<input type="radio" id="chk5" name="payment" value="5" />
+										<input type="radio" id="chk5" name="payment" value="5" checked="checked" />
 										<label for="chk5">카카오페이</label>
 										<input type="radio" id="chk6" name="payment" value="6" />
 										<label for="chk6">네이버페이</label>
@@ -321,48 +318,61 @@
 						<!-- 결제수단 end -->
 					</div>
 				</div>
-			</from>
+			</form>
 		</div>
 	</div>
 </main>
 <script>
-	var IMP = window.IMP;
-	IMP.init("imp88272048");
+var IMP = window.IMP;
+IMP.init("imp88272048");
 
-	// 필요한 DOM 요소
-	const amountElement = document.querySelector('p[name="totalPrice"]');
+// 필요한 DOM 요소
+const amountElement = document.querySelector('p[name="totalPrice"]');
 
-	// 금액에서 "원"을 제거하고 숫자 부분만 추출
-	const amountText = amountElement.textContent;
-	const amount = parseInt(amountText.replace(/[^\d]/g, ''));
+// 금액에서 "원"을 제거하고 숫자 부분만 추출
+const amountText = amountElement.textContent;
+const amount = parseInt(amountText.replace(/[^\d]/g, ''));
 
-	function requestPay() {
-		IMP.request_pay({
-			pg : "kakaopay",
-			pay_method : "card",
-			merchant_uid : "ORD20183-822", // 주문번호
-			name : "제주플러스",
-			amount : amount, // 가격
-		}, function(rsp) {
-			console.log("결제 rsp : 2." + JSON.stringify(rsp));
-			if (rsp.success) {
-				var msg = '결제가 완료되었습니다.';
-				msg += '결제 금액 : ' + rsp.paid_amount;
-				// 결제가 성공한 경우, 폼을 자동으로 제출 (submit)
-				if (rsp.success) {
-					var formElement = document.getElementById("paymentForm");
-					if (formElement) {
-						formElement.submit();
-					} else {
-						alert("폼 엘리먼트를 찾을 수 없습니다.");
-					}
+//'pg_tid' 생성 및 설정
+var pgTid = "";
+
+function requestPay() {
+	IMP.request_pay({
+		pg : "kakaopay",
+		pay_method : "card",
+		merchant_uid : "ORD2000-5", // 주문번호
+		name : "제주플러스",
+		amount : amount, // 가격
+		pg_tid : pgTid,
+	}, function(rsp) {
+		console.log("결제 rsp: " + JSON.stringify(rsp));
+
+		if (rsp.success) {
+			// [1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 및 pg_tid 전달하기
+			jQuery.ajax({
+				url : "/air/booking",
+				type : 'POST',
+				dataType : 'json',
+				data : {
+					imp_uid : rsp.imp_uid,
+					pg_tid : rsp.pg_tid, // pg_tid 추가
+				// 기타 필요한 데이터가 있으면 추가 전달
 				}
-			} else {
-				var msg = '결제에 실패하였습니다.';
-				msg += '에러내용 : ' + rsp.error_msg;
-			}
-			alert(msg);
-		});
-	}
+    		}).done(function(data, textStatus, xhr) {
+    			console.log("result OK " + data.name);
+    			alert(data);
+    			
+    		}).fail(function(error) {
+    			console.log("실패");
+    			alert(error.responseText);
+    		});
+
+        } else {
+            var msg = '결제에 실패하였습니다.';
+            msg += '\n에러내용: ' + rsp.error_msg;
+            alert(msg);
+        }
+    });
+}
 </script>
 <%@ include file="/WEB-INF/view/footer.jsp"%>

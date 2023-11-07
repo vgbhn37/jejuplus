@@ -26,7 +26,7 @@
                             <div class="flight-info-row">
                                 <div class="flight-info-column">
                                     <div class="flight-info-head">
-                                        <img src="/img/air/jeju_air_logo.png" alt="jeju_logo" class="flight-logo" />
+                                        <img src="../../images/air/jeju_air_logo.png" alt="jeju_logo" class="flight-logo" />
                                         <p class="flight-brand">제주항공</p>
                                     </div>
                                     <div class="flight-info-body">
