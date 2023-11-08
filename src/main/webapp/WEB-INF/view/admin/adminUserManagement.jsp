@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/view/admin/layout/header.jsp"%>
 		<!-- PAGE CONTAINER-->
 		<div class="page-container">
@@ -81,8 +82,21 @@
 													<td class="desc">${user.phoneNumber}</td>
 													<td><span class="status--denied">${user.isKakao}</span>
 													</td>
-													<td id="userLevel-${user.username}">${user.levelId}</td>
+													
+													<c:set var="level" value="${user.levelId}" />
+													<c:if test="${ level == 1}">
+													<td id="userLevel-${user.username}">일반유저</td>
+													</c:if>
+													<c:if test="${ level == 2}">
+													<td id="userLevel-${user.username}">관리자</td>
+													</c:if>
+													<c:if test="${ level == 3}">
+													<td id="userLevel-${user.username}">VIP</td>
+													</c:if>
+													
 													<td>
+													
+													
 														<div class="table-data-feature">
 
 
