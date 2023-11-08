@@ -1,5 +1,6 @@
 package com.green.jejuplus.handler;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +15,7 @@ import com.green.jejuplus.handler.exception.CustomPageException;
  * 예외 page 를 리턴하도록 설계 
  */
 @ControllerAdvice  // IoC 대상 
+@Order(2)
 public class MyPageExceptionHandler {
 
 //	@ExceptionHandler(Exception.class)

@@ -21,10 +21,13 @@
 	<div class="row">
 		<div class="sche-left col-8">
 			<div class="row">
-				<div class="col-7">
+				<div class="col-5">
 					<h4>${schedule.title }</h4>
 					<h5 style="color: #767676;">${schedule.startDate }~
 						${schedule.endDate }</h5>
+				</div>
+				<div class="col-2">
+					<button id="edit-compl" class="btn btn-orange">편집완료</button>
 				</div>
 				<div class="col-5">
 					<img src = '/images/schedule/calendar.png' id ='calendar'><input type="text" id="date" name="schedule-date" value="${schedule.startDate}" readonly>
@@ -95,8 +98,8 @@
 
 
 
-<script src='/js/schedule/scheduleDetailEditRefactor.js'></script>
-<script src='/js/schedule/scheduleCalendar.js'></script>
+<script src='/js/schedule/scheduleDetailEdit.js'></script>
+<script src='/js/schedule/scheduleDetailEditCalendar.js'></script>
 
 
 

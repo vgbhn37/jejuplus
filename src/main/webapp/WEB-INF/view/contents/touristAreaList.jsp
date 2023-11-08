@@ -6,9 +6,10 @@
 		background-color: white;
 	}
 	#touristArea {
-		font-size: 50px;
+		font-size: 40px;
+		font-weight: bold;
 		text-align: center;
-		margin: 50px;
+		margin: 20px;
 	}
 	#container {
 		width: 1000px;
@@ -68,7 +69,7 @@
 	#btn {
 		width: 460px;
 		height: 40px;
-		background-color: orange;
+		background-color: #f37021;
 		color: white;
 		border: none;
 		margin-top: 30px;
@@ -78,8 +79,8 @@
 	}
 	#btn:hover {
 	    background-color: white;
-	    color: orange;
-	    border: solid 2px orange;
+	    color: #f37021;
+	    border: solid 1px #f37021;
 	    cursor: pointer;
 	}
 	
@@ -96,7 +97,7 @@
 				<div id="location">${contents.region1} > ${contents.region2}</div>
 				<div id="tag">${contents.tag}</div>
 				<div id="icon">
-					<div><img src="/images/좋아요.png" class="icon">1234</div>
+					<div><img src="/images/좋아요.png" class="icon">${contents.recommendedCnt}</div>
 					<div><img src="/images/리뷰.png" class="icon">${contents.reviewCnt}</div>
 				</div>
 				<div><input type="hidden" value="${contents.contentsLabel}"></div>

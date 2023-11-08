@@ -213,9 +213,32 @@ $(document).ready(function() {
 	});
 });
 
-
-
 /* 왕복 편도 라디오 버튼 end */
+
+/*  */
+$(document).ready(function() {
+	// "구매자와 동일" 라디오 버튼 클릭 시
+	$('#same').click(function() {
+		if (this.checked) {
+			const customerName = $('input[name=customer-name]').val();
+			const customerPhone = $('input[name=customer-phone]').val();
+			const customerEmail = $('input[name=customer-email]').val();
+
+			$('input[name=username]').val(customerName);
+			$('input[name=phone]').val(customerPhone);
+			$('input[name=email]').val(customerEmail);
+		}
+	});
+
+	$('#new').click(function() {
+		if (this.checked) {
+			// 탑승객 1 정보 초기화
+			$('input[name=username]').val("");
+			$('input[name=phone]').val("");
+			$('input[name=email]').val("");
+		}
+	});
+});
 
 
 

@@ -3,8 +3,6 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.green.jejuplus.repository.interfaces.FavoriteRepository">
-
-
 	<insert id="insertFavorite">
 		insert into tb_favorite(user_id, contents_id)
 		values(#{userId},#{contentsId})
@@ -17,5 +15,4 @@
 	<delete id="deleteFavorite">
 		delete from tb_favorite where user_id = #{userId} and contents_id = #{contentsId}
 	</delete>
-	
 </mapper>

@@ -1,6 +1,7 @@
 package com.green.jejuplus.controller.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -37,6 +38,8 @@ import com.green.jejuplus.dto.user.SignUpFormDto;
 import com.green.jejuplus.dto.user.UserDeleteDto;
 import com.green.jejuplus.dto.user.UserUpdateDto;
 import com.green.jejuplus.handler.exception.CustomException;
+import com.green.jejuplus.repository.model.Promotion;
+import com.green.jejuplus.repository.model.PromotionImg;
 import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.service.user.EmailService;
 import com.green.jejuplus.service.user.UserService;
@@ -139,7 +142,7 @@ public class UserController {
 		// 아이디 중복 확인
 		if (!userService.isUsernameUnique(username)) {
 			System.out.println("어디까지오냐1");
-			return ResponseEntity.badRequest().body("아이디가 이미 사용 중입니다.");
+			return ResponseEntity.badRequest().body("아이디가 이미 사용 중 이거나 한글로 작성되었습니다.");
 		}
 
 		// 이메일 중복 확인
@@ -216,12 +219,13 @@ public class UserController {
 	// 이메일
 	@GetMapping("/check-email")
 	public ResponseEntity<String> checkEmail(@RequestParam("email") String email) {
+		System.out.println("컨트롤러에 이메일 제대로옴? :" + email);
 		if (userService.isEmailUnique(email)) {
-			return new ResponseEntity<>("succes", HttpStatus.OK);
+			return new ResponseEntity<>("success", HttpStatus.OK);
 		} 
-
 		else {
-			return new ResponseEntity<>("duplicate", HttpStatus.BAD_REQUEST);
+			System.out.println("여기로 오는거 맞지?");
+			return new ResponseEntity<>("duplicate", HttpStatus.OK);
 		}
 	}
 
@@ -592,56 +596,65 @@ public class UserController {
 
 	@PostMapping("/userDelete")
 	public String userDeleteProc(UserDeleteDto userDeleteDto, Model model) {
-		User user = (User) session.getAttribute(Define.PRINCIPAL);
+	    User user = (User) session.getAttribute(Define.PRINCIPAL);
 
-		// 1. 유효성 검사
-		if(userDeleteDto.getUsername() == null || 
-				userDeleteDto.getUsername().isEmpty()) {
-			throw new CustomException("username을 입력하시오", HttpStatus.BAD_REQUEST);
-		}
-		if(userDeleteDto.getPassword() == null || 
-				userDeleteDto.getPassword().isEmpty()) {
-			throw new CustomException("password를 입력하시오", HttpStatus.BAD_REQUEST);
-		}
+	    // 1. 유효성 검사
+	    if (userDeleteDto.getUsername() == null || userDeleteDto.getUsername().isEmpty()) {
+	        throw new CustomException("username을 입력하시오", HttpStatus.BAD_REQUEST);
+	    }
+	    if (userDeleteDto.getPassword() == null || userDeleteDto.getPassword().isEmpty()) {
+	        throw new CustomException("password를 입력하시오", HttpStatus.BAD_REQUEST);
+	    }
 
+	    String username = userDeleteDto.getUsername();
+	    System.out.println("컨트롤러 첫 유저네임:" + username);
+	    String sessionUsername = user.getUsername();
+	    System.out.println("컨트롤러 첫 세션유저네임:" + sessionUsername);
+	    if (sessionUsername.equals(username)) {
+	        String password = userDeleteDto.getPassword();
+	        System.out.println("컨트롤러입력받은 패스워드" + password);
+	        
+	        // 2. 데이터베이스에서 해당 사용자의 저장된 해시된 비밀번호를 가져옵니다
+	        UserDeleteDto userFindPassword= userService.findUserDelete(username);
+	        
+	        String storedPasswordHash = userFindPassword.getPassword();
+	        
+	        System.out.println("컨트롤러 사용자디비에서 가져온 패스워드" + storedPasswordHash);
+	        // 3. 입력된 해시화된 비밀번호와 저장된 해시화된 비밀번호를 비교
+	        if (passwordEncoder.matches(password, storedPasswordHash)) {
+	            userService.userDelete(username, password);
 
-
-		String username = userDeleteDto.getUsername();
-		String sessionUsername = user.getUsername();
-
-
-		System.out.println("세션꺼 아이디" + sessionUsername);
-
-
-		System.out.println(username);
-		UserDeleteDto name = userService.findUserDelete(username);
-
-		if(sessionUsername.equals(username)) {
-			String password = name.getPassword();		
-			System.out.println("해쉬 암호 가져오나?" + password);
-			UserDeleteDto usercheck = userService.findUserDeleteCheck(username,password);
-
-			if(usercheck != null && sessionUsername.equals(username)) {				
-				userService.userDelete(username,password);
-
-				// 세션 로그아웃 처리
-				session.invalidate();
-				// 모델에 메시지 추가
-				model.addAttribute("message", "사용자가 삭제되었습니다.");
-				// alert 창을 표시하는 페이지로 리다이렉트
-				return "redirect:/user/delete-confirmation";
-
-			} else {
-				throw new CustomException("아이디 비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
-			}
-		} else {
-			throw new CustomException("사용자가 다릅니다.", HttpStatus.BAD_REQUEST);
-		}
+	            // 세션 로그아웃 처리
+	            session.invalidate();
+	            // 모델에 메시지 추가
+	            model.addAttribute("message", "사용자가 삭제되었습니다.");
+	            // alert 창을 표시하는 페이지로 리다이렉트
+	            return "redirect:/user/delete-confirmation";
+	        } else {
+	            throw new CustomException("아이디 비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
+	        }
+	    } else {
+	        throw new CustomException("사용자가 다릅니다.", HttpStatus.BAD_REQUEST);
+	    }
 	}
+
 
 	@GetMapping("/delete-confirmation")
 	public String deleteConfirmation() {
 		return "/user/deleteConfirmation";
+	}
+	
+	// 광고 상세보기
+	@GetMapping("/promotionDetail/{promotionId}")
+	public String promotionDetail(@PathVariable("promotionId") int promotionId,Model model) {
+		
+		Promotion promotion = userService.findByPromotionDetail(promotionId);
+		
+		List<PromotionImg> images = userService.findImagesByPromotionId(promotionId);
+		
+		model.addAttribute("promotion",promotion);
+		model.addAttribute("images",images);
+		return"/user/promotionDetail";
 	}
 
 }

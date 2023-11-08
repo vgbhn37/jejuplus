@@ -6,9 +6,10 @@
 		background-color: white;
 	}
 	#favoriteArea {
-		font-size: 50px;
+		font-size: 40px;
+		font-weight: bold;
 		text-align: center;
-		margin: 50px;
+		margin: 20px;
 	}
 	#container {
 		width: 1000px;
@@ -22,7 +23,7 @@
 	}
 	#label{
 		width:300px;
-		background-color:orange;
+		background-color:#f37021;
 		color: white;
 		font-weight:bold;
 	}

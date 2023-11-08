@@ -17,12 +17,10 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
 }
 
 /* 헤더 start */
 header {
-    background-color: white;
     color: black;
     padding: 20px;
 }
@@ -34,22 +32,28 @@ nav {
 }
 
 .logo a img {
-    height: 40px;
+    height: 30px;
+}
+.menu {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+}
+.menu li {
+    margin-right: 20px;
 }
 
 .menu ul {
     list-style: none;
 }
 
-.menu li {
-    display: inline;
-    margin-right: 20px;
-}
+
 
 .menu a {
     text-decoration: none;
     color: black;
 }
+
+
 
 /* 날씨 */
 .app {
@@ -62,10 +66,10 @@ nav {
     margin: 50px 50px 0 0;
     right: 0;
     display: none;
-    height: 450px;
+    height: auto;
     width: 400px;
-
-    border: 1px solid red;
+    border: 1px none red;
+    border-radius: 10px;
 }
 .show-sidebar {
     display: block;
@@ -79,7 +83,7 @@ footer {
     width: 100%;
     height: 500px;
     border-top: 1px solid #e5e5e5;
-    background: #f9f9f9;
+    background: #292929;
     overflow: hidden;
 }
 footer > div {

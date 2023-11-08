@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.jejuplus.dto.air.AirPlanDTO;
 import com.green.jejuplus.dto.air.CustomerDTO;
+import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.service.air.OpenApiAirService;
+import com.green.jejuplus.util.Define;
 
 @Controller
 @RequestMapping("/air")
@@ -26,15 +30,24 @@ public class AirController {
 	@Autowired
 	private OpenApiAirService openApiAirService;
 
+	@Autowired
+	private HttpSession session;
+
+	@Autowired
+	private HttpServletRequest request;
+
 	// main page (강중현)
 	@GetMapping("/index")
 	public String index() throws Exception {
+		// 유저 정보 받아옴
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		System.out.println("principal" + principal);
 
 		return "air/index";
 	}
 
 	@PostMapping("/index")
-	public String indexProc(AirPlanDTO airPlanDTO, HttpSession session) throws Exception {
+	public String indexProc(AirPlanDTO airPlanDTO) throws Exception {
 
 		// 출발지와 도착지가 '선택'으로 설정된 경우에 페이지 이동 금지
 		if (airPlanDTO.getDepAirportNm() == null || airPlanDTO.getArrAirportNm() == null
@@ -45,12 +58,12 @@ public class AirController {
 		if (airPlanDTO.getDepAirportNm().equals(airPlanDTO.getArrAirportNm())) {
 			return "redirect:/air/index";
 		}
-		
-	    // 날짜 형식을 "yyyymmdd"로 변경
-	    String depPlandTime = airPlanDTO.getDepPlandTime().replaceAll("-", "");
-	    String arrPlandTime = airPlanDTO.getArrPlandTime().replaceAll("-", "");
-	    airPlanDTO.setDepPlandTime(depPlandTime);
-	    airPlanDTO.setArrPlandTime(arrPlandTime);
+
+		// 날짜 형식을 "yyyymmdd"로 변경
+		String depPlandTime = airPlanDTO.getDepPlandTime().replaceAll("-", "");
+		String arrPlandTime = airPlanDTO.getArrPlandTime().replaceAll("-", "");
+		airPlanDTO.setDepPlandTime(depPlandTime);
+		airPlanDTO.setArrPlandTime(arrPlandTime);
 
 		// 세션에 airPlanDTO 데이터 담음
 		session.setAttribute("airPlanDTO", airPlanDTO);
@@ -58,39 +71,40 @@ public class AirController {
 		return "redirect:/air/booking";
 	}
 
-
 	// 예약 및 결제 페이지
 	@GetMapping("/booking")
-	public String booking(Model model, HttpSession session) throws Exception {
+	public String booking(Model model) throws Exception {
+		
+		// 유저 정보 받아옴
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+
 		// session에 담긴 데이터를 받음
 		AirPlanDTO airPlanDTO = (AirPlanDTO) session.getAttribute("airPlanDTO");
 
 		String depAirportId = airPlanDTO.getDepAirportNm();
-        String arrAirportId = airPlanDTO.getArrAirportNm();
-        String depPlandTime = airPlanDTO.getDepPlandTime();
-        String arrPlandTime = airPlanDTO.getArrPlandTime();
-		
-		
-		// openApiAirService.OpenApiAir() 메서드를 호출하여 API 응답 데이터 호출
-        String apiResponse = openApiAirService.OpenApiAir(depAirportId, arrAirportId, depPlandTime, arrPlandTime);
+		String arrAirportId = airPlanDTO.getArrAirportNm();
+		String depPlandTime = airPlanDTO.getDepPlandTime();
+		String arrPlandTime = airPlanDTO.getArrPlandTime();
 
+		// openApiAirService.OpenApiAir() 메서드를 호출하여 API 응답 데이터 호출
+		String apiResponse = openApiAirService.OpenApiAir(depAirportId, arrAirportId, depPlandTime, arrPlandTime);
 
 		// ObjectMapper를 사용하여 JSON 데이터를 Map으로 파싱
-        ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Object> responseMap = objectMapper.readValue(apiResponse, Map.class);
+		ObjectMapper objectMapper = new ObjectMapper();
+		Map<String, Object> responseMap = objectMapper.readValue(apiResponse, Map.class);
 
 		// 필요한 데이터 추출
-        Map<String, Object> responseBody = (Map<String, Object>) responseMap.get("response");
-        Map<String, Object> body = (Map<String, Object>) responseBody.get("body");
-        Map<String, Object> items = (Map<String, Object>) body.get("items");
-        List<Map<String, Object>> itemList = (List<Map<String, Object>>) items.get("item");
+		Map<String, Object> responseBody = (Map<String, Object>) responseMap.get("response");
+		Map<String, Object> body = (Map<String, Object>) responseBody.get("body");
+		Map<String, Object> items = (Map<String, Object>) body.get("items");
+		List<Map<String, Object>> itemList = (List<Map<String, Object>>) items.get("item");
 //	    System.out.println("[booking] itemList 데이터 추출 성공 : " + itemList);
 
 		// 모델에 데이터를 추가
-        for (int i = 0; i < itemList.size(); i++) {
-            Map<String, Object> item = itemList.get(i);
-            depPlandTime = item.get("depPlandTime").toString();
-            arrPlandTime = item.get("arrPlandTime").toString();
+		for (int i = 0; i < itemList.size(); i++) {
+			Map<String, Object> item = itemList.get(i);
+			depPlandTime = item.get("depPlandTime").toString();
+			arrPlandTime = item.get("arrPlandTime").toString();
 
 			// 시간을 추출할 위치 정의 (예: "202310291030" 형식에서 "1030"을 추출)
 			String depTime = depPlandTime.substring(8); // 앞 8자리를 잘라내고 그 뒤부터 출력
@@ -129,29 +143,39 @@ public class AirController {
 //		    System.out.println("airlineNm" + airlineNm);
 		}
 
-        model.addAttribute("itemList", itemList);
+		model.addAttribute("itemList", itemList);
 
-        return "air/booking";
-    }
-	
+		return "air/booking";
+	}
+
 	// 예약 및 결제 페이지
 	@PostMapping("/booking")
-	public String bookingProc(HttpSession session, CustomerDTO customerDTO) throws Exception {
-		
+	@ResponseBody
+	public String bookingProc(CustomerDTO customerDTO, HttpServletRequest request) throws Exception {
+		String pgTid = request.getParameter("pg_tid"); // "pg_tid" 값을 직접 가져옴
+	    System.out.println("받은 pg_tid: " + pgTid);
+
+//		// 유저 정보 받아옴
+//		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+
 		// 세션에 customerDTO 데이터 담음
 		session.setAttribute("customerDTO", customerDTO);
 		System.out.println("booking에서 customerDTO 데이터 넘김 확인 " + customerDTO);
-
-		
-		return "redirect:/air/bookingcomplete";
+	    
+	    // Object 로 리턴해야 중간에 메세지 컨번터가 JSON 문자열로 변환해서 던져 준다. 
+		return "{\r\n"
+				+ "   \"name\":\"result\"\r\n"
+				+ "}";
+		// return "redirect:/air/bookingcomplete";
 	}
 
 	// 결제 완료 페이지
 	@GetMapping("/bookingcomplete")
-	public String bookingcomplete(Model model, HttpSession session) {
-		
-		
-        
+	public String bookingcomplete(Model model) {
+
+		// 유저 정보 받아옴
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+
 		return "air/bookingcomplete";
 	}
 
