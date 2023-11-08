@@ -111,8 +111,9 @@ public class AdminService {
 		if (!imageFile.isEmpty()) {
 			try {
 				String originalFilename = imageFile.getOriginalFilename();
+				String projectRoot = System.getProperty("user.dir");
 				// 이미지 파일을 저장할 경로 설정
-				Path filePath = Paths.get(uploadDirectory, originalFilename);
+				Path filePath = Paths.get(projectRoot + uploadDirectory, originalFilename);
 
 				// 경로의 디렉토리가 없는 경우 생성
 				if (!Files.exists(filePath.getParent())) {

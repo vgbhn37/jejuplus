@@ -43,6 +43,9 @@ public class MainController {
 	    }
 	    
 	    model.addAttribute("promotions", promotions);
+	    
+	    String projectRoot = System.getProperty("user.dir");
+	    System.out.println(projectRoot);
 		
 		
 		return "/main";
