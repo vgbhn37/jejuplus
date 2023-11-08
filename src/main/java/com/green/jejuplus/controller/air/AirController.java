@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.jejuplus.dto.air.AirPlanDTO;
 import com.green.jejuplus.dto.air.CustomerDTO;
+import com.green.jejuplus.dto.payment.PaymentDTO;
 import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.service.air.OpenApiAirService;
+import com.green.jejuplus.service.payment.PaymentService;
 import com.green.jejuplus.util.Define;
 
 @Controller
@@ -35,13 +37,16 @@ public class AirController {
 
 	@Autowired
 	private HttpServletRequest request;
+	
+	@Autowired
+	private PaymentService paymentService;
 
 	// main page (강중현)
 	@GetMapping("/index")
 	public String index() throws Exception {
 		// 유저 정보 받아옴
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		System.out.println("principal" + principal);
+		User user = (User)session.getAttribute(Define.PRINCIPAL);
+		System.out.println("받은 user" + user);
 
 		return "air/index";
 	}
@@ -76,7 +81,7 @@ public class AirController {
 	public String booking(Model model) throws Exception {
 		
 		// 유저 정보 받아옴
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		User user = (User)session.getAttribute(Define.PRINCIPAL);
 
 		// session에 담긴 데이터를 받음
 		AirPlanDTO airPlanDTO = (AirPlanDTO) session.getAttribute("airPlanDTO");
@@ -151,22 +156,30 @@ public class AirController {
 	// 예약 및 결제 페이지
 	@PostMapping("/booking")
 	@ResponseBody
-	public String bookingProc(CustomerDTO customerDTO, HttpServletRequest request) throws Exception {
+	public String bookingProc(CustomerDTO customerDTO, PaymentDTO paymentDTO) throws Exception {
+
+		// 유저 정보 받아옴
+		User user = (User)session.getAttribute(Define.PRINCIPAL);
+		System.out.println("받은 user : " + user);
+		
 		String pgTid = request.getParameter("pg_tid"); // "pg_tid" 값을 직접 가져옴
-	    System.out.println("받은 pg_tid: " + pgTid);
-
-//		// 유저 정보 받아옴
-//		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-
+	    System.out.println("받은 pg_tid : " + pgTid);
+		
+	    
+	    paymentService.insertPayment(paymentDTO, user.getUserId());
+	    
+		
 		// 세션에 customerDTO 데이터 담음
 		session.setAttribute("customerDTO", customerDTO);
 		System.out.println("booking에서 customerDTO 데이터 넘김 확인 " + customerDTO);
+		
 	    
-	    // Object 로 리턴해야 중간에 메세지 컨번터가 JSON 문자열로 변환해서 던져 준다. 
-		return "{\r\n"
-				+ "   \"name\":\"result\"\r\n"
-				+ "}";
-		// return "redirect:/air/bookingcomplete";
+	    // Object 로 리턴해야 중간에 메세지 컨번터가 JSON 문자열로 변환해서 던져 준다.
+		String jsonResult = "1";
+	    
+	    return jsonResult;
+//		return "{name:result}";
+//		return "redirect:/air/bookingcomplete";
 	}
 
 	// 결제 완료 페이지
@@ -174,7 +187,7 @@ public class AirController {
 	public String bookingcomplete(Model model) {
 
 		// 유저 정보 받아옴
-		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		User user = (User)session.getAttribute(Define.PRINCIPAL);
 
 		return "air/bookingcomplete";
 	}

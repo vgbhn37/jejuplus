@@ -340,7 +340,7 @@ function requestPay() {
 	IMP.request_pay({
 		pg : "kakaopay",
 		pay_method : "card",
-		merchant_uid : "ORD2000-5", // 주문번호
+		merchant_uid : "ORD2001-1", // 주문번호
 		name : "제주플러스",
 		amount : amount, // 가격
 		pg_tid : pgTid,
@@ -360,11 +360,14 @@ function requestPay() {
 				}
     		}).done(function(data, textStatus, xhr) {
     			console.log("result OK " + data.name);
-    			alert(data);
+     			alert(data);
+				
+    			
+    			window.location.href = "http://localhost:80/air/bookingcomplete";
     			
     		}).fail(function(error) {
     			console.log("실패");
-    			alert(error.responseText);
+    			alert("실패 : "+error.responseText);
     		});
 
         } else {
