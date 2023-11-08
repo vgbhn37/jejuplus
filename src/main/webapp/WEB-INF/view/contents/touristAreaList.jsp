@@ -1,92 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/view/header.jsp"%>
-<style>
-	body {
-		background-color: white;
-	}
-	#touristArea {
-		font-size: 40px;
-		font-weight: bold;
-		text-align: center;
-		margin: 20px;
-	}
-	#container {
-		width: 1000px;
-		height:30px;
-		margin: 0 auto;
-		backgroud-color:white;
-
-	}
-	#container div {
-		display: inline-block;
-	}
-	#img-box {
-		float:left;
-		width:500px;
-		height:250px;
-		overflow:hidden;
-		border-radius: 10px;
-	}
-	#img {
-		width:100%;
-		height:100%;
-	    object-fit: cover;
-	}
-	#content-box {
-		margin-left:30px;
-		margin-bottom:30px;
-		padding-left: 10px;
-		float:left;
-		width:460px;
-		height:250px;
-	
-	}
-	#title {
-		font-size: 30px;
-		font-weight: bold;
-	}
-	#location {
-		width:460px;
-		font-size: 20px;
-		margin-top: 10px;
-	}
-	#tag {
-		width:460px;
-		font-size: 15px;
-		color:grey;
-		margin-top: 10px;
-	}
-	.icon{
-		width:20px;
-		margin-right:5px;
-
-	}
-	#icon{
-		margin-top: 10px;
-		font-size: 15px;
-	}
-	#btn {
-		width: 460px;
-		height: 40px;
-		background-color: #f37021;
-		color: white;
-		border: none;
-		margin-top: 30px;
-		font-size: 15px;
-		font-weight: bold;
-		
-	}
-	#btn:hover {
-	    background-color: white;
-	    color: #f37021;
-	    border: solid 1px #f37021;
-	    cursor: pointer;
-	}
-	
-</style>
+<link rel="stylesheet" href="/css/contents/list.css" />
 <body>
-	<div id="touristArea">관광지</div>
+	<div id="contentsLabel">관광지</div>
 	<hr>
 	<br><br>
 	<div id="container">
@@ -107,7 +24,6 @@
 	</div>
 </body>
 <script>
-
 
 </script>
 <%@ include file="/WEB-INF/view/footer.jsp"%>

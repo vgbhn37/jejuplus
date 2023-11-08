@@ -16,4 +16,5 @@ public class ShoppingDetailDto {
 	private String introduction;
 	private String imgPath;
 	private int recommended;
+
 }

@@ -1,6 +1,7 @@
 let contents = {
 	version: 1,
-	init: function() {
+	init: function() {		
+		// 찜 등록
 		const unfavorite = document.querySelector("#unfavorite");
 		if (unfavorite != null) {
 			unfavorite.addEventListener("click", () => {
@@ -8,6 +9,7 @@ let contents = {
 			});
 		}
 
+		// 찜 취소
 		const favorite = document.querySelector("#favorite");
 
 		if (favorite != null) {
@@ -15,6 +17,8 @@ let contents = {
 				this.unfavorite();
 			});
 		}
+		
+		// 추천 등록
 		const unrecommended = document.querySelector("#unrecommended");
 		if (unrecommended != null) {
 			unrecommended.addEventListener("click", () => {
@@ -22,6 +26,7 @@ let contents = {
 			});
 		}
 
+		// 추천 취소
 		const recommended = document.querySelector("#recommended");
 
 		if (recommended != null) {
@@ -29,19 +34,41 @@ let contents = {
 				this.unrecommended();
 			});
 		}
-
+		
+		// 리뷰 등록
 		document.querySelector("#insertReviewBtn").addEventListener("click", () => {
 			this.insertReview();
 		});
 		
+		// 모달창 열기
+		openModalBtn.addEventListener("click", () => {
+			modal.style.display = "block";
+			document.body.style.overflow = "hidden"; // 스크롤바 제거
+		});
+		
+		// 모달창 닫기
+		closeMadalBtn.addEventListener("click", () => {
+			modal.style.display = "none";
+			document.body.style.overflow = "auto"; // 스크롤바 보이기
+		});
+		
+		
+		// 리뷰 수정
+		const modifyModal = document.querySelector("#modifyModal");
+		modifyModal.addEventListener("click", () => {
+			this.modifyReview();			
+		});
+		
+		// 리뷰 삭제
 		const deleteReviewBtn = document.querySelector("#deleteReviewBtn");
-
 		if (deleteReviewBtn != null) {
 			document.querySelector("#deleteReviewBtn").addEventListener("click", () => {
 				this.deleteReview();
 			});
 		}
 	},
+	
+	// 찜 등록
 	favorite: function() {
 		let favorite = {
 			userId: document.getElementById("userId").value,
@@ -62,6 +89,7 @@ let contents = {
 		});
 	},
 
+	// 찜 취소
 	unfavorite: function() {
 		let unfavorite = {
 			contentsId: document.getElementById("contentsId").value,
@@ -74,12 +102,13 @@ let contents = {
 				"Content-Type": "application/json",
 			}
 		}).then(response => {
-			const msg = (response.ok) ? "찜이 삭제되었습니다." : "찜 삭제 실패";
+			const msg = (response.ok) ? "찜이 취소되었습니다." : "찜 취소 실패";
 			alert(msg);
 			window.location.reload();
 		});
 	},
 	
+	// 추천
 	recommended: function() {
 		let recommended = {
 			userId: document.getElementById("userId").value,
@@ -100,6 +129,7 @@ let contents = {
 		});
 	},
 
+	// 추천 취소
 	unrecommended: function() {
 		let unrecommended = {
 			contentsId: document.getElementById("contentsId").value,
@@ -118,6 +148,7 @@ let contents = {
 		});
 	},
 
+	// 리뷰 등록
 	insertReview: function() {
 
 		let review = {
@@ -135,11 +166,38 @@ let contents = {
 				"Content-Type": "application/json",
 			}
 		}).then(response => {
-			const msg = (response.ok) ? "댓글이 등록되었습니다." : "댓글 등록 실패";
+			const msg = (response.ok) ? "리뷰가 등록되었습니다." : "리뷰 등록 실패";
 			alert(msg);
 			window.location.reload();
 		});
 	},
+	
+	// 리뷰 수정
+	modifyReview: function() {
+
+		let review = {
+			reviewStar: document.querySelector('input[name="modifyStar"]:checked').value,
+			reviewContent: document.getElementById("modifyContent").value,
+			reviewId: document.querySelector("#reviewId").value,
+			userId: document.getElementById("userId").value,
+			contentsId: document.getElementById("contentsId").value,
+		};
+		console.log(review);
+		
+		fetch("/api/contents/"+ review.contentsLabel + "/" + review.contentsId + "/review", {
+			method: "PATCH",
+			body: JSON.stringify(review),
+			headers: {
+				"Content-Type": "application/json",
+			}
+		}).then(response => {
+			const msg = (response.ok) ? "리뷰가 수정되었습니다." : "리뷰 수정 실패";
+			alert(msg);
+			window.location.reload();
+		});
+	},
+	
+	// 리뷰 삭제
 	deleteReview: function() {
 		let reviewId = document.getElementById("reviewId").value;
 
@@ -149,7 +207,7 @@ let contents = {
 				"Content-Type": "application/json"
 			}
 		}).then(response => {
-			const msg = (response.ok) ? "댓글이 삭제되었습니다." : "댓글 삭제 실패";
+			const msg = (response.ok) ? "리뷰가 삭제되었습니다." : "리뷰 삭제 실패";
 			alert(msg);
 
 			window.location.reload();

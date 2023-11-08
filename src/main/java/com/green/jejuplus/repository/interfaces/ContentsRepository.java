@@ -23,10 +23,10 @@ public interface ContentsRepository {
 	public List<TouristAreaListDto> findTouristAreaList(String contentsLabel);
 	public List<RestaurantListDto> findRestaurantList(String contentsLabel);
 	public List<LodgingListDto> findLodgingList(String contentsLabel);
+	public List<ShoppingListDto> findShoppingList(String contentsLabel);
 	public TouristAreaDetailDto showTouristAreaDetail(int contentsId);
 	public RestaurantDetailDto showRestaurantDetail(int contentsId);
 	public LodgingDetailDto showLodgingDetail(int contentsId);
-	public List<ShoppingListDto> findShoppingList(String contentsLabel);
 	public ShoppingDetailDto showShoppingDetail(int contentsId);
 	public List<FavoriteDto> selectFavoriteList(@Param("userId") Integer userId);
 	public Contents selectRecommend(Contents contents);

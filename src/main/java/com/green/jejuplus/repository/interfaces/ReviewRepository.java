@@ -17,4 +17,6 @@ public interface ReviewRepository {
 
 	void deleteReview(Integer reviewId);
 
+	String findUsernameByUserId(Integer userId);
+
 }

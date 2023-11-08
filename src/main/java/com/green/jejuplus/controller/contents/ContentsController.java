@@ -95,8 +95,18 @@ public class ContentsController {
 	// 맛집 상세보기
 	@GetMapping("/restaurantDetail/{contentsId}")
 	public String restaurantDetail(@PathVariable("contentsId") int contentsId, Model model) {
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		RestaurantDetailDto restaurantDetail = contentsService.restaurantDetail(contentsId);
+		List<ReviewDto> review = reviewService.showReview(contentsId);
+		
+		if (principal != null) {
+			boolean isFavorite = favoriteService.selectFavorite(principal.getUserId(), contentsId);
+			boolean isRecommended = recommendedService.selectRecommended(principal.getUserId(), contentsId);
+			model.addAttribute("isFavorite", isFavorite);
+			model.addAttribute("isRecommended", isRecommended);
+		}
 		model.addAttribute("restaurantDetail", restaurantDetail);
+		model.addAttribute("review",review);
 		return "contents/restaurantDetail";
 	}
 	
@@ -111,8 +121,19 @@ public class ContentsController {
 	// 숙소 상세보기
 	@GetMapping("/lodgingDetail/{contentsId}")
 	public String lodgingDetail(@PathVariable("contentsId") int contentsId, Model model) {
-		LodgingDetailDto lodgingDetail = contentsService.lodgingDetail(contentsId);	
+		User principal = (User) session.getAttribute(Define.PRINCIPAL);
+		LodgingDetailDto lodgingDetail = contentsService.lodgingDetail(contentsId);
+		List<ReviewDto> review = reviewService.showReview(contentsId);
+		
+		if (principal != null) {
+			boolean isFavorite = favoriteService.selectFavorite(principal.getUserId(), contentsId);
+			boolean isRecommended = recommendedService.selectRecommended(principal.getUserId(), contentsId);
+			model.addAttribute("isFavorite", isFavorite);
+			model.addAttribute("isRecommended", isRecommended);
+		}
+		
 		model.addAttribute("lodgingDetail", lodgingDetail);
+		model.addAttribute("review",review);
 		return "contents/lodgingDetail";
 	}
 	
@@ -134,9 +155,9 @@ public class ContentsController {
 		
 		if (principal != null) {
 			boolean isFavorite = favoriteService.selectFavorite(principal.getUserId(), contentsId);
-//			boolean isRecommend = contentsService.selectRecommend(principal.getUserId(), contentsId);
+			boolean isRecommended = recommendedService.selectRecommended(principal.getUserId(), contentsId);
 			model.addAttribute("isFavorite", isFavorite);
-//			model.addAttribute("isRecommend", isRecommend);
+			model.addAttribute("isRecommended", isRecommended);
 		}
 
 		model.addAttribute("shoppingDetail", shoppingDetail);

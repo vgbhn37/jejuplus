@@ -13,7 +13,7 @@
 	</select>
 
 	<select id="findRestaurantList" resultType="com.green.jejuplus.dto.contents.RestaurantListDto">
-		select (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
+		select (select count(*) from tb_recommended r WHERE c.contents_id = r.contents_id ) as recommendedCnt, (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
 	</select>
 	
 	<select id="showRestaurantDetail" resultType="com.green.jejuplus.dto.contents.RestaurantDetailDto">
@@ -21,7 +21,7 @@
 	</select>
 	
 	<select id="findLodgingList" resultType="com.green.jejuplus.dto.contents.LodgingListDto">
-		select (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
+		select (select count(*) from tb_recommended r WHERE c.contents_id = r.contents_id ) as recommendedCnt, (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
 	</select>
 	
 	<select id="showLodgingDetail" resultType="com.green.jejuplus.dto.contents.LodgingDetailDto">
@@ -29,7 +29,7 @@
 	</select>
 	
 	<select id="findShoppingList" resultType="com.green.jejuplus.dto.contents.ShoppingListDto">
-		select (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
+		select (select count(*) from tb_recommended r WHERE c.contents_id = r.contents_id ) as recommendedCnt, (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
 	</select>
 
 	<select id="showShoppingDetail" resultType="com.green.jejuplus.dto.contents.ShoppingDetailDto">
