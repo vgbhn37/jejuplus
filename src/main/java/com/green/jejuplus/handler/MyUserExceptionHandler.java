@@ -4,6 +4,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.green.jejuplus.handler.exception.CustomAdminException;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.handler.exception.UnAuthorizedException;
 
@@ -39,6 +40,17 @@ public class MyUserExceptionHandler {
 		sb.append("<script>");
 		sb.append("alert(' "+ e.getMessage() +" ');");
 		sb.append("location.href='/user/sign-in'");
+		sb.append("</script>");
+		return sb.toString();
+	}
+	
+	// 관리자 인터셉트 후
+	@ExceptionHandler(CustomAdminException.class)
+	public String basicException(CustomAdminException e) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("alert(' "+ e.getMessage() +" ');");
+		sb.append("location.href='/main'");
 		sb.append("</script>");
 		return sb.toString();
 	}

@@ -50,8 +50,10 @@ nav {
 
 .menu a {
     text-decoration: none;
-    color: white;
+    color: black;
 }
+
+
 
 /* 날씨 */
 .app {

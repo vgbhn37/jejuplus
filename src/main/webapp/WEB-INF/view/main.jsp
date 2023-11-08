@@ -178,11 +178,7 @@ $(document).ready(function() {
     // "다음" 버튼 클릭 시 슬라이드 오른쪽으로 이동
     $('#slide-next-2').click(function() {
         $('#multiple-items-2').slick('slickNext');
-    });
-    
-    
-    
-    
+    });    
 });
 
 

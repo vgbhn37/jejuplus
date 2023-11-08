@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.green.jejuplus.handler.exception.CustomException;
+import com.green.jejuplus.handler.exception.CustomAdminException;
 import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.util.Define;
 
@@ -25,7 +25,7 @@ public class AdminInterceptor implements HandlerInterceptor{
 			        
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		if(principal == null || principal.getLevelId() != 2) {
-			throw new CustomException("관리자만 접근가능합니다.",
+			throw new CustomAdminException("관리자만 접근가능합니다.",
 					HttpStatus.UNAUTHORIZED);
 		}
 		return true;

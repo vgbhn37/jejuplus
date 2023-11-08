@@ -11,7 +11,7 @@
         var email = $("input[name='email']").val();
         console.log(username);
         console.log(typeof username);
-        
+        alert("이메일을 확인 중 입니다. 안내가 나올때까지 잠시만 기다려주세요");
         $.ajax({
             type: 'POST',
             url: '/user/check-id-email',
@@ -62,6 +62,7 @@
                 dataType: 'text',
                 success: function(response) {
                     alert(response);
+                    window.location.href = "/user/sign-in";
                 },
                 error: function(xhr, status, error) {
                     alert("오류: " + error);

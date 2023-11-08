@@ -20,6 +20,7 @@
 	                emailChecked = false;
 	            } else {
 	                // Send a request to get the verification code
+	                alert("이메일을 확인 중 입니다. 안내가 나올때까지 잠시만 기다려주세요");
 	                $.post("/user/send-verification-code", { email: email })
 	                    .done(function(response) {
 	                        alert("인증 코드가 이메일로 전송되었습니다.");
