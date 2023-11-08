@@ -13,6 +13,9 @@
 				style="background-color: #E2E2E2;">
 				<nav class="navbar-sidebar">
 					<ul class="list-unstyled navbar__list">
+					<li class="active"><a href="/main">
+								<i class="fas fa-table"></i>Main
+						</a></li>
 
 						<li class="active"><a href="/admin/adminUserManagement">
 								<i class="fas fa-table"></i>User

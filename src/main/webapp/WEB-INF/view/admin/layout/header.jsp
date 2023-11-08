@@ -149,8 +149,6 @@ to {
 						<li class="active"><a href="/main">
 								<i class="fas fa-table"></i>Main
 						</a></li>
-
-
 						<li class="active"><a href="/admin/adminUserManagement">
 								<i class="fas fa-table"></i>User
 						</a></li>

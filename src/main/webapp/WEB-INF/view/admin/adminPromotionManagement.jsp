@@ -2,37 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/admin/layout/header.jsp"%>
 
-<!-- MENU SIDEBAR-->
-<aside class="menu-sidebar d-none d-lg-block">
-	<div class="logo">
-		<a href="#"> <img src="/images/icon/logo.png" alt="Cool Admin">
-		</a>
-	</div>
-	<div class="menu-sidebar__content js-scrollbar1 ps">
-		<nav class="navbar-sidebar">
-			<ul class="list-unstyled navbar__list">
 
-				<li class="active"><a href="/admin/adminUserManagement"> <i
-						class="fas fa-table"></i>User
-				</a></li>
-				<li class="active"><a href="/admin/adminPromotionManagement">
-						<i class="fas fa-table"></i>Promotion
-				</a></li>
-				<li class="active"><a href="/admin/insertPromotion"> <i
-						class="fas fa-table"></i>Promotion Write
-				</a></li>
-
-			</ul>
-		</nav>
-		<div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-			<div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-		</div>
-		<div class="ps__rail-y" style="top: 0px; right: 0px;">
-			<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
-		</div>
-	</div>
-</aside>
-<!-- END MENU SIDEBAR-->
 
 <!-- PAGE CONTAINER-->
 <div class="page-container">

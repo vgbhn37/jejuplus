@@ -5,10 +5,11 @@ width:600px;
 margin-top:5%;
 }
 
-.signin-body > input[type='text'],input[type='password'] {
-  width:100%;
+.signin-body > .form-group > .signin-text{
+	width: 60%; 
+	height:48px; 
+	margin: 0 auto;
 }
-
 .signin-body > .signin-location-btn {
 display:flex;
 justify-content: center;
@@ -42,50 +43,72 @@ border-radius: 5px;
 
 /* 회원가입 */
 .register-body{
-width:600px;
+width:800px;
 margin-top:5%;
 }
 
-.register-body > label {
-margin-top: 4%;
+.register-body > .register-textButton > label   {
+margin-right: 5%;
 }
+ .label-fixed-width {
+        width: 80px; /* 라벨의 고정 너비 설정 */
+        display: inline-block;
+    }
 
-.register-body > .form-inline input[type='text'],.form-inline input[type='password'] {
-  width:100%;
-}
+ .register-textButton {
+        display: flex;
+        margin-left: 15%;
+  
+    }
 
+    .register-textField {
+        flex: 1;
+        margin-right: 10px;
+        max-width: 50%;
+        height: 50px;
+        border: 1px solid lightgrey;
+        border-radius: 10px;
+    }
+
+    .register-button {
+        margin: 0;
+    }
+    
 .register-space {
   width: 4px;
   height: auto;
   display: inline-block;
 }
 
-.register-body> .register-button {
+.register-body> .register-textButton> .register-button {
 float:right;
 height: 40px;
-background-color: #F37021;
+background-color: lightgray;
 border: 1px solid transparent;
-border-radius: 5px;
+border-radius: 10px;
+color: black;
 }
 
-.register-body> .register-button:hover{
+.register-body> .register-textButton> .register-button:hover{
 filter: brightness(1.5);
 }
 
 #register-final{
-text-align: right;
+text-align: center;
 }
 
 #register-final-button{
-width:30%;
+width:45%;
 display :inline-block;
-height: 50px;
+height: 60px;
 margin-bottom: 10%;
 background-color: #F37021;
 border: 1px solid transparent;
 cursor:pointer;
 color: white;
+border-radius: 10px;
 }
+
 #register-final-button:hover{
 filter: brightness(1.5);
 }
@@ -172,7 +195,7 @@ width:600px;
 margin-top: 7%;
 }
 
-.userUpdate-body > .form-inline input[type='text'],.form-inline input[type='password'] {
+.userUpdate-body > .form-inline input[type='text'],.userUpdate-body > .form-inline input[type='password'] {
   width:100%;
 }
 

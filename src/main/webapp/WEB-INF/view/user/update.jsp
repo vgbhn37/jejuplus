@@ -90,7 +90,6 @@
 							class="form-control mb-2 mr-sm-2">
 						<div id="confirm-password-update-btn" class="btn  user-btn mb-2">비밀번호
 							변경</div>
-						<hr class="my-2">
 					</div>
 				</div>
 
