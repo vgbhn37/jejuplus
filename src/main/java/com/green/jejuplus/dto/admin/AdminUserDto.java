@@ -21,5 +21,6 @@ public class AdminUserDto {
 	String isKakao;
 	String pageSize;
 	String offset;
+	String category;
 	
 }

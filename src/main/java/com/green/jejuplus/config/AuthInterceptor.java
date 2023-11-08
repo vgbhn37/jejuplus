@@ -22,13 +22,13 @@ public class AuthInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		System.out.println("preHandle() 메서드 호출");
 		HttpSession session  = request.getSession();
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		if(principal == null) {
+			System.out.println("인터셉터 발동");
 			throw new UnAuthorizedException("로그인 먼저 해주세요",
 					HttpStatus.UNAUTHORIZED);
-		}
+		} 
 		
 		return true;
 		}

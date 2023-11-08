@@ -55,6 +55,60 @@
     
        <select id="count" resultType="int">
   SELECT COUNT(*) FROM tb_user;
+	</select>
+
+<!-- src/main/resources/mapper/UserMapper.xml -->
+
+<!-- Search users with category and search -->
+<select id="searchUsers" parameterType="map" resultType="com.green.jejuplus.dto.admin.AdminUserDto">
+    SELECT *
+    FROM tb_user
+    WHERE
+        <choose>
+            <!-- Depending on the category, apply search criteria -->
+             <when test="category == 'all'">
+                1=1
+            </when>
+            <when test="category == 'username'">
+                username LIKE CONCAT('%', #{search}, '%')
+            </when>
+            <when test="category == 'email'">
+                email LIKE CONCAT('%', #{search}, '%')
+            </when>
+            <when test="category == 'fullname'">
+                fullname LIKE CONCAT('%', #{search}, '%')
+            </when>
+            <when test="category == 'phoneNumber'">
+                phone_number LIKE CONCAT('%', #{search}, '%')
+            </when>
+            
+        </choose>
+    LIMIT #{pageSize} OFFSET #{offset}
+</select>
+
+<!-- Count users with category and search -->
+<select id="countWithSearch" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+    FROM tb_user
+    WHERE
+        <choose>
+        <when test="category == 'all'">
+                1=1
+            </when>
+            <!-- Depending on the category, apply search criteria -->
+            <when test="category == 'username'">
+                username LIKE CONCAT('%', #{search}, '%')
+            </when>
+            <when test="category == 'email'">
+                email LIKE CONCAT('%', #{search}, '%')
+            </when>
+            <when test="category == 'fullname'">
+                fullname LIKE CONCAT('%', #{search}, '%')
+            </when>
+            <when test="category == 'phoneNumber'">
+                phone_number LIKE CONCAT('%', #{search}, '%')
+            </when>
+        </choose>
 </select>
 
 

@@ -4,37 +4,50 @@
 
 <mapper namespace="com.green.jejuplus.repository.interfaces.ContentsRepository"> 
 
-	<select id="findTouristAreaList" resultType="com.green.jejuplus.dto.TouristAreaListDto">
-		select * from tb_contents where contents_label = #{contentsLabel}
+	<select id="findTouristAreaList" resultType="com.green.jejuplus.dto.contents.TouristAreaListDto">
+		select (select count(*) from tb_recommended r WHERE c.contents_id = r.contents_id ) as recommendedCnt, (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
 	</select>
 	
-	<select id="showTouristAreaDetail" resultType="com.green.jejuplus.dto.TouristAreaDetailDto">
+	<select id="showTouristAreaDetail" resultType="com.green.jejuplus.dto.contents.TouristAreaDetailDto">
 		select * from tb_contents where contents_id = #{contentsId}
 	</select>
 
-	<select id="findRestaurantList" resultType="com.green.jejuplus.dto.RestaurantListDto">
-		select * from tb_contents where contents_label = #{contentsLabel}
+	<select id="findRestaurantList" resultType="com.green.jejuplus.dto.contents.RestaurantListDto">
+		select (select count(*) from tb_recommended r WHERE c.contents_id = r.contents_id ) as recommendedCnt, (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
 	</select>
 	
-	<select id="showRestaurantDetail" resultType="com.green.jejuplus.dto.RestaurantDetailDto">
+	<select id="showRestaurantDetail" resultType="com.green.jejuplus.dto.contents.RestaurantDetailDto">
 		select * from tb_contents where contents_id = #{contentsId}
 	</select>
 	
-	<select id="findLodgingList" resultType="com.green.jejuplus.dto.LodgingListDto">
-		select * from tb_contents where contents_label = #{contentsLabel}
+	<select id="findLodgingList" resultType="com.green.jejuplus.dto.contents.LodgingListDto">
+		select (select count(*) from tb_recommended r WHERE c.contents_id = r.contents_id ) as recommendedCnt, (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
 	</select>
 	
-	<select id="showLodgingDetail" resultType="com.green.jejuplus.dto.LodgingDetailDto">
+	<select id="showLodgingDetail" resultType="com.green.jejuplus.dto.contents.LodgingDetailDto">
 		select * from tb_contents where contents_id = #{contentsId}
 	</select>
 	
-	<select id="findShoppingList" resultType="com.green.jejuplus.dto.ShoppingListDto">
-		select * from tb_contents where contents_label = #{contentsLabel}
+	<select id="findShoppingList" resultType="com.green.jejuplus.dto.contents.ShoppingListDto">
+		select (select count(*) from tb_recommended r WHERE c.contents_id = r.contents_id ) as recommendedCnt, (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
 	</select>
 
-	<select id="showShoppingDetail" resultType="com.green.jejuplus.dto.ShoppingDetailDto">
+	<select id="showShoppingDetail" resultType="com.green.jejuplus.dto.contents.ShoppingDetailDto">
 		select * from tb_contents where contents_id = #{contentsId}
 	</select>
 	
+	
+	<select id="selectFavoriteList" resultType="com.green.jejuplus.dto.contents.FavoriteDto">
+		select c.contents_id, c.contents_label, c.title, c.region1, c.region2, c.thumbnail_path
+		from tb_contents as c
+		inner join tb_favorite as f
+		on c.contents_id = f.contents_id
+		where f.user_id = #{userId}
+	</select>
+	
+	<select id="selectRecommend" resultType="com.green.jejuplus.repository.model.Contents">
+		select * from tb_contents where user_id = #{userId} and contents_id = #{contentsId} limit 1
+	</select>
 
+	
 </mapper>

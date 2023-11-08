@@ -1,109 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<style>
-	#box {
-		width:1200px;
-		text-align: center;
-		margin: auto;
-	}
-	#img-box {
-		width:100%;
-		height:300px;
-		overflow:hidden;
-	}
-	#imgPath {
-		width:100%;
-		height:100%;
-	    object-fit: cover;
-	}
-	#title {
-		text-alight:center;
-		font-size: 80px;
-		font-weight:bold;
-		margin-top: 50px;
-	}
-	#introduction {
-		color: orange;
-		font-size: 35px;
-		margin: auto;
-	}
-	#tag {
-		font-size: 20px;
-		color:grey;
+<%@ include file="/WEB-INF/view/header.jsp"%>
 
-	}
-	#map{
-		margin: auto;
-		width: 1200px;
-		height: 600px;
-	}
-	#infomation {
-		margin: auto;
-		width: 1200px;
-		height: 100px;
-		background-color:#f4f4f4;
-		font-size: 20px;
-	}
-	.subTitle {
-		margin: auto;
-		width: 1200px;
-		height: 30px;
-		background: #fdf0e5;
-		border: 1.5px solid orange;
-		color: orange;
-		font-size: 20px;
-	}
-	.icon {
-		width: 60px;
-	}
-	#icon {
-		width:1200px;
-		font-size: 20px;
-		margin: auto;
+<link rel="stylesheet" href="/css/contents/detail.css" />
 
-	}
-	#insertReview fieldset{
-    display: inline-block;
-    direction: rtl;
-    border:0;
-	}
-	#insertReview fieldset legend{
-	    text-align: right;
-	}
-	#insertReview input[type=radio]{
-	    display: none;
-	}
-	#insertReview label{
-	    font-size: 3em;
-	    color: transparent;
-	    text-shadow: 0 0 0 #f0f0f0;
-	}
-	#insertReview label:hover{
-	    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-	}
-	#insertReview label:hover ~ label{
-	    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-	}
-	#insertReview input[type=radio]:checked ~ label{
-	    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-	}
-	#reviewContent {
-	    width: 1200px;
-	    height: 150px;
-	    padding: 10px;
-	    box-sizing: border-box;
-	    border: solid 1.5px #D3D3D3;
-	    border-radius: 5px;
-	    font-size: 16px;
-	    resize: none;
-	}
-</style>
 <body>
 	<div>
 		<div id="img-box">
@@ -113,42 +13,85 @@
 	<div id="box">		
 		<br>
 		<div id="title">${touristAreaDetail.title}</div>
-		<br><br>
+		<br>
 		<div id="introduction">" ${touristAreaDetail.introduction} "</div>
-		<br><br>
+		<br>
 		<div id="tag">${touristAreaDetail.tag}</div>
-		<br><br>
-		<hr>
+		<div><input type="hidden" value="${touristAreaDetail.contentsLabel}" id="contentsLabel"></div>
+		<br><hr>
+		
 		<table id="icon">
 			<tr>
-				<td><img src="/images/좋아요.png" class="icon"></td>
+				<td>
+					<c:if test="${principal != null}">
+						<c:choose>
+							<c:when test="${isRecommended}">
+								<img src="/images/좋아요2.png" class="icon" id="recommended" >
+							</c:when>
+							<c:otherwise>
+								<img src="/images/좋아요.png" class="icon" id="unrecommended">
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+					<c:if test="${principal == null}">
+						<img src="/images/좋아요.png" class="icon">
+					</c:if>
+				</td>
 				<td><a href="#insertReview"><img src="/images/리뷰.png" class="icon"></a></td>
-				<td><img src="/images/저장.png" class="icon"></td>
+				<td>
+					<input type="hidden" id="userId" value="${principal.userId}">
+					<c:if test="${principal != null}">
+						<c:choose>
+							<c:when test="${isFavorite}">
+								<img src="/images/저장2.png" class="icon" id="favorite" >
+							</c:when>
+							<c:otherwise>
+								<img src="/images/저장.png" class="icon" id="unfavorite">
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+					<c:if test="${principal == null}">
+						<img src="/images/저장.png" class="icon">
+					</c:if>
+				</td>
 			</tr>
 			<tr>
 				<td>추천하기</td>
 				<td>리뷰쓰기</td>
-				<td>일정추가</td>
+				<td>저장하기</td>
 			</tr>
 		</table>
-		<hr>
-		<br><br>
-		<div class="subTitle">상세정보</div>
-		<br><br>
+		<hr><br><br>
+		<div class="subTitle">상세정보</div><br>
+		
 		<div>
 			<div id=map>지도</div>
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	23d4bf3926d523313e54a46d82cbb016"></script>
-		</div>
+		</div><br>
 		<div id="infomation">
-			<div>${touristAreaDetail.title}</div>
-			<div>주소 : ${touristAreaDetail.roadAddress}</div>
-			<div>연락처 : ${touristAreaDetail.phoneNo}</div>
+			<div id="infomation-title">기본정보</div>
+			<hr>
+			<table width="1000px">
+				<tr>
+					<th>장소</th>
+					<td style="text-align:left">${touristAreaDetail.title}</td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td style="text-align:left">${touristAreaDetail.roadAddress}</td>
+				</tr>
+				<tr>
+					<th>연락처</th>
+					<td style="text-align:left">${touristAreaDetail.phoneNo}</td>
+				</tr>
+			</table>
 		</div>
-		<br><br>
+		<br><br><br>
 		<div class="subTitle">리뷰</div>
-		<br><br>
+		<br>
 	</div>
-	<form class="mb-3" name=insertReview id="insertReview" method="post">
+	
+	<form name="insertReview" id="insertReview" method="post">
 		<fieldset>
 			<span class="text-bold">별점을 선택해주세요</span>
 			<input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1">★</label>
@@ -163,21 +106,71 @@
 		<div>
 			<input type="hidden" id="contentsId" value="${touristAreaDetail.contentsId}">
 		</div>
-		<input type="submit" value="등록" id="insertReviewBtn">
+		<div id="review-btn"><input type="button" value="리뷰등록" id="insertReviewBtn"></div>
 	</form>
-	<div>
-		<c:forEach var="review" items="${review}">
-			<div><input type="hidden" value="${review.reviewId}" id="reviewId"></div>
-			<div>${review.userId}</div>
-			<div>${review.reviewContent}</div>
-			<div>${review.createdAt}</div>
-			<div>${review.reviewRecommend}</div>
-			<input type="submit" value="수정" id="updateReviewBtn">
-			<input type="submit" value="삭제" id="deleteReviewBtn">
-		</c:forEach>
-		<hr>
+	<br>
+	<br>
+	
+	<div id="reviewList">
+			<c:forEach var="review" items="${review}">
+	<table width="1000px">
+		<tbody>
+				<tr>
+					<td width="10%">
+						<div><input type="hidden" value="${review.reviewId}" id="reviewId"></div>
+						<div id="username">${review.username}</div>
+					</td>
+					<td width="8%">
+						<div>
+							<span class="${review.reviewStar>=1 ? "yellowStar" : "greyStar"}">★</span>
+							<span class="${review.reviewStar>=2 ? "yellowStar" : "greyStar"}">★</span>
+							<span class="${review.reviewStar>=3 ? "yellowStar" : "greyStar"}">★</span>
+							<span class="${review.reviewStar>=4 ? "yellowStar" : "greyStar"}">★</span>
+							<span class="${review.reviewStar>=5 ? "yellowStar" : "greyStar"}">★</span>
+						</div>					
+					</td>
+					<td width="64%">
+						<div id="reviewStar">${review.reviewStar}</div>
+					</td>
+					<td style="text-align:right" width="20%">
+						<div id="reviewDate">${review.createdAt}</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" width="85%" style="word-break:break-all">${review.reviewContent}</td>
+					<c:if test="${review.userId eq principal.userId}">
+						<td style="text-align:right" width="15%"><input type="button" value="수정" id="modifyReviewBtn">
+						<input type="button" value="삭제" id="deleteReviewBtn"></td>
+					</c:if>
+				</tr>
+		</tbody>
+	</table>
+	<br><hr><br>
+			</c:forEach>
+	</div>
+	
+	<div id="modal">
+		<div class="modal-content">
+			<div id="modal-title">리뷰 수정</div>
+			<form name="modifyReview" id="modifyReview" method="post">
+				<fieldset>
+					<span class="text-bold">별점을 선택해주세요</span>
+					<input type="radio" name="modifyStar" value="5" id="rate_1"><label for="rate_1">★</label>
+					<input type="radio" name="modifyStar" value="4" id="rate_2"><label for="rate_2">★</label>
+					<input type="radio" name="modifyStar" value="3" id="rate_3"><label for="rate_3">★</label>
+					<input type="radio" name="modifyStar" value="2" id="rate_4"><label for="rate_4">★</label>
+					<input type="radio" name="modifyStar" value="1" id="rate_5"><label for="rate_5">★</label>
+				</fieldset>
+				<textarea id="modifyContent" placeholder="직접 경험한 솔직한 리뷰를 남겨주세요."></textarea>
+			</form>
+			<div id="modal-button">
+				<button id="modifyModal">수정완료</button>
+				<button id="closeModal">취소</button>
+			</div>
+		</div>
 	</div>
 </body>
+
 <script>
 	const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	
@@ -198,90 +191,10 @@
 	// 마커가 지도 위에 표시되도록 설정
 	marker.setMap(map);
 	
-	const insertReviewBtn = document.getElementById("insertReviewBtn")
-	let contentsId = document.getElementById("contentsId").value;
-
-    // 버튼 클릭 이벤트 감지
-    insertReviewBtn.addEventListener("click", () => {
-
-        // 닉네임과 댓글 내용에 작성된 내용으로 객체를 생성
-        // id 값으로 입력된 값을 가져옴
-        const review = {
-        	reviewContent: document.getElementById("reviewContent").value,
-        	contentsId: document.getElementById("contentsId").value
-        }
-        
-        const url = "/api/contents/touristAreaDetail/" + contentsId + "/review";
-
-        fetch(url, {
-            method: "POST", // POST 요청
-            body: JSON.stringify(review),  // comment 객체를 JSON 형식으로 변환하여 보냄
-            headers: {
-                "Content-Type": "application/json", // body에 담긴 객체의 type이 무엇인지 명시
-            }
-        }).then(response => {
-            // fetch 응답 처리
-            // 응답이 돌아오는 경우에 대한 처리
-
-            // http 응답 코드에 따른 메세지 출력
-            const msg = (response.ok) ? "댓글이 등록되었습니다." : "댓글 등록 실패";
-            alert(msg);
-
-            // 현재 페이지 새로고침
-            window.location.reload();
-        });
-    });
-    
-	const updateReviewBtn = document.getElementById("updateReviewBtn");
-	updateReviewBtn.addEventListener("click", () => {
-		
-		const review = {
-			userId: document.getElementById("userId").value,
-			reviewId: document.getElementById("reviewId").value,
-			contentsId: document.getElementById("contentsId").value
-		}
-		
-		const url = "/api/review/"+ reviewId;
-		fetch(url, {
-			method: "PATCH",
-			body: JSON.stringify(review),
-			headers: {
-				"Content-Type": "application/json"
-			}
-		}).then(response => {
-			const msg = (response.ok) ? "댓글이 수정되었습니다.": "댓글 수정 실패";
-            alert(msg);
-            
-            window.location.reload();
-		});
-	})
-	
-	
-	const deleteReviewBtn = document.getElementById("deleteReviewBtn");
-	
-	deleteReviewBtn.addEventListener("click", () => {
-		
-
-			const reviewId = document.getElementById("reviewId").value;
-			console.log(reviewId);
-
-			
-			const url = "/api/review/" + reviewId;
-			console.log(url);
-			
-			fetch(url, {
-				method: "DELETE",
-				headers: {
-					"Content-Type": "application/json"
-				}
-			}).then(response => {
-				const msg = (response.ok) ? "댓글이 삭제되었습니다.": "댓글 삭제 실패";
-	            alert(msg);
-	            
-	            window.location.reload();
-			});
-		})
-		
+	const modal = document.getElementById("modal");
+	const openModalBtn = document.getElementById("modifyReviewBtn");
+	const closeMadalBtn = document.getElementById("closeModal");
 	
 </script>
-</html>
+<script src="/js/contents/contents.js"></script>
+<%@ include file="/WEB-INF/view/footer.jsp"%>

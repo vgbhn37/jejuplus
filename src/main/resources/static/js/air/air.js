@@ -3,6 +3,7 @@
  * 강중현
  */
 
+
 /* main 달력 start */
 $(document).ready(function() {
 	var depPlandTime_input = $('input[name="depPlandTime"]');
@@ -187,42 +188,57 @@ $(document).ready(function() {
 });
 /* 결제버튼 end */
 
+/* 왕복 편도 라디오 버튼 start */
+$(document).ready(function() {
+	// 왕복 라디오 버튼 선택 시
+	$('#round-trip').on('change', function() {
+		if ($(this).is(':checked')) {
+			// 왕복 선택 시 가는날과 오는날 모두 활성화
+			$('input[name="depPlandTime"]').prop('disabled', false);
+			$('input[name="arrPlandTime"]').prop('disabled', false);
+			// 오는날 레이블과 입력 필드 보이기
+			$('.input-group-m2').show();
+		}
+	});
 
-/* 구매자와 동일 체크 */
-// 구매자 정보 입력 요소들
-const buyerLastNameInput = document.querySelector('.info-body input:nth-child(1)');
-const buyerFirstNameInput = document.querySelector('.info-body input:nth-child(3)');
-const buyerPhoneInput = document.querySelector('.info-body input:nth-child(5)');
-const buyerEmailInput = document.querySelector('.info-body input:nth-child(7)');
+	// 편도 라디오 버튼 선택 시
+	$('#oneway').on('change', function() {
+		if ($(this).is(':checked')) {
+			// 편도 선택 시 가는날만 활성화, 오는날 비활성화
+			$('input[name="depPlandTime"]').prop('disabled', false);
+			$('input[name="arrPlandTime"]').prop('disabled', true);
+			// 오는날 레이블과 입력 필드 숨기기
+			$('.input-group-m2').hide();
+		}
+	});
+});
 
-// 탑승객 정보 입력 요소들
-const passengerLastNameInput = document.querySelector('.info-body input:nth-child(11)');
-const passengerFirstNameInput = document.querySelector('.info-body input:nth-child(13)');
-const passengerPhoneInput = document.querySelector('.info-body input:nth-child(15)');
-const passengerEmailInput = document.querySelector('.info-body input:nth-child(17)');
+/* 왕복 편도 라디오 버튼 end */
 
-// "구매자와 동일" 체크박스
-const sameInfoCheckbox = document.querySelector('.same-info');
+/*  */
+$(document).ready(function() {
+	// "구매자와 동일" 라디오 버튼 클릭 시
+	$('#same').click(function() {
+		if (this.checked) {
+			const customerName = $('input[name=customer-name]').val();
+			const customerPhone = $('input[name=customer-phone]').val();
+			const customerEmail = $('input[name=customer-email]').val();
 
-// 체크박스 상태가 변경될 때 실행되는 함수
-function handleCheckboxChange() {
-	if (sameInfoCheckbox.checked) {
-		// 구매자 정보를 탑승객 정보로 복사
-		passengerLastNameInput.value = buyerLastNameInput.value;
-		passengerFirstNameInput.value = buyerFirstNameInput.value;
-		passengerPhoneInput.value = buyerPhoneInput.value;
-		passengerEmailInput.value = buyerEmailInput.value;
-	} else {
-		// 체크박스가 해제되면 탑승객 정보 입력란을 비움
-		passengerLastNameInput.value = '';
-		passengerFirstNameInput.value = '';
-		passengerPhoneInput.value = '';
-		passengerEmailInput.value = '';
-	}
-}
+			$('input[name=username]').val(customerName);
+			$('input[name=phone]').val(customerPhone);
+			$('input[name=email]').val(customerEmail);
+		}
+	});
 
-// 체크박스 상태 변경을 감지하는 이벤트 리스너 추가
-sameInfoCheckbox.addEventListener('change', handleCheckboxChange);
+	$('#new').click(function() {
+		if (this.checked) {
+			// 탑승객 1 정보 초기화
+			$('input[name=username]').val("");
+			$('input[name=phone]').val("");
+			$('input[name=email]').val("");
+		}
+	});
+});
 
 
 

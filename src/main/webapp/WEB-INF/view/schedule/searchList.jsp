@@ -13,7 +13,7 @@
 			<p class="card-text">${item.region1 }>${item.region2}</p>
 			<p class="card-text tag">${item.tag }</p>
 			<button class="btn btn-orange float-right"
-				onclick="addList(${item.contentsId},'${item.title}','${item.region1}','${item.region2}','${item.contentsLabel}',${item.longitude},${item.latitude})">일정추가</button>
+				onclick="scheduleDetailEdit.addToScheduleList(${item.contentsId},'${item.title}','${item.region1}','${item.region2}','${item.contentsLabel}',${item.longitude},${item.latitude})">일정추가</button>
 		</div>
 	</div>
 </c:forEach>
@@ -23,18 +23,18 @@
 		<ul class="pagination" id="pagination">
 			<c:if test="${pagination.prev}">
 				<li class="page-item "><a class="page-link"
-					onclick="searchList(${pagination.beginPage-1})" data-page="${pagination.beginPage-1}">Prev</a></li>
+					onclick="scheduleDetailEdit.printSearchList(${pagination.beginPage-1})" data-page="${pagination.beginPage-1}">Prev</a></li>
 			</c:if>
 			<c:forEach var="num" begin="${pagination.beginPage}"
 				end="${pagination.endPage}">
 				<li
 					class="${pagination.paging.page == num ? 'page-item active' : ''}"><a
-					class="page-link" onclick="searchList(${num})" data-page="${num}">${num}</a></li>
+					class="page-link" onclick="scheduleDetailEdit.printSearchList(${num})" data-page="${num}">${num}</a></li>
 			</c:forEach>
 
 			<c:if test="${pagination.next}">
 				<li class="page-item"><a class="page-link"
-					onclick="searchList(${pagination.endPage+1})" data-page="${pagination.endPage+1}">Next</a></li>
+					onclick="scheduleDetailEdit.printSearchList(${pagination.endPage+1})" data-page="${pagination.endPage+1}">Next</a></li>
 			</c:if>
 		</ul>
 		<!-- 페이지 관련 버튼을 클릭 시 같이 숨겨서 보낼 값 -->

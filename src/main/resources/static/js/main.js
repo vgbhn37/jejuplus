@@ -3,20 +3,7 @@
  * 강중현
  */
 
-// main 달력
-$(document).ready(function () {
-    $(function () {
-        $('input[name="daterange"]').daterangepicker({
-            startDate: moment(),
-            endDate: moment(),
-            opens: 'center',
-            autoApply: true,
-            locale: {
-                format: 'DD/MM/YYYY',
-            },
-        });
-    });
-});
+
 
 
 
@@ -1694,3 +1681,5 @@ $(document).ready(function () {
   }
 
 })(jQuery);
+
+

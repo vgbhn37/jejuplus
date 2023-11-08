@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class Review {
+	private Integer reviewStar;
 	private Integer reviewId;
 	private Integer contentsId;
 	private Integer userId;

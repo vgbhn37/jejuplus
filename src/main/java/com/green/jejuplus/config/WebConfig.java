@@ -25,9 +25,15 @@ public class WebConfig implements WebMvcConfigurer{
 		@Override
 		public void addInterceptors(InterceptorRegistry registry) {
 			registry.addInterceptor(authInterceptor)
-			.addPathPatterns("/schedule/**");
+			.addPathPatterns("/schedule/**")
+			.addPathPatterns("/user/userUpdate/**")
+			.addPathPatterns("/user/delete-confirmation")
+			.addPathPatterns("/user/userDelete")
+			.excludePathPatterns("/error/**"); 
 			
 			registry.addInterceptor(amdinInterceptor).addPathPatterns("/admin/**");
+			
+			
 		}
 		
 	@Bean // IoC 관리 대상 -> 싱글톤 

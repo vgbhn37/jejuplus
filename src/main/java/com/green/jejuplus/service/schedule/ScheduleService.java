@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.green.jejuplus.dto.schedule.ScheduleDetailDto;
+import com.green.jejuplus.dto.schedule.ScheduleDto;
+import com.green.jejuplus.dto.schedule.ScheduleItemDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.interfaces.ScheduleRepository;
 import com.green.jejuplus.repository.model.Contents;
@@ -118,8 +121,75 @@ public class ScheduleService {
 	}
 
 	public Schedule findScheduleById(Integer scheduleId) {
-
-		return scheduleRepository.findScheduleById(scheduleId);
+		
+		Schedule schedule = scheduleRepository.findScheduleById(scheduleId);
+		if(schedule==null) {
+			throw new CustomException("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+		}
+		
+		return schedule;
+	}
+	
+	public List<Schedule> findScheduleByUserId(Integer UserId){
+		
+		return scheduleRepository.findScheduleByUserId(UserId);
+	}
+	
+	public String insertScheduleDetail(List<ScheduleDetailDto> scheduleDetailDto) {
+		
+		for (ScheduleDetailDto dto : scheduleDetailDto) {
+			int result = scheduleRepository.insertScheduleDetail(dto);
+			if(result!= 1) {
+				return "fail";
+			}
+		}
+		
+		return "success";
+	}
+	
+	public void deleteScheduleDetailByDay(ScheduleDetailDto scheduleDetailDto) {
+		
+		scheduleRepository.deleteScheduleDetailByDay(scheduleDetailDto);
+	}
+	
+	public List<ScheduleItemDto> requestList(Integer scheduleId, Integer itemDay){
+		
+		return scheduleRepository.findScheduleDetailByDay(scheduleId, itemDay);
+	}
+	
+	public void insertSchedule(ScheduleDto scheduleDto) {
+		
+		int result = scheduleRepository.insertSchedule(scheduleDto);
+		if(result!=1) {
+			throw new CustomException("일정 추가에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	public Integer findNewestScheduleIdByUserId(Integer userId) {
+		
+		return scheduleRepository.findNewestScheduleIdByUserId(userId);
+	}
+	
+	public void updateSchedule(Schedule schedule) {
+		
+		int result = scheduleRepository.updateSchedule(schedule);
+		if(result!=1) {
+			throw new CustomException("일정 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	public void deleteSchedule(Integer scheduleId) {
+		scheduleRepository.deleteSchedule(scheduleId);
+	}
+	
+	public Contents findContentsById(Integer contentsId) {
+		Contents contents = scheduleRepository.findContentsById(contentsId);
+		if(contents==null) {
+			throw new CustomException("컨텐츠를 찾아오는 데 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return contents;
 	}
 	
 	//해쉬태그(#)를 붙여줌
