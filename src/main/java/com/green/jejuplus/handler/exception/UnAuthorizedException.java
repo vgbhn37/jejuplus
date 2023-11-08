@@ -12,6 +12,7 @@ public class UnAuthorizedException extends RuntimeException {
 	public UnAuthorizedException(String message, HttpStatus status) {
 		super(message);
 		this.status = status;
+		System.out.println("이셉션");
 	}
 
 }

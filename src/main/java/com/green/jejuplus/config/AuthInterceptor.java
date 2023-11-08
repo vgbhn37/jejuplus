@@ -28,7 +28,7 @@ public class AuthInterceptor implements HandlerInterceptor{
 			System.out.println("인터셉터 발동");
 			throw new UnAuthorizedException("로그인 먼저 해주세요",
 					HttpStatus.UNAUTHORIZED);
-		}
+		} 
 		
 		return true;
 		}

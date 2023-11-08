@@ -97,7 +97,7 @@
       </c:choose>
   </div>
 				
-				<li><a href="#">여행 정보</a></li>
+				<li><a href="/contents/touristAreaList">여행 정보</a></li>
 				<li><a href="#" id="toggleButton">날씨</a></li>
 				<div class="app">
 					<div class="sidebar">
