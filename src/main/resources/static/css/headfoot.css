@@ -52,11 +52,11 @@ nav {
 
 #hiddenMenu {
   position: absolute;
-  right: 9.3rem;
+  right: 14.3rem;
   top: 48px;
   border: 1px solid #313131;
   box-sizing: border-box;
-  width: 130px;
+  width: 160px;
   background-color: black;
   padding: 20px;
   border-radius: 30px;
