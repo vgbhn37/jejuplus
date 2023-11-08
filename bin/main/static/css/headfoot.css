@@ -1,8 +1,3 @@
-/**
- * 10-24
- * 강중현
- */
-
 /* 전체 페이지 스타일 */
 * {
     text-decoration: none;
@@ -52,6 +47,22 @@ nav {
     text-decoration: none;
     color: black;
 }
+
+#hiddenMenu {
+  position: absolute;
+  right: 9.3rem;
+  top: 48px;
+  border: 1px solid #313131;
+  box-sizing: border-box;
+  width: 130px;
+  background-color: black;
+  padding: 20px;
+  border-radius: 30px;
+  z-index: 2;
+}
+
+
+
 
 
 

@@ -50,7 +50,7 @@ nav {
 
 .menu a {
 	text-decoration: none;
-	color: black;
+	color: white !important;
 }
 
 /* 날씨 */
@@ -165,7 +165,7 @@ footer>div>section>ul>li>a:hover {
 	background-repeat: no-repeat;
 	background-position: 0%;
 	background-size: cover;
-	height: 550px;
+	height: 600px;
 	text-align: center;
 	color: white;
 }
@@ -173,7 +173,7 @@ footer>div>section>ul>li>a:hover {
 .hero h1 {
 	font-size: 50px;
 	font-weight: bold;
-	margin-top: 100px;
+	margin-top: 130px;
 	color: white;
 }
 

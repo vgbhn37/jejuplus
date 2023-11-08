@@ -1,13 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- main css -->
+
 <link rel="stylesheet" href="/css/main.css" />
 
 <!-- main -->
 <main>
 
 	<section class="hero">
+	<c:set var="isMainPage" value="true" />
 	<%@ include file="/WEB-INF/view/header.jsp"%>
+	
 		<h1>제주를 더하다, 제주플러스</h1>
 		<p>항공권 예약부터 일정까지 제주여행을 더 간편하게!</p>
 		<input type="button" onclick="location.href='/main'" value="버튼활용" id="main_btn">
