@@ -66,10 +66,10 @@ nav {
     margin: 50px 50px 0 0;
     right: 0;
     display: none;
-    height: 450px;
+    height: auto;
     width: 400px;
-
-    border: 1px solid red;
+    border: 1px none red;
+    border-radius: 10px;
 }
 .show-sidebar {
     display: block;
