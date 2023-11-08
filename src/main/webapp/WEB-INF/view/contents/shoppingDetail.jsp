@@ -1,130 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/view/header.jsp"%>
-<style>
-	body{
-		background-color:white;
-	}
-	#box {
-		width:1000px;
-		text-align: center;
-		margin: auto;
-	}
-	#img-box {
-		width:100%;
-		height:300px;
-		overflow:hidden;
-	}
-	#imgPath {
-		width:100%;
-		height:100%;
-	    object-fit: cover;
-	}
-	#title {
-		text-alight:center;
-		font-size: 60px;
-		font-weight:bold;
-		margin-top: 50px;
-	}
-	#introduction {
-		color: orange;
-		font-size: 25px;
-		margin: auto;
-	}
-	#tag {
-		font-size: 18px;
-		color:grey;
+<link rel="stylesheet" href="/css/contents/detail.css" />
 
-	}
-	#map{
-		margin: auto;
-		width: 1000px;
-		height: 600px;
-	}
-	#infomation {
-		margin: auto;
-		width: 1000px;
-		height: 200px;
-		background-color:#f4f4f4;
-		font-size: 18px;
-	}
-	.subTitle {
-		margin: auto;
-		width: 1000px;
-		height: 30px;
-		background: #fdf0e5;
-		border: 1.5px solid orange;
-		color: orange;
-		font-size: 15px;
-		font-weight: bold;
-	}
-	.icon {
-		width: 40px;
-	}
-	#icon {
-		width:1000px;
-		font-size: 15px;
-		margin: auto;
-
-	}
-	.favorite_heart {
-		width: 40px;
-	}
-	#insertReview{
-		margin: auto;
-		width: 1000px;
-	}
-	#insertReview fieldset{
-	    display: inline-block;
-	    direction: rtl;
-	    border:0;
-	}
-	#insertReview fieldset legend{
-	    text-align: right;
-	}
-	#insertReview input[type=radio]{
-	    display: none;
-	}
-	#insertReview label{
-	    font-size: 3em;
-	    color: transparent;
-	    text-shadow: 0 0 0 #f0f0f0;
-	}
-	#insertReview label:hover{
-	    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-	}
-	#insertReview label:hover ~ label{
-	    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-	}
-	#insertReview input[type=radio]:checked ~ label{
-	    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-	}
-	#reviewContent {
-	    width: 1000px;
-	    height: 150px;
-	    padding: 10px;
-	    box-sizing: border-box;
-	    border: solid 1.5px #D3D3D3;
-	    border-radius: 5px;
-	    font-size: 16px;
-	    resize: none;
-	}
-	#reviewList {
-		margin: auto;
-		width: 1000px;
-	}
-	
-	.yellowStar{
-		color: rgba(250, 208, 0, 0.99);
-		margin-left:-5px;
-	}
-	.greyStar {
-		color: #f0f0f0;
-		margin-left:-5px;
-	}
-	
-	
-</style>
 <body>
 	<div>
 		<div id="img-box">
@@ -134,23 +12,23 @@
 	<div id="box">		
 		<br>
 		<div id="title">${shoppingDetail.title}</div>
-		<br><br>
+		<br>
 		<div id="introduction">" ${shoppingDetail.introduction} "</div>
-		<br><br>
+		<br>
 		<div id="tag">${shoppingDetail.tag}</div>
 		<div><input type="hidden" value="${shoppingDetail.contentsLabel}" id="contentsLabel"></div>
-		<br><br>
-		<hr><br>
+		<br><hr>
+		
 		<table id="icon">
 			<tr>
 				<td>
 					<c:if test="${principal != null}">
 						<c:choose>
-							<c:when test="${isRecommend}">
-								<img src="/images/좋아요2.png" class="icon" id="recommend" >
+							<c:when test="${isRecommended}">
+								<img src="/images/좋아요2.png" class="icon" id="recommended" >
 							</c:when>
 							<c:otherwise>
-								<img src="/images/좋아요.png" class="icon" id="unrecommend">
+								<img src="/images/좋아요.png" class="icon" id="unrecommended">
 							</c:otherwise>
 						</c:choose>
 					</c:if>
@@ -172,7 +50,7 @@
 						</c:choose>
 					</c:if>
 					<c:if test="${principal == null}">
-						<img src="/images/저장.png" class="favorite_heart">
+						<img src="/images/저장.png" class="icon">
 					</c:if>
 				</td>
 			</tr>
@@ -182,14 +60,13 @@
 				<td>저장하기</td>
 			</tr>
 		</table>
-		<br><hr>
-		<br><br>
-		<div class="subTitle">상세정보</div>
-		<br><br>
+		<hr><br><br>
+		<div class="subTitle">상세정보</div><br>
+		
 		<div>
 			<div id=map>지도</div>
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	23d4bf3926d523313e54a46d82cbb016"></script>
-		</div><br><br>
+		</div><br>
 		<div id="infomation">
 			<div>기본정보</div>
 			<hr>
@@ -201,7 +78,8 @@
 		<div class="subTitle">리뷰</div>
 		<br>
 	</div>
-	<form class="mb-3" name=insertReview id="insertReview" method="post">
+	
+	<form name="insertReview" id="insertReview" method="post">
 		<fieldset>
 			<span class="text-bold">별점을 선택해주세요</span>
 			<input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1">★</label>
@@ -216,14 +94,20 @@
 		<div>
 			<input type="hidden" id="contentsId" value="${shoppingDetail.contentsId}">
 		</div>
-		<input type="button" value="등록" id="insertReviewBtn">
+		<div id="review-btn"><input type="button" value="리뷰등록" id="insertReviewBtn"></div>
 	</form>
 	<br>
+	<br>
 	<div id="reviewList">
-		<c:forEach var="review" items="${review}">
-			<table>
+			<c:forEach var="review" items="${review}">
+	<table width="1000px">
+		<tbody>
 				<tr>
-					<td>
+					<td width="10%">
+						<div><input type="hidden" value="${review.reviewId}" id="reviewId"></div>
+						<div id="username">${review.username}</div>
+					</td>
+					<td width="8%">
 						<div>
 							<span class="${review.reviewStar>=1 ? "yellowStar" : "greyStar"}">★</span>
 							<span class="${review.reviewStar>=2 ? "yellowStar" : "greyStar"}">★</span>
@@ -232,29 +116,48 @@
 							<span class="${review.reviewStar>=5 ? "yellowStar" : "greyStar"}">★</span>
 						</div>					
 					</td>
-					<td>
-						<div><input type="hidden" value="${review.reviewId}" id="reviewId"></div>
-						<div>${review.username}</div>
+					<td width="64%">
+						<div id="reviewStar">${review.reviewStar}</div>
 					</td>
-					<td>
-						<div>${review.createdAt}</div>
-					</td>
-					<td>
-						<div>${review.reviewRecommend}</div>
+					<td style="text-align:right" width="20%">
+						<div id="reviewDate">${review.createdAt}</div>
 					</td>
 				</tr>
 				<tr>
-					<td>${review.reviewContent}</td>
+					<td colspan="3" width="85%" style="word-break:break-all">${review.reviewContent}</td>
 					<c:if test="${review.userId eq principal.userId}">
-						<td><input type="button" value="수정" id="updateReviewBtn"></td>
-						<td><input type="button" value="삭제" id="deleteReviewBtn"></td>
+						<td style="text-align:right" width="15%"><input type="button" value="수정" id="modifyReviewBtn">
+						<input type="button" value="삭제" id="deleteReviewBtn"></td>
 					</c:if>
 				</tr>
-			</table>
-		<br><hr><br>
-		</c:forEach>
+		</tbody>
+	</table>
+	<br><hr><br>
+			</c:forEach>
+	</div>
+	
+	<div id="modal">
+		<div class="modal-content">
+			<div id="modal-title">리뷰 수정</div>
+			<form name="modifyReview" id="modifyReview" method="post">
+				<fieldset>
+					<span class="text-bold">별점을 선택해주세요</span>
+					<input type="radio" name="modifyStar" value="5" id="rate_1"><label for="rate_1">★</label>
+					<input type="radio" name="modifyStar" value="4" id="rate_2"><label for="rate_2">★</label>
+					<input type="radio" name="modifyStar" value="3" id="rate_3"><label for="rate_3">★</label>
+					<input type="radio" name="modifyStar" value="2" id="rate_4"><label for="rate_4">★</label>
+					<input type="radio" name="modifyStar" value="1" id="rate_5"><label for="rate_5">★</label>
+				</fieldset>
+				<textarea id="modifyContent" placeholder="직접 경험한 솔직한 리뷰를 남겨주세요."></textarea>
+			</form>
+			<div id="modal-button">
+				<button id="modifyModal">수정완료</button>
+				<button id="closeModal">취소</button>
+			</div>
+		</div>
 	</div>
 </body>
+
 <script>
 	const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	
@@ -274,6 +177,10 @@
 
 	// 마커가 지도 위에 표시되도록 설정
 	marker.setMap(map);
+	
+	const modal = document.getElementById("modal");
+	const openModalBtn = document.getElementById("modifyReviewBtn");
+	const closeMadalBtn = document.getElementById("closeModal");
 	
 </script>
 <script src="/js/contents/contents.js"></script>

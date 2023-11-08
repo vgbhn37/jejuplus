@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Contents {
-
 	private Integer contentsId;
 	private String contentsTempId;
 	private String contentsLabel;

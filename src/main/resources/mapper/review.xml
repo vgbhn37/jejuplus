@@ -3,8 +3,13 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.green.jejuplus.repository.interfaces.ReviewRepository">
+
+	<select id="findUsernameByUserId" resultType="String"> <!-- resultType 확인! -->
+		select username from tb_user where user_id = #{userId}
+	</select>
+	
 	<select id="findReviewList" resultType="com.green.jejuplus.dto.contents.ReviewDto">
-		select * from tb_review where contents_id = #{contentsId}
+		select * from tb_review where contents_id = #{contentsId} ORDER BY review_id DESC
 	</select>
 	
 	<insert id="insertReview">
@@ -13,8 +18,8 @@
 	</insert>
 	
 	<update id="updateReview">
-		UPDATE tb_review SET review_content = #{reviewContent}
-		WHERE user_id = #{userId};
+		UPDATE tb_review SET review_star = #{reviewStar}, review_content = #{reviewContent}
+		WHERE user_id = #{userId} and review_id = #{reviewId} 
 	</update>
 	
 	<delete id="deleteReview">
