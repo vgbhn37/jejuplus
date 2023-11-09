@@ -16,6 +16,7 @@ import com.green.jejuplus.dto.user.UserUpdateDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.interfaces.PromotionRepository;
 import com.green.jejuplus.repository.interfaces.UserRepository;
+import com.green.jejuplus.repository.model.Payment;
 import com.green.jejuplus.repository.model.Promotion;
 import com.green.jejuplus.repository.model.PromotionImg;
 import com.green.jejuplus.repository.model.User;
@@ -202,5 +203,13 @@ public class UserService {
 		return images;
 	}
 	
+	/* 강중현 추가 */
+	@Transactional
+	public List<Payment> readOrderList(int userId) {
+		
+		List<Payment> orderList = userRepository.findOrderAll(userId);
+		
+		return orderList;
+	}
 
 }

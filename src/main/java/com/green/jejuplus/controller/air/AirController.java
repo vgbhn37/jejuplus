@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.jejuplus.dto.air.AirPlanDTO;
 import com.green.jejuplus.dto.air.CustomerDTO;
 import com.green.jejuplus.dto.payment.PaymentDTO;
+import com.green.jejuplus.repository.model.Payment;
 import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.service.air.OpenApiAirService;
 import com.green.jejuplus.service.payment.PaymentService;
@@ -165,15 +166,18 @@ public class AirController {
 		System.out.println("받은 user : " + user);
 
 		String pgTid = request.getParameter("pg_tid"); // "pg_tid" 값을 직접 가져옴
-		paymentDTO.setPgTid(pgTid);
 		int userId = user.getUserId();
-		System.out.println("userId 5. : " + userId);
+
+//		System.out.println("userId 5. : " + userId);
+		paymentDTO.setUserId(userId);
+		paymentDTO.setPgTid(pgTid);
 
 		System.out.println("받은 pg_tid : " + pgTid);
 
 		paymentService.insertPayment(paymentDTO, userId);
 
-		// 세션에 customerDTO 데이터 담음
+		// 세션에 데이터 담음
+		session.setAttribute("paymentDTO", paymentDTO);
 		session.setAttribute("customerDTO", customerDTO);
 		System.out.println("booking에서 customerDTO 데이터 넘김 확인 " + customerDTO);
 
@@ -181,8 +185,6 @@ public class AirController {
 		String jsonResult = "1";
 
 		return jsonResult;
-//		return "{name:result}";
-//		return "redirect:/air/bookingcomplete";
 	}
 
 	// 결제 완료 페이지
@@ -191,6 +193,16 @@ public class AirController {
 
 		// 유저 정보 받아옴
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
+
+		// session에 담긴 데이터를 받음
+		PaymentDTO paymentDTO = (PaymentDTO) session.getAttribute("paymentDTO");
+
+		// PaymentService를 사용하여 paymentId 값을 가지고 옴
+		Payment payList = paymentService.payNumber(paymentDTO.getPaymentId());
+
+		// payList를 모델에 추가
+		model.addAttribute("payList", payList);
+		System.out.println("paylist : 777. " + payList);
 
 		return "air/bookingcomplete";
 	}

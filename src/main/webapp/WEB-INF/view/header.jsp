@@ -63,39 +63,28 @@
 						</div>
 					</c:otherwise>
 			</c:choose>
-
-
-			
 			<ul class="menu">
-  <li><a href="/air/index">항공권</a></li>
-
-    <li><a href="#" id="myPageLink">마이페이지</a></li>
+				<li><a href="/air/index">항공권</a></li>
+				<li><a href="#" id="myPageLink">마이페이지</a></li>
     
-    <div id="hiddenMenu" style="display: none;">
-    
-      <c:choose>
-        <c:when test="${principal == null}">
- 
-          <li><a href="/user/register" >회원가입</a></li>
-          <li><a href="/user/sign-in" >로그인</a></li>
-
-        </c:when>
-        
-        <c:otherwise>
-  
-          <input type="hidden" id="is-login" value='${principal ne null}'>
-          <li><a href="/user/userUpdate/${principal.userId}">정보수정</a></li>
-          <li><a href="/user/logout" >로그아웃</a></li>
-
-          
-          <c:if test="${principal.levelId >= 2}">
-     
-            <li><a class="common-black-font" href="/admin/adminUserManagement" >관리자</a></li>
-     
-          </c:if>
-        </c:otherwise>
-      </c:choose>
-  </div>
+				<div id="hiddenMenu" style="display: none;">
+					<c:choose>
+						<c:when test="${principal == null}">
+							<li><a href="/user/register" >회원가입</a></li>
+							<li><a href="/user/sign-in" >로그인</a></li>
+						</c:when>
+						
+						<c:otherwise>
+							<input type="hidden" id="is-login" value='${principal ne null}'>
+							<li><a href="/user/userUpdate/${principal.userId}">내 정보</a></li>
+							<li><a href="/user/orderList/">구매 내역</a></li>
+							<li><a href="/user/logout" >로그아웃</a></li>
+							<c:if test="${principal.levelId >= 2}">
+								<li><a class="common-black-font" href="/admin/adminUserManagement" >관리자</a></li>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
+				</div>
 				
 				<li><a href="/contents/touristAreaList">여행 정보</a></li>
 				<li><a href="#" id="toggleButton">날씨</a></li>

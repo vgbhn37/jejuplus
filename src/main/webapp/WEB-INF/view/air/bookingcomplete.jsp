@@ -16,7 +16,8 @@
                 </section>
                 <div class="complete-body">
                     <span>예약이 완료되었습니다</span>
-                    <span>예약번호 100001</span>
+                    <span>예약번호 : Jeju${payList.paymentId}</span>
+
                     <!-- 예약 상품 start -->
                     <div class="complete-wrap">
                         <div class="info-header">

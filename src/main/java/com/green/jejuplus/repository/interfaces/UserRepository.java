@@ -9,10 +9,13 @@ import com.green.jejuplus.dto.admin.AdminUserDto;
 import com.green.jejuplus.dto.user.SignUpFormDto;
 import com.green.jejuplus.dto.user.UserDeleteDto;
 import com.green.jejuplus.dto.user.UserUpdateDto;
+import com.green.jejuplus.repository.model.Payment;
 import com.green.jejuplus.repository.model.User;
 
 @Mapper
 public interface UserRepository {
+	/* 강중현 추가 */
+	public List<Payment> findOrderAll(int userId);
 
 	User findByVerificationToken(String token);
 	User findByEmail(@Param("email") String email);
