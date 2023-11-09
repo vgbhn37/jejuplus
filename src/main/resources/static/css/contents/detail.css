@@ -6,9 +6,13 @@
 		text-align: center;
 		margin: auto;
 	}
+	#img-cover{
+		position: relative; 	
+	}
 	#img-box {
+		filter: brightness(0.6);
 		width:100%;
-		height:300px;
+		height:250px;
 		overflow:hidden;
 	}
 	#imgPath {
@@ -19,10 +23,15 @@
 	#title {
 		font-size: 50px;
 		font-weight:bold;
-		margin-top: 50px;
+		position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+        color: white;
+        text-shadow: 2px 2px 2px rgb(0, 0, 0, 0.3);
 	}
 	#introduction {
-		width:600px;
+		width:800px;
 		color: #f37021;
 		font-size: 18px;
 		font-weight: 500;
