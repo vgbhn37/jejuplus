@@ -202,11 +202,20 @@ let scheduleDetailEdit = {
 		let d = R * c; // Distance in km
 		return d;
 	},
+	/* active 클래스 제거 및 추가*/
+	modifyActive: function(label){
+		const oldItem = document.querySelector('.nav-item.active');
+		oldItem.classList.remove('active');
+		const selectedTab = document.querySelector('.nav-link[data-tab="' + label + '"]');
+		selectedTab.closest('.nav-item').classList.add('active');
+	},
 
 	/* 컨텐츠 리스트 출력 */
 	printContentsList: function(label) {
-
+		
 		const tabOutput = document.getElementById('tab-output');
+		
+		this.modifyActive(label);
 
 		let url = "";
 		switch (label) {
@@ -411,7 +420,7 @@ let scheduleDetailEdit = {
 			const binIcon = document.createElement('img');
 			binIcon.src = '/images/schedule/bin.png';
 			binIcon.classList.add('item-btn');
-			binIcon.addEventListener('click', (index) => {
+			binIcon.addEventListener('click', () => {
 				this.removeList(index);
 			});
 			colDiv3.appendChild(binIcon);

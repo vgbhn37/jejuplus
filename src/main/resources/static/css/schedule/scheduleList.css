@@ -1,7 +1,16 @@
 @charset "EUC-KR";
 
+.container {
+	margin-top: 50px;
+	font-family: 'NanumSquareRound';
+}
+
 .card-text {
 	color: rgb(172, 172, 172);
+}
+
+.card-title a {
+	text-decoration: none;
 }
 
 .card-header {

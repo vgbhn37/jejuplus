@@ -1,5 +1,8 @@
+
+
 .container {
 	margin-top: 50px;
+	font-family: 'NanumSquareRound';
 }
 
 .map {
@@ -48,34 +51,38 @@
 	cursor: pointer;
 }
 
-.page-link {
-	cursor: pointer;
-}
 
-/* 네비게이션 바 스타일 */
+.label-tabs{
+	margin-top: 30px;
+	height: 45px;
+}
 
 
 .nav-item {
 	margin-right: 10px;
 	border-bottom: 1px solid #767676;
 	border-width: 10%;
-
 }
 
 .nav-item:hover {
 	margin-right: 10px;
-	border-bottom: 2px solid #767676;
+	border-bottom: 2px solid #f37021;
 	border-width: 15%;
 }
 
-/* 활성화된 탭 스타일 */
-.nav-link.active {
-	color: #fff;
-	background-color: #17a2b8;
-	border-radius: 5px;
-	padding: 5px 10px;
-
+.nav-item.active {
+	margin-right: 10px;
+	border-bottom: 3px solid #f37021;
+	border-width: 18%;
+	
 }
+
+.nav-link{
+	color: #292929;
+}
+
+
+
 
 .circle {
 
@@ -153,13 +160,31 @@
 	margin-top: 40px;
 }
 
+.pagination{
+	justify-content: center;
+	margin-top: 30px;
+}
+
+
+.page-link {
+	cursor: pointer;
+	color: #292929;
+}
+
+.page-prev, .page-next{
+	font-weight: bold;
+}
+
+.page-item.active .page-link{
+	background-color: #292929;
+}
 
 .distance {
 	position: absolute;
-	width: 60px;
+	width: 65px;
 	height: 25px;
 	top: -22px;
-	left: -55px;
+	left: -50px;
 	background-color: #f37021;
 	border-radius: 10%;
 	color: #fff;

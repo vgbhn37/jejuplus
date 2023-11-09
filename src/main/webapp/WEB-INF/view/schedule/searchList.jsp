@@ -22,7 +22,7 @@
 	<div class="text-center clearfix">
 		<ul class="pagination" id="pagination">
 			<c:if test="${pagination.prev}">
-				<li class="page-item "><a class="page-link"
+				<li class="page-item "><a class="page-link page-prev"
 					onclick="scheduleDetailEdit.printSearchList(${pagination.beginPage-1})" data-page="${pagination.beginPage-1}">Prev</a></li>
 			</c:if>
 			<c:forEach var="num" begin="${pagination.beginPage}"
@@ -33,7 +33,7 @@
 			</c:forEach>
 
 			<c:if test="${pagination.next}">
-				<li class="page-item"><a class="page-link"
+				<li class="page-item"><a class="page-link page-next"
 					onclick="scheduleDetailEdit.printSearchList(${pagination.endPage+1})" data-page="${pagination.endPage+1}">Next</a></li>
 			</c:if>
 		</ul>

@@ -35,9 +35,12 @@ import com.green.jejuplus.util.Define;
 import com.green.jejuplus.util.Pagination;
 import com.green.jejuplus.util.PagingDto;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @Controller
 @RequestMapping("/schedule")
+@Slf4j
 public class ScheduleController {
 
 	@Autowired
@@ -46,25 +49,14 @@ public class ScheduleController {
 	@Autowired
 	HttpSession session;
 
-	@GetMapping("/list/{userId}")
-	public String list(@PathVariable("userId")Integer userId ,Model model, HttpServletRequest request) {
-		
-		// 주소창에 직접 입력시 오류 발생
-		if (request.getHeader("REFERER") == null) {
-			throw new CustomException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
-		}
-		
-		if(userId==null) {
-			throw new UnAuthorizedException("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
-		}
+	@GetMapping("/list")
+	public String list(Model model, HttpServletRequest request) {
 		
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
-		if(!userId.equals(user.getUserId())) {
-			throw new CustomException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
-		}
-		
-		List<Schedule> list = scheduleService.findScheduleByUserId(userId);
+	
+		List<Schedule> list = scheduleService.findScheduleByUserId(user.getUserId());
 		model.addAttribute("scheduleList", list);
+		log.info(Integer.toString(list.size()));
 		
 		return "/schedule/list";
 	}

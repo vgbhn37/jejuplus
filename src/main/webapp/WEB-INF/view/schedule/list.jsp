@@ -20,7 +20,7 @@
 <div class="container">
 	<div class="list-header row">
 		<div class="col-8">
-			<h3>${principal.fullname}님의 제주 여행</h3>
+			<h3>${principal.fullname} 님의 제주 여행</h3>
 		</div>
 		<div class="col-4 float-right">
 			<button class="btn btn-orange open-add-modal">일정 등록</button>
