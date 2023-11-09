@@ -32,7 +32,7 @@
 	                        	<c:forEach var="item" items="${itemList}" varStatus="loop">
 							    	<div class="info-body">
 							        	<div class="flight-info-row">
-							            	<div class="flight-info-column">
+							        		<div class="flight-info-column">
 							                	<div class="flight-info-head">
 							                    	<img src="../../images/air/jeju_air_logo.png" alt="jeju_logo" class="flight-logo" />
 							                    	<p class="flight-brand"><c:out value="${item.airlineNm}" /></p>
@@ -340,7 +340,7 @@ function requestPay() {
 	IMP.request_pay({
 		pg : "kakaopay",
 		pay_method : "card",
-		merchant_uid : "ORD2001-14", // 주문번호
+//		merchant_uid : "jeju2001-29", // 주문번호
 		name : "제주플러스",
 		amount : amount, // 가격
 		pg_tid : pgTid,
@@ -356,6 +356,7 @@ function requestPay() {
 				data : {
 					imp_uid : rsp.imp_uid,
 					pg_tid : rsp.pg_tid, // pg_tid 추가
+					merchant_uid : rsp.merchant_uid,
 				// 기타 필요한 데이터가 있으면 추가 전달
 				}
     		}).done(function(data, textStatus, xhr) {

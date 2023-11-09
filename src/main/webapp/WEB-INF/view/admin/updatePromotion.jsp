@@ -102,17 +102,17 @@
 									</c:forEach>
 								</div>
 								<div class="form-group">
-									<label for="images">대표사진 수정:</label> <input type="file"
+									<label for="images">이미지 추가:</label> <input type="file"
 										name="images" id="imageField" multiple
 										class="form-control-file">
 								</div>
 								<div class="form-group">
-									<label for="images">이미지 수정:</label> <input type="file"
+									<label for="images">이미지 추가:</label> <input type="file"
 										name="images" id="imageField" multiple
 										class="form-control-file">
 								</div>
 								<div class="form-group">
-									<label for="images">이미지 수정:</label> <input type="file"
+									<label for="images">이미지 추가:</label> <input type="file"
 										name="images" id="imageField" multiple
 										class="form-control-file">
 								</div>

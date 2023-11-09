@@ -51,6 +51,15 @@
     SELECT * FROM tb_promotion WHERE promotion_id = #{promotionId}
     </select>
     
+    <select id="checkImageExists" resultType="int">
+    SELECT COUNT(*) FROM tb_promotionimg
+    WHERE promotion_id = #{promotionId}
+	</select>
+
+ 	<select id="findByPromotionImgPath" resultType="com.green.jejuplus.repository.model.PromotionImg">
+    	SELECT promotionimg_id FROM tb_promotionimg WHERE promotion_id = #{promotionId}
+    </select>
+    
     
    <insert id="savePromotion" useGeneratedKeys="true" keyProperty="promotionId">
     INSERT INTO tb_promotion (title, introduce, content, start_date, end_date)
@@ -85,7 +94,7 @@ update tb_promotion set title=#{title}, introduce=#{introduce}, content=#{conten
 </update>
 
 <update id="updatePromotionImg">
-update tb_promotionimg set img_path=#{filename} where promotion_id = #{promotionId}
+update tb_promotionimg set img_path=#{imageFilename} where promotion_id = #{promotionId} and promotionimg_id=#{promotinImgId}
 </update> 
 
 <update id="updatePromotionEndDate">

@@ -49,9 +49,14 @@ public interface PromotionRepository {
 
 	int updatePromotion(@Param("promotionId")int promotionId,@Param("title") String title,@Param("introduce") String introduce,@Param("content") String content);
 
-	void updatePromotionImg(PromotionImg image);
 
 	void updatePromotionEndDate(@Param("promotionId") int promotionId,@Param("endDate") String endDate);
 
+	int checkImageExists(@Param("promotionId")int promotionId,@Param("imagePath") String imagePath);
+
+	List<PromotionImg> findByPromotionImgPath(int promotionId);
+
+
+	void updatePromotionImg(@Param("imageFilename") String imageFilename,@Param("promotionId") int promotionId,@Param("promotinImgId") int promotinImgId);
 
 }

@@ -21,7 +21,6 @@ public class PaymentService {
 
 	    Payment payment = new Payment();
 	    // PaymentDTO에서 필요한 정보를 Payment 객체에 복사
-	    payment.setPaymentId(paymentDTO.getPaymentId());
 	    payment.setUserId(userId);
 	    payment.setPgTid(paymentDTO.getPgTid());
 
@@ -30,5 +29,12 @@ public class PaymentService {
 	    // paymentRepository를 사용하여 Payment 객체를 저장
 	    int result = paymentRepository.insert(payment);
 	}
+	
+	public Payment payNumber(int paymentId) {
+		Payment result = paymentRepository.findById(paymentId);
+		return result;
+	}
+	
+	
 
 }

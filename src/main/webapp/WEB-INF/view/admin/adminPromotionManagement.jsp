@@ -179,7 +179,7 @@ $(document).ready(function() {
         var $row = $(this).closest("tr");
         var promotionId = $(this).closest("tr").find(".promotionIdInput").val();
 		console.log(promotionId);
-        if (confirm("이동하시겠습니까?")) {
+        if (confirm("상세보기로 이동하시겠습니까?")) {
             window.location.href = '/user/promotionDetail/' + promotionId;
         } else {
             // 사용자가 취소한 경우 아무 작업도 필요하지 않습니다.
@@ -191,7 +191,7 @@ $(document).ready(function() {
         var $row = $(this).closest("tr");
         var promotionId = $(this).closest("tr").find(".promotionIdInput").val();
 		console.log(promotionId);
-        if (confirm("이동하시겠습니까?")) {
+        if (confirm("광고를 수정하러 이동하시겠습니까?")) {
             window.location.href = '/admin/updatePromotion/' + promotionId;
         } else {
             // 사용자가 취소한 경우 아무 작업도 필요하지 않습니다.

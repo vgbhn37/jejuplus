@@ -9,4 +9,8 @@
 		VALUES(#{userId}, NOW(), #{pgTid});
 	</insert>
 	
+	<select id="findById" resultType="com.green.jejuplus.repository.model.Payment">
+		SELECT * FROM tb_payment ORDER BY payment_id DESC LIMIT 1;
+	</select>
+	
 </mapper>
