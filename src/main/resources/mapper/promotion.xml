@@ -64,7 +64,7 @@
    <insert id="savePromotion" useGeneratedKeys="true" keyProperty="promotionId">
     INSERT INTO tb_promotion (title, introduce, content, start_date, end_date)
     VALUES (#{title}, #{introduce}, #{content}, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH))
-</insert>
+	</insert>
 
     
      <insert id="savePromotionImg">
@@ -94,7 +94,7 @@ update tb_promotion set title=#{title}, introduce=#{introduce}, content=#{conten
 </update>
 
 <update id="updatePromotionImg">
-update tb_promotionimg set img_path=#{imageFilename} where promotion_id = #{promotionId} and promotionimg_id=#{promotinImgId}
+update tb_promotionimg set img_path=#{imageFilename} where promotion_id = #{promotionId} and promotionimg_id=#{promotionImgId}
 </update> 
 
 <update id="updatePromotionEndDate">

@@ -57,6 +57,7 @@ public interface PromotionRepository {
 	List<PromotionImg> findByPromotionImgPath(int promotionId);
 
 
-	void updatePromotionImg(@Param("imageFilename") String imageFilename,@Param("promotionId") int promotionId,@Param("promotinImgId") int promotinImgId);
+	void updatePromotionImg(@Param("imageFilename") String imageFilename, @Param("promotionId") int promotionId, @Param("promotionImgId") int promotionImgId);
+
 
 }

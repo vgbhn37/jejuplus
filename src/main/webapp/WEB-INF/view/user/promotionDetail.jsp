@@ -14,7 +14,7 @@
 	</div>
 	
 	<div class="detail-promotion-uptext">
-		<b style="color: white;">Jeju travle</b>
+		<b style="color: white;">Jeju travel</b>
 		</div>
 		</div>
 	<div class="promotionDetail-page">
@@ -29,7 +29,7 @@
 			readonly value="${promotion.introduce}"> 
 			
 			<label
-			class="promotionDetail-label">상세소개</label>
+			class="promotionDetail-label" style="margin-bottom:3rem;">상세소개</label>
 		
 		<div class="promotionDetail-image-container">
 			<c:forEach var="image" items="${images}">
