@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -207,5 +209,52 @@ public class AdminService {
 		
 	}
 
+	public AdminPromotionDto findPromotionDetail(int promotionId) {
+		AdminPromotionDto promotion = promotionRepository.findByAdminPromotionDetail(promotionId);
+		return promotion;
+	}
+
+	public void promotionDetailUpdate(int promotionId, String title, String introduce, String content, MultipartFile[] images) {
+	    promotionRepository.updatePromotion(promotionId, title, introduce, content);
+
+	    List<PromotionImg> totalPromotionImgId = promotionRepository.findByPromotionImgPath(promotionId);
+
+	    // 이미지 정보를 별도로 저장
+	    for (int i = 0; i < images.length; i++) {
+	        MultipartFile imageFile = images[i];
+	        if (imageFile != null && !imageFile.isEmpty()) {
+	            uploadImage(imageFile); // 이미지 파일을 업로드하고 저장
+	            String imageFilename = "/images/promotion/" + imageFile.getOriginalFilename();
+	            String imagePath = uploadDirectory + '/' + imageFilename;
+
+	            PromotionImg image = PromotionImg.builder()
+	                    .filename(imageFilename)
+	                    .imgPath(imagePath)
+	                    .promotionId(promotionId)
+	                    .build();
+
+	            int result = promotionRepository.checkImageExists(promotionId, imagePath);
+	            boolean imageExists = result > 0;
+	            System.out.println("서비스 트루폴스 확인" + imageExists);
+
+	            if (imageExists && i < totalPromotionImgId.size()) {
+	                // 이미지가 존재하면 업데이트
+	                int promotionimgid = totalPromotionImgId.get(i).getPromotionImgId();
+	                promotionRepository.updatePromotionImg(imageFilename, promotionId, promotionimgid);
+	            } else {
+	                // 이미지가 존재하지 않으면 추가
+	                promotionRepository.savePromotionImg(image);
+	            }
+	        }
+	    }
+	}
+
+
+	public void promotionEndDateUpdate(int promotionId, String endDate) {
+		System.out.println("서비스 엔드데이트" + endDate);
+		System.out.println("이번엔 서비스프로모션아이디확인해보자" + promotionId);
+		promotionRepository.updatePromotionEndDate(promotionId,endDate);
+		
+	}
 
 }

@@ -1,5 +1,6 @@
 package com.green.jejuplus.repository.interfaces;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -43,4 +44,19 @@ public interface PromotionRepository {
 	void deleteImgByPromotionId(int promotionId);
 
 	void deleteAll(int promotiondId);
+
+	AdminPromotionDto findByAdminPromotionDetail(int promotionId);
+
+	int updatePromotion(@Param("promotionId")int promotionId,@Param("title") String title,@Param("introduce") String introduce,@Param("content") String content);
+
+
+	void updatePromotionEndDate(@Param("promotionId") int promotionId,@Param("endDate") String endDate);
+
+	int checkImageExists(@Param("promotionId")int promotionId,@Param("imagePath") String imagePath);
+
+	List<PromotionImg> findByPromotionImgPath(int promotionId);
+
+
+	void updatePromotionImg(@Param("imageFilename") String imageFilename,@Param("promotionId") int promotionId,@Param("promotinImgId") int promotinImgId);
+
 }

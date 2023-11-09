@@ -69,8 +69,18 @@
 											<td><input type="hidden" class="promotionIdInput"
 												value="${promotion.promotionId}">
 												<div class="table-data-feature">
+												<button class="item extension-promotion"
+														 data-toggle="tooltip"
+														data-placement="top" title="연장하기">
+														<i class="zmdi zmdi-money-box"></i>
+													</button>
+												<button class="item update-promotion"
+														 data-toggle="tooltip"
+														data-placement="top" title="수정하기">
+														<i class="zmdi zmdi-edit"></i>
+													</button>
 													<button class="item delete-promotion" data-toggle="tooltip"
-														data-placement="top" title="" data-original-title="업체삭제">
+														data-placement="top" title="삭제하기" data-original-title="업체삭제">
 														<i class="zmdi zmdi-delete"></i>
 													</button>
 													<button class="item detail-promotion"
@@ -78,6 +88,7 @@
 														data-placement="top" title="상세보기">
 														<i class="zmdi zmdi-more"></i>
 													</button>
+												
 												</div>
 											</td>
 										</tr>
@@ -133,7 +144,7 @@
 </div>
 <script>
 $(document).ready(function() {
-    // 버튼 클릭 이벤트 처리
+    // 삭제
     $(".delete-promotion").on("click", function() {
         var $row = $(this).closest("tr"); 
         var promotionId = $row.find(".promotionIdInput").val(); 
@@ -163,18 +174,60 @@ $(document).ready(function() {
         }
     });
     
- // Handle click event for detail-promotion button
+ // 상세보기
     $(".detail-promotion").on("click", function() {
         var $row = $(this).closest("tr");
         var promotionId = $(this).closest("tr").find(".promotionIdInput").val();
 		console.log(promotionId);
-        if (confirm("이동하시겠습니까?")) {
+        if (confirm("상세보기로 이동하시겠습니까?")) {
             window.location.href = '/user/promotionDetail/' + promotionId;
         } else {
             // 사용자가 취소한 경우 아무 작업도 필요하지 않습니다.
         }
     });
+ 
+ // 수정
+    $(".update-promotion").on("click", function() {
+        var $row = $(this).closest("tr");
+        var promotionId = $(this).closest("tr").find(".promotionIdInput").val();
+		console.log(promotionId);
+        if (confirm("광고를 수정하러 이동하시겠습니까?")) {
+            window.location.href = '/admin/updatePromotion/' + promotionId;
+        } else {
+            // 사용자가 취소한 경우 아무 작업도 필요하지 않습니다.
+        }
+    }); 
+ 
+ 	// 연장
+    $(".extension-promotion").on("click", function() {
 
+        var promotionId = $(this).closest("tr").find(".promotionIdInput").val();
+		console.log(promotionId);
+		 if (confirm("한달 연장하시겠습니까?")) {
+	            $.ajax({
+	                type: 'POST',
+	                url: '/admin/updatePromotionEndDate/' + promotionId,
+	                data: {
+	                    "promotionId": promotionId
+	                },
+	                dataType: 'json',
+	                success: function(data) {
+	                    if (data && data.result === "success") {
+	                        alert("광고가 한달 연장 되었습니다.");
+	                        location.reload();
+	                    } else {
+	                        alert("서버에서 빈 응답이 돌아왔습니다. 연장에 실패했습니다.");
+	                    }
+	                },
+	                error: function(xhr) {
+	                    alert("연장에 실패했습니다.");
+	                }
+	            });
+	        } else {
+	            // 사용자가 취소한 경우 아무 작업도 필요하지 않습니다.
+	        }      
+    });
+ 
 });
 
 </script>
