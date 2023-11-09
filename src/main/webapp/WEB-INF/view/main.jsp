@@ -72,7 +72,7 @@
 							<img src="${restaurantDto.imgPath}" alt="sample" />
 							<h3>${restaurantDto.title}</h3>
 							<p>${restaurantDto.tag}</p>
-							<a href="#">자세히 보기</a>
+							<a href="/contents/restaurantDetail/${restaurantDto.contentsId}">자세히 보기</a>
 						</div>
 					</c:forEach>
 				</div>
@@ -103,7 +103,7 @@
 							<img src="${palceDto.imgPath}" alt="sample" />
 							<h3>${palceDto.title}</h3>
 							<p>${palceDto.tag}</p>
-							<a href="#">자세히 보기</a>
+							<a href="/contents/touristAreaDetail/${palceDto.contentsId}">자세히 보기</a>
 						</div>
 					</c:forEach>
 				</div>

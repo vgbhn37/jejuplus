@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/view/header.jsp"%>
 
 <link rel="stylesheet" href="/css/contents/detail.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 
 <body>
 	<div>
@@ -34,7 +35,7 @@
 						</c:choose>
 					</c:if>
 					<c:if test="${principal == null}">
-						<img src="/images/좋아요.png" class="icon">
+						<img src="/images/좋아요.png" class="icon" id="unrecommended2">
 					</c:if>
 				</td>
 				<td><a href="#insertReview"><img src="/images/리뷰.png" class="icon"></a></td>
@@ -51,7 +52,7 @@
 						</c:choose>
 					</c:if>
 					<c:if test="${principal == null}">
-						<img src="/images/저장.png" class="icon">
+						<img src="/images/저장.png" class="icon" id="unfavorite2">
 					</c:if>
 				</td>
 			</tr>
@@ -145,9 +146,10 @@
 				</tr>
 		</tbody>
 	</table>
-	<br><hr><br>
+	<hr>
 			</c:forEach>
 	</div>
+	<br><br>
 	
 	<div id="modal">
 		<div class="modal-content">
@@ -169,6 +171,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<input type="hidden" id="user-id" value="${principal.userId }">
 </body>
 
 <script>

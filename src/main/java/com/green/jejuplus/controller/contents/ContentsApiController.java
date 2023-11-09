@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.green.jejuplus.dto.contents.FavoriteRequestDto;
 import com.green.jejuplus.dto.contents.RecommendedDto;
 import com.green.jejuplus.dto.contents.ReviewDto;
+import com.green.jejuplus.handler.exception.UnAuthorizedException;
 import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.service.contents.FavoriteService;
 import com.green.jejuplus.service.contents.RecommendedService;
@@ -43,7 +44,7 @@ public class ContentsApiController {
 	
 	// 찜 등록
 	@PostMapping("/contents/{contentsLabel}/{contentsId}/favorite")
-	public ResponseEntity<Integer> insertFavorite(@PathVariable String contentsLabel, @PathVariable Integer contentsId, @RequestBody FavoriteRequestDto favoriteRequestDto, Model model) {
+	public ResponseEntity<Integer> insertFavorite(@PathVariable String contentsLabel, @PathVariable Integer contentsId, @RequestBody FavoriteRequestDto favoriteRequestDto) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);	
 		ResponseEntity<Integer> response = favoriteService.insertFavorite(principal.getUserId(), contentsId);
 
@@ -52,7 +53,7 @@ public class ContentsApiController {
 	
 	// 찜 삭제
 	@DeleteMapping("/contents/{contentsLabel}/{contentsId}/unfavorite")
-	public ResponseEntity<Integer> deleteFavorite(@PathVariable String contentsLabel, @PathVariable Integer contentsId, Model model) {
+	public ResponseEntity<Integer> deleteFavorite(@PathVariable String contentsLabel, @PathVariable Integer contentsId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		ResponseEntity<Integer> response = favoriteService.deleteFavorite(principal.getUserId(), contentsId);
 
@@ -61,7 +62,7 @@ public class ContentsApiController {
 	
 	// 추천
 	@PostMapping("/contents/{contentsLabel}/{contentsId}/recommended")
-	public ResponseEntity<Integer> insertRecommended(@PathVariable String contentsLabel, @PathVariable Integer contentsId, @RequestBody RecommendedDto recommendedDto, Model model ) {
+	public ResponseEntity<Integer> insertRecommended(@PathVariable String contentsLabel, @PathVariable Integer contentsId, @RequestBody RecommendedDto recommendedDto) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 
 		ResponseEntity<Integer> response = recommendedService.insertRecommended(principal.getUserId(), contentsId);
@@ -71,7 +72,7 @@ public class ContentsApiController {
 	
 	// 추천 취소
 	@DeleteMapping("/contents/{contentsLabel}/{contentsId}/unrecommended")
-	public ResponseEntity<Integer> deleteRecommended(@PathVariable String contentsLabel, @PathVariable Integer contentsId, Model model) {
+	public ResponseEntity<Integer> deleteRecommended(@PathVariable String contentsLabel, @PathVariable Integer contentsId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		ResponseEntity<Integer> response = recommendedService.deleteRecommended(principal.getUserId(), contentsId);
 
@@ -80,16 +81,19 @@ public class ContentsApiController {
 	
 	// 리뷰 등록
 	@PostMapping("/contents/{contentsLabel}/{contentsId}/review")
-	public ResponseEntity<ReviewDto> insertReview(@PathVariable String contentsLabel, @PathVariable Integer contentsId, @RequestBody ReviewDto reviewDto, Model model) {	
+	public ResponseEntity<ReviewDto> insertReview(@PathVariable String contentsLabel, @PathVariable Integer contentsId, @RequestBody ReviewDto reviewDto) {	
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		reviewService.insertReview(principal.getUserId(), reviewDto);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(reviewDto);
+		if (principal == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(reviewDto);
+		} else {
+			reviewService.insertReview(principal.getUserId(), reviewDto);
+			return ResponseEntity.status(HttpStatus.OK).body(reviewDto);
+		}
 	}
 	
 	// 리뷰 수정
 	@PatchMapping("/contents/{contentsLabel}/{contentsId}/review")
-	public ResponseEntity<ReviewDto> updateReview(@PathVariable String contentsLabel, @PathVariable Integer contentsId, @RequestBody ReviewDto reviewDto, Model model) {	
+	public ResponseEntity<ReviewDto> updateReview(@PathVariable String contentsLabel, @PathVariable Integer contentsId, @RequestBody ReviewDto reviewDto) {	
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		reviewService.updateReview(principal.getUserId(), reviewDto);
 		
@@ -99,7 +103,7 @@ public class ContentsApiController {
 	
 	// 리뷰 삭제 
 	@DeleteMapping("/review/{reviewId}")
-	public ResponseEntity<Integer> delete(@PathVariable Integer reviewId, Model model) {
+	public ResponseEntity<Integer> delete(@PathVariable Integer reviewId) {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		reviewService.deleteReview(reviewId);
 		

@@ -7,7 +7,14 @@ let contents = {
 			unfavorite.addEventListener("click", () => {
 				this.favorite();
 			});
-		}
+		} 
+		const unfavorite2 = document.querySelector("#unfavorite2");
+		if (unfavorite2 != null) {
+			unfavorite2.addEventListener("click", () => {
+				alert("로그인이 필요합니다.");
+				window.location.href = "/user/sign-in";
+			});
+		} 
 
 		// 찜 취소
 		const favorite = document.querySelector("#favorite");
@@ -25,6 +32,13 @@ let contents = {
 				this.recommended();
 			});
 		}
+		const unrecommended2 = document.querySelector("#unrecommended2");
+		if (unrecommended2 != null) {
+			unrecommended2.addEventListener("click", () => {
+				alert("로그인이 필요합니다.");
+				window.location.href = "/user/sign-in";
+			});
+		} 
 
 		// 추천 취소
 		const recommended = document.querySelector("#recommended");
@@ -39,6 +53,7 @@ let contents = {
 		document.querySelector("#insertReviewBtn").addEventListener("click", () => {
 			this.insertReview();
 		});
+		
 		
 		// 모달창 열기
 		openModalBtn.addEventListener("click", () => {
@@ -75,6 +90,8 @@ let contents = {
 			contentsId: document.getElementById("contentsId").value,
 			contentsLabel: document.getElementById("contentsLabel").value
 		};
+		
+		console.log('dpd')
 
 		fetch("/api/contents/"+ favorite.contentsLabel + "/" + favorite.contentsId + "/favorite", {
 			method: "POST",
@@ -150,7 +167,7 @@ let contents = {
 
 	// 리뷰 등록
 	insertReview: function() {
-
+		
 		let review = {
 			reviewStar: document.querySelector('input[name="reviewStar"]:checked').value,
 			reviewContent: document.getElementById("reviewContent").value,
@@ -166,9 +183,15 @@ let contents = {
 				"Content-Type": "application/json",
 			}
 		}).then(response => {
-			const msg = (response.ok) ? "리뷰가 등록되었습니다." : "리뷰 등록 실패";
-			alert(msg);
-			window.location.reload();
+			if(response.ok){
+				alert("리뷰가 등록되었습니다.");
+				window.location.reload();
+            } else if(response.status == 401) {
+                alert("로그인이 필요합니다.");
+                window.location.href = "/user/sign-in";
+            } else {
+                alert("리뷰 등록 실패");
+            }
 		});
 	},
 	

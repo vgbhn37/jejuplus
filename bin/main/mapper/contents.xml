@@ -5,7 +5,7 @@
 <mapper namespace="com.green.jejuplus.repository.interfaces.ContentsRepository"> 
 
 	<select id="findTouristAreaList" resultType="com.green.jejuplus.dto.contents.TouristAreaListDto">
-		select (select count(*) from tb_recommended r WHERE c.contents_id = r.contents_id ) as recommendedCnt, (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
+		select (select ROUND(AVG(review_star), 1) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewAvg, (select count(*) from tb_recommended r WHERE c.contents_id = r.contents_id ) as recommendedCnt, (select count(*) from tb_review r WHERE c.contents_id = r.contents_id ) as reviewCnt, c.* from tb_contents c where contents_label = #{contentsLabel}
 	</select>
 	
 	<select id="showTouristAreaDetail" resultType="com.green.jejuplus.dto.contents.TouristAreaDetailDto">
