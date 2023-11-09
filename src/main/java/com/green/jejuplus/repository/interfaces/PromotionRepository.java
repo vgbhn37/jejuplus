@@ -1,5 +1,6 @@
 package com.green.jejuplus.repository.interfaces;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -49,6 +50,8 @@ public interface PromotionRepository {
 	int updatePromotion(@Param("promotionId")int promotionId,@Param("title") String title,@Param("introduce") String introduce,@Param("content") String content);
 
 	void updatePromotionImg(PromotionImg image);
+
+	void updatePromotionEndDate(@Param("promotionId") int promotionId,@Param("endDate") String endDate);
 
 
 }

@@ -83,8 +83,16 @@ let contents = {
 				"Content-Type": "application/json",
 			}
 		}).then(response => {
-			const msg = (response.ok) ? "찜이 등록되었습니다." : "찜 등록 실패";
-			alert(msg);
+			 
+			if(response.ok){
+			 alert("찜이 등록되었습니다.");
+			} else if(response.status == 401) {
+				alert("로그인이필요합니다.");
+			} else {
+				alert("리뷰 등록 실패");
+			}
+				
+			
 			window.location.reload();
 		});
 	},

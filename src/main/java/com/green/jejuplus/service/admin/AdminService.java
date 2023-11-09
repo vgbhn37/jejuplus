@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -231,6 +232,13 @@ public class AdminService {
 					promotionRepository.updatePromotionImg(image);
 					}
 				}		
+	}
+
+	public void promotionEndDateUpdate(int promotionId, String endDate) {
+		System.out.println("서비스 엔드데이트" + endDate);
+		System.out.println("이번엔 서비스프로모션아이디확인해보자" + promotionId);
+		promotionRepository.updatePromotionEndDate(promotionId,endDate);
+		
 	}
 
 }
