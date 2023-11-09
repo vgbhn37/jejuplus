@@ -207,5 +207,30 @@ public class AdminService {
 		
 	}
 
+	public AdminPromotionDto findPromotionDetail(int promotionId) {
+		AdminPromotionDto promotion = promotionRepository.findByAdminPromotionDetail(promotionId);
+		return promotion;
+	}
+
+	public void promotionDetailUpdate(int promotionId, String title, String introduce, String content, MultipartFile[] images) {
+		promotionRepository.updatePromotion(promotionId,title,introduce,content);
+		
+		// 이미지 정보를 별도로 저장
+				for (MultipartFile imageFile : images) {
+					if(imageFile != null && !imageFile.isEmpty()){
+					uploadImage(imageFile); // 이미지 파일을 업로드하고 저장
+					String imageFilename = "/images/promotion/" + imageFile.getOriginalFilename();
+					String imagePath = uploadDirectory +'/'+ imageFilename;
+
+					PromotionImg image = PromotionImg.builder()
+							.filename(imageFilename)
+							.imgPath(imagePath) 
+							.promotionId(promotionId) 
+							.build();
+
+					promotionRepository.updatePromotionImg(image);
+					}
+				}		
+	}
 
 }

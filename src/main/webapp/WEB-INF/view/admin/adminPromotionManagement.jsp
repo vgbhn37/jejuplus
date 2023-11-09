@@ -78,6 +78,11 @@
 														data-placement="top" title="상세보기">
 														<i class="zmdi zmdi-more"></i>
 													</button>
+													<button class="item update-promotion"
+														 data-toggle="tooltip"
+														data-placement="top" title="수정하기">
+														<i class="zmdi zmdi-edit"></i>
+													</button>
 												</div>
 											</td>
 										</tr>
@@ -133,7 +138,7 @@
 </div>
 <script>
 $(document).ready(function() {
-    // 버튼 클릭 이벤트 처리
+    // 삭제
     $(".delete-promotion").on("click", function() {
         var $row = $(this).closest("tr"); 
         var promotionId = $row.find(".promotionIdInput").val(); 
@@ -163,7 +168,7 @@ $(document).ready(function() {
         }
     });
     
- // Handle click event for detail-promotion button
+ // 상세보기
     $(".detail-promotion").on("click", function() {
         var $row = $(this).closest("tr");
         var promotionId = $(this).closest("tr").find(".promotionIdInput").val();
@@ -174,7 +179,18 @@ $(document).ready(function() {
             // 사용자가 취소한 경우 아무 작업도 필요하지 않습니다.
         }
     });
-
+ 
+ // 수정
+    $(".update-promotion").on("click", function() {
+        var $row = $(this).closest("tr");
+        var promotionId = $(this).closest("tr").find(".promotionIdInput").val();
+		console.log(promotionId);
+        if (confirm("이동하시겠습니까?")) {
+            window.location.href = '/admin/updatePromotion/' + promotionId;
+        } else {
+            // 사용자가 취소한 경우 아무 작업도 필요하지 않습니다.
+        }
+    });
 });
 
 </script>

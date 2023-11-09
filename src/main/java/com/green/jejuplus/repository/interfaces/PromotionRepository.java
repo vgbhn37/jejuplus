@@ -43,4 +43,12 @@ public interface PromotionRepository {
 	void deleteImgByPromotionId(int promotionId);
 
 	void deleteAll(int promotiondId);
+
+	AdminPromotionDto findByAdminPromotionDetail(int promotionId);
+
+	int updatePromotion(@Param("promotionId")int promotionId,@Param("title") String title,@Param("introduce") String introduce,@Param("content") String content);
+
+	void updatePromotionImg(PromotionImg image);
+
+
 }

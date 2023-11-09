@@ -34,10 +34,12 @@ import com.green.jejuplus.dto.admin.AdminPromotionDto;
 import com.green.jejuplus.dto.admin.AdminUserDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.model.Contents;
+import com.green.jejuplus.repository.model.PromotionImg;
 import com.green.jejuplus.repository.model.Schedule;
 import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.service.admin.AdminService;
 import com.green.jejuplus.service.schedule.ScheduleService;
+import com.green.jejuplus.service.user.UserService;
 import com.green.jejuplus.util.Define;
 import com.green.jejuplus.util.Pagination;
 import com.green.jejuplus.util.PagingDto;
@@ -57,6 +59,9 @@ public class AdminController {
 
 	@Autowired
 	ScheduleService scheduleService;
+	
+	@Autowired
+	UserService userService;
 
 	@GetMapping("/adminUserManagement")
 	public String adminUserManagement(
@@ -195,6 +200,35 @@ public class AdminController {
 			response.put("result", "error");
 		}
 		return response;
+	}
+	
+	@GetMapping("/updatePromotion/{promotionId}")
+	public String updatePromotion(@PathVariable("promotionId") int promotionId, Model model) {
+		AdminPromotionDto promotion = adminService.findPromotionDetail(promotionId);
+		model.addAttribute("promotion",promotion);
+		List<PromotionImg> images = userService.findImagesByPromotionId(promotionId);
+		model.addAttribute("images",images);
+		return "/admin/updatePromotion";
+	}
+	
+	@PostMapping("/updatePromotion/{promotionId}")
+	public String updatePromotionProc(@PathVariable("promotionId") int promotionId,
+									 @RequestParam("title") String title,
+									 @RequestParam("introduce") String introduce,
+									 @RequestParam("content") String content,
+									 @RequestParam("images") MultipartFile[] images,
+									 Model model) {
+		
+		adminService.promotionDetailUpdate(promotionId,title,introduce,content,images);
+		
+		model.addAttribute("successMessage", "광고가 수정되었습니다.");
+
+		    
+		    // JavaScript 함수를 호출하여 메시지 표시
+		    String script = "<script>showSuccessMessage('${successMessage}');</script>";
+		    model.addAttribute("javascript", script);
+
+		return "redirect:/admin/adminUserManagement" ;
 	}
 
 
