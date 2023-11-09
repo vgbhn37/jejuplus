@@ -4,6 +4,7 @@ package com.green.jejuplus.controller.admin;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -34,10 +35,13 @@ import com.green.jejuplus.dto.admin.AdminPromotionDto;
 import com.green.jejuplus.dto.admin.AdminUserDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.model.Contents;
+import com.green.jejuplus.repository.model.Promotion;
+import com.green.jejuplus.repository.model.PromotionImg;
 import com.green.jejuplus.repository.model.Schedule;
 import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.service.admin.AdminService;
 import com.green.jejuplus.service.schedule.ScheduleService;
+import com.green.jejuplus.service.user.UserService;
 import com.green.jejuplus.util.Define;
 import com.green.jejuplus.util.Pagination;
 import com.green.jejuplus.util.PagingDto;
@@ -57,6 +61,9 @@ public class AdminController {
 
 	@Autowired
 	ScheduleService scheduleService;
+	
+	@Autowired
+	UserService userService;
 
 	@GetMapping("/adminUserManagement")
 	public String adminUserManagement(
@@ -196,12 +203,61 @@ public class AdminController {
 		}
 		return response;
 	}
+	
+	@GetMapping("/updatePromotion/{promotionId}")
+	public String updatePromotion(@PathVariable("promotionId") int promotionId, Model model) {
+		AdminPromotionDto promotion = adminService.findPromotionDetail(promotionId);
+		model.addAttribute("promotion",promotion);
+		List<PromotionImg> images = userService.findImagesByPromotionId(promotionId);
+		model.addAttribute("images",images);
+		return "/admin/updatePromotion";
+	}
+	
+	@PostMapping("/updatePromotion/{promotionId}")
+	public String updatePromotionProc(@PathVariable("promotionId") int promotionId,
+									 @RequestParam("title") String title,
+									 @RequestParam("introduce") String introduce,
+									 @RequestParam("content") String content,
+									 @RequestParam("images") MultipartFile[] images,
+									 Model model) {
+		
+		adminService.promotionDetailUpdate(promotionId,title,introduce,content,images);
+		
+		model.addAttribute("successMessage", "광고가 수정되었습니다.");
 
+		    
+		    // JavaScript 함수를 호출하여 메시지 표시
+		    String script = "<script>showSuccessMessage('${successMessage}');</script>";
+		    model.addAttribute("javascript", script);
 
+		return "redirect:/admin/adminUserManagement" ;
+	}
+	
+	@PostMapping("/updatePromotionEndDate/{promotionId}")
+	public  ResponseEntity<Map<String, String>> updatePromotionEndDate(@PathVariable("promotionId") int promotionId) {
+		Map<String, String> response = new HashMap<>();
+		
+		Promotion promotion = userService.findByPromotionDetail(promotionId);
+		Timestamp  totalEndDate = promotion.getEndDate();
+		// 포맷터 생성
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-
-
-
+		// 포맷팅하여 문자열로 변환
+		String endDate = sdf.format(totalEndDate);
+		System.out.println("컨트롤러 엔드데이트" + endDate);
+		System.out.println("이번엔 프로모션아이디확인해보자" + promotionId);
+		
+		try {
+			adminService.promotionEndDateUpdate(promotionId,endDate);
+			response.put("result", "success");
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			response.put("result", "error");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
+		
+		
+	}
 
 
 }

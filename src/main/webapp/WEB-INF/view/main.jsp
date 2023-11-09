@@ -4,6 +4,7 @@
 <!-- main css -->
 
 <link rel="stylesheet" href="/css/main.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 
 <!-- main -->
 <main>
@@ -14,7 +15,7 @@
 	
 		<h1>제주를 더하다, 제주플러스</h1>
 		<p>항공권 예약부터 일정까지 제주여행을 더 간편하게!</p>
-		<input type="button" onclick="location.href='/main'" value="버튼활용" id="main_btn">
+		<input type="button" onclick="location.href='/schedule/list/${principal.userId}'" value="나의 일정 만들기" id="main_btn">
 
 
 	</section>

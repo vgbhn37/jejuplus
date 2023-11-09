@@ -26,6 +26,7 @@ import com.green.jejuplus.dto.schedule.ScheduleDetailDto;
 import com.green.jejuplus.dto.schedule.ScheduleDto;
 import com.green.jejuplus.dto.schedule.ScheduleItemDto;
 import com.green.jejuplus.handler.exception.CustomException;
+import com.green.jejuplus.handler.exception.UnAuthorizedException;
 import com.green.jejuplus.repository.model.Contents;
 import com.green.jejuplus.repository.model.Schedule;
 import com.green.jejuplus.repository.model.User;
@@ -46,7 +47,17 @@ public class ScheduleController {
 	HttpSession session;
 
 	@GetMapping("/list/{userId}")
-	public String list(@PathVariable("userId")Integer userId ,Model model) {
+	public String list(@PathVariable("userId")Integer userId ,Model model, HttpServletRequest request) {
+		
+		// 주소창에 직접 입력시 오류 발생
+		if (request.getHeader("REFERER") == null) {
+			throw new CustomException("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
+		}
+		
+		if(userId==null) {
+			throw new UnAuthorizedException("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
+		}
+		
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		if(!userId.equals(user.getUserId())) {
 			throw new CustomException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);

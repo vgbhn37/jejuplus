@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -207,5 +208,37 @@ public class AdminService {
 		
 	}
 
+	public AdminPromotionDto findPromotionDetail(int promotionId) {
+		AdminPromotionDto promotion = promotionRepository.findByAdminPromotionDetail(promotionId);
+		return promotion;
+	}
+
+	public void promotionDetailUpdate(int promotionId, String title, String introduce, String content, MultipartFile[] images) {
+		promotionRepository.updatePromotion(promotionId,title,introduce,content);
+		
+		// 이미지 정보를 별도로 저장
+				for (MultipartFile imageFile : images) {
+					if(imageFile != null && !imageFile.isEmpty()){
+					uploadImage(imageFile); // 이미지 파일을 업로드하고 저장
+					String imageFilename = "/images/promotion/" + imageFile.getOriginalFilename();
+					String imagePath = uploadDirectory +'/'+ imageFilename;
+
+					PromotionImg image = PromotionImg.builder()
+							.filename(imageFilename)
+							.imgPath(imagePath) 
+							.promotionId(promotionId) 
+							.build();
+
+					promotionRepository.updatePromotionImg(image);
+					}
+				}		
+	}
+
+	public void promotionEndDateUpdate(int promotionId, String endDate) {
+		System.out.println("서비스 엔드데이트" + endDate);
+		System.out.println("이번엔 서비스프로모션아이디확인해보자" + promotionId);
+		promotionRepository.updatePromotionEndDate(promotionId,endDate);
+		
+	}
 
 }

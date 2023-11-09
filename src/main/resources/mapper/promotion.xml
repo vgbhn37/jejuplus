@@ -46,7 +46,10 @@
      <select id="findByEndDateBefore" resultType="com.green.jejuplus.repository.model.Promotion">
     SELECT * FROM tb_promotion WHERE end_date  <![CDATA[<]]> #{currentDate}
     </select>
-    
+
+    <select id="findByAdminPromotionDetail" resultType="com.green.jejuplus.dto.admin.AdminPromotionDto">
+    SELECT * FROM tb_promotion WHERE promotion_id = #{promotionId}
+    </select>
     
     
    <insert id="savePromotion" useGeneratedKeys="true" keyProperty="promotionId">
@@ -77,6 +80,16 @@ delete from tb_promotionimg where promotion_id = #{promotionId}
     WHERE promotion_id = #{promotionId}
 </delete>
 
+<update id="updatePromotion">
+update tb_promotion set title=#{title}, introduce=#{introduce}, content=#{content} where promotion_id = #{promotionId}
+</update>
 
+<update id="updatePromotionImg">
+update tb_promotionimg set img_path=#{filename} where promotion_id = #{promotionId}
+</update> 
+
+<update id="updatePromotionEndDate">
+update tb_promotion set end_date=DATE_ADD(#{endDate}, INTERVAL 1 MONTH) where promotion_id = #{promotionId}
+</update>
 
 </mapper>

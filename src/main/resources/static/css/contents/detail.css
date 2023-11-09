@@ -22,6 +22,7 @@
 		margin-top: 50px;
 	}
 	#introduction {
+		width:600px;
 		color: #f37021;
 		font-size: 18px;
 		font-weight: 500;
@@ -195,7 +196,6 @@
 	    padding: 10px;
 	    box-sizing: border-box;
 	    border: solid 1.5px #D3D3D3;
-	    border-radius: 5px;
 	    font-size: 16px;
 	    resize: none;
 	}

@@ -37,7 +37,7 @@ public class AirController {
 
 	@Autowired
 	private HttpServletRequest request;
-	
+
 	@Autowired
 	private PaymentService paymentService;
 
@@ -45,7 +45,7 @@ public class AirController {
 	@GetMapping("/index")
 	public String index() throws Exception {
 		// 유저 정보 받아옴
-		User user = (User)session.getAttribute(Define.PRINCIPAL);
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		System.out.println("받은 user" + user);
 
 		return "air/index";
@@ -79,9 +79,9 @@ public class AirController {
 	// 예약 및 결제 페이지
 	@GetMapping("/booking")
 	public String booking(Model model) throws Exception {
-		
+
 		// 유저 정보 받아옴
-		User user = (User)session.getAttribute(Define.PRINCIPAL);
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
 
 		// session에 담긴 데이터를 받음
 		AirPlanDTO airPlanDTO = (AirPlanDTO) session.getAttribute("airPlanDTO");
@@ -149,6 +149,8 @@ public class AirController {
 		}
 
 		model.addAttribute("itemList", itemList);
+		model.addAttribute("userId", user.getUserId());
+		System.out.println();
 
 		return "air/booking";
 	}
@@ -159,25 +161,26 @@ public class AirController {
 	public String bookingProc(CustomerDTO customerDTO, PaymentDTO paymentDTO) throws Exception {
 
 		// 유저 정보 받아옴
-		User user = (User)session.getAttribute(Define.PRINCIPAL);
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		System.out.println("받은 user : " + user);
-		
+
 		String pgTid = request.getParameter("pg_tid"); // "pg_tid" 값을 직접 가져옴
-	    System.out.println("받은 pg_tid : " + pgTid);
-		
-	    
-	    paymentService.insertPayment(paymentDTO, user.getUserId());
-	    
-		
+		paymentDTO.setPgTid(pgTid);
+		int userId = user.getUserId();
+		System.out.println("userId 5. : " + userId);
+
+		System.out.println("받은 pg_tid : " + pgTid);
+
+		paymentService.insertPayment(paymentDTO, userId);
+
 		// 세션에 customerDTO 데이터 담음
 		session.setAttribute("customerDTO", customerDTO);
 		System.out.println("booking에서 customerDTO 데이터 넘김 확인 " + customerDTO);
-		
-	    
-	    // Object 로 리턴해야 중간에 메세지 컨번터가 JSON 문자열로 변환해서 던져 준다.
+
+		// Object 로 리턴해야 중간에 메세지 컨번터가 JSON 문자열로 변환해서 던져 준다.
 		String jsonResult = "1";
-	    
-	    return jsonResult;
+
+		return jsonResult;
 //		return "{name:result}";
 //		return "redirect:/air/bookingcomplete";
 	}
@@ -187,7 +190,7 @@ public class AirController {
 	public String bookingcomplete(Model model) {
 
 		// 유저 정보 받아옴
-		User user = (User)session.getAttribute(Define.PRINCIPAL);
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
 
 		return "air/bookingcomplete";
 	}

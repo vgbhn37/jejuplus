@@ -16,18 +16,19 @@ public class PaymentService {
 	private PaymentRepository paymentRepository;
 	
 	@Transactional
-	public void insertPayment(PaymentDTO paymentDTO, int principalId) {
-		System.out.println("[service] paymentDTO start : " + paymentDTO);
-		
-		Payment payment = new Payment();
-		payment.setPaymentId(paymentDTO.getPaymentId());
-		payment.setUserId(principalId);
-		payment.setPgTid(paymentDTO.getPgTid());
-		
-		System.out.println("[service] paymentDTO end : " + paymentDTO);
-		
-		int result = paymentRepository.insert(paymentDTO);
-		
-		
+	public void insertPayment(PaymentDTO paymentDTO, int userId) {
+	    System.out.println("[service] paymentDTO start : " + paymentDTO);
+
+	    Payment payment = new Payment();
+	    // PaymentDTO에서 필요한 정보를 Payment 객체에 복사
+	    payment.setPaymentId(paymentDTO.getPaymentId());
+	    payment.setUserId(userId);
+	    payment.setPgTid(paymentDTO.getPgTid());
+
+	    System.out.println("[service] paymentDTO end : " + paymentDTO);
+
+	    // paymentRepository를 사용하여 Payment 객체를 저장
+	    int result = paymentRepository.insert(payment);
 	}
+
 }

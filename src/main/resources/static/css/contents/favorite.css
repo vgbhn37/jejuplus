@@ -15,7 +15,7 @@
 		
 	}
 	#box{
-		background-color:#f4f4f4;
+		background-color: white;
 		width: 200px;
 		float: left;
 		margin: 20px;
@@ -51,6 +51,9 @@
 	#title {
 		font-size: 18px;
 		font-weight: bold;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	#location {
 		width:200px;

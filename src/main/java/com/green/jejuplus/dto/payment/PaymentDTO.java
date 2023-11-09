@@ -16,9 +16,6 @@ public class PaymentDTO {
 	private int paymentId;
 	private int userId;
 	private String pgTid;
-    private String amount;
     
-    private String impUid;
-    private String merchantUid;
 	
 }

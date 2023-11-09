@@ -340,7 +340,7 @@ function requestPay() {
 	IMP.request_pay({
 		pg : "kakaopay",
 		pay_method : "card",
-		merchant_uid : "ORD2001-1", // 주문번호
+		merchant_uid : "ORD2001-14", // 주문번호
 		name : "제주플러스",
 		amount : amount, // 가격
 		pg_tid : pgTid,
