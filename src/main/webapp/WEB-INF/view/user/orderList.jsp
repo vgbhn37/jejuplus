@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="/WEB-INF/view/header.jsp"%>
 <!-- css -->
 <link rel="stylesheet" href="/css/user/orderlist.css" />
@@ -22,6 +23,7 @@
 							<thead>
 								<tr>
 									<th>상품정보</th>
+									<th>탑승시간</th>
 									<th>구매일자</th>
 									<th>주문번호</th>
 									<th>주문상태</th>
@@ -40,12 +42,14 @@
 												<img src="../../images/air/jeju_air_logo.png" alt="jeju_logo" class="flight-logo" />
 											</a>
 											<ul class="info">
-												<li id="company"><a href="#">제주항공</a></li>
+												<li id="company">항공사 : 제주항공</li>
+												<li id="prodName">부산 - > 제주</li>
 											</ul>
 										</div>
 									</td>
-									<td>{orderView.createdAt}</td>
-									<td><a href="#">100000</a></td>
+									<td>10:30</td>
+									<td><fmt:formatDate value="${payList.createdAt}" pattern="yyyy-MM-dd" /></td>
+									<td>100000</td>
 									<td>
 										<div class="">
 											<button type="submit" class="btn-refund">환불</button>

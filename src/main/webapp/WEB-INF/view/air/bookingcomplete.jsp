@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="/WEB-INF/view/air/header.jsp" %>
+<%@ include file="/WEB-INF/view/header.jsp" %>
 <!-- css -->
 <link rel="stylesheet" href="../../css/air/air.css" />
 <!-- js -->
@@ -15,7 +15,7 @@
                     <p class="current"><span>2</span> 주문완료</p>
                 </section>
                 <div class="complete-body">
-                    <span>예약이 완료되었습니다</span>
+                    <span>${user.fullname} 고객님의 예약이 완료되었습니다</span>
                     <span>예약번호 : Jeju${payList.paymentId}</span>
 
                     <!-- 예약 상품 start -->

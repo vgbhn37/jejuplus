@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="/WEB-INF/view/air/header.jsp" %>
+<%@ include file="/WEB-INF/view/header.jsp" %>
 <!-- css -->
-<link rel="stylesheet" href="../../css/air/air.css" />
+<link rel="stylesheet" href="/css/air/air.css" />
 <!-- js -->
 <script src="../../js/air/air.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
@@ -25,43 +25,92 @@
 				<form id="paymentForm" action="/air/booking" method="post">
 					<div class="left-info">
 						<!-- flight-info start -->
+						<!-- 가는 편 -->
 	                    <div class="info-wrap">
 	                        <div class="info-header">
-	                            <p class="info-title">총 <c:out value="${itemList.size()}" />개의 항공편이 있습니다</p>
+	                            <p class="info-title">총 <c:out value="${n1_itemList.size()}" />개의 항공편이 있습니다</p>
+	                            <div class="round-ticket">가는 편</div>
 	                        </div>
-	                        	<c:forEach var="item" items="${itemList}" varStatus="loop">
+	                        	<c:forEach var="n1_item" items="${n1_itemList}" varStatus="loop">
 							    	<div class="info-body">
 							        	<div class="flight-info-row">
 							        		<div class="flight-info-column">
 							                	<div class="flight-info-head">
 							                    	<img src="../../images/air/jeju_air_logo.png" alt="jeju_logo" class="flight-logo" />
-							                    	<p class="flight-brand"><c:out value="${item.airlineNm}" /></p>
+							                    	<p class="flight-brand"><c:out value="${n1_item.airlineNm}" /></p>
 							                	</div>
 							                	<div class="flight-info-body">
 							                    	<div class="">
 							                        	<div class="dep-block">
-							                            	<p><c:out value="${item.depTimeFormatted}" /></p>
+							                            	<p><c:out value="${n1_item.depPlandTimeLastFour}" /></p>
 							                            	<div class="flight-time">
-							                                	<span class="flight-time-info"><c:out value="${item.flightTimeMinutes}" /> 분 소요</span>
+							                                	<span class="flight-time-info"><c:out value="${n1_item.flightTimeMinutes}" /> 분 소요</span>
 							                            	</div>
 						                        		</div>
-							                        	<p class="airport-name"><c:out value="${item.depAirportNm}" /></p>
+							                        	<p class="airport-name"><c:out value="${n1_item.depAirportNm}" /></p>
 							                    	</div>
 							                    	<div style="margin-left: 35px">
 								                        <div class="arr-block">
-								                            <p><c:out value="${item.arrTimeFormatted}" /></p>
+								                            <p><c:out value="${n1_item.arrPlandTimeLastFour}" /></p>
 								                        </div>
-							                        	<p class="airport-name"><c:out value="${item.arrAirportNm}" /></p>
+							                        	<p class="airport-name"><c:out value="${n1_item.arrAirportNm}" /></p>
 							                    	</div>
 							                	</div>
 							            	</div>
 								            <div class="price-block">
-								                <span>60,000 원</span>
+								                <span>${n1_item.economyCharge} 원</span>
 								            </div>
+								            <div class="n1-check-block">
+										        <input type="radio" id="n1-check${loop.index}" name="n1-check" class="n1-check-input" />
+										        <label for="n1-check${loop.index}" class="n1-check-air">선택</label>
+										    </div>
 							        	</div>
-								    </div>
+							    	</div>
 								</c:forEach>
-	                    	</div>
+                    	</div>
+                    	<!-- 오는 편 -->
+                    	<div class="info-wrap">
+	                        <div class="info-header">
+	                            <p class="info-title">총 <c:out value="${n2_itemList.size()}" />개의 항공편이 있습니다</p>
+	                            <div class="round-ticket">오는 편</div>
+	                        </div>
+	                        	<c:forEach var="n2_item" items="${n2_itemList}" varStatus="loop">
+							    	<div class="info-body">
+							        	<div class="flight-info-row">
+							        		<div class="flight-info-column">
+							                	<div class="flight-info-head">
+							                    	<img src="../../images/air/jeju_air_logo.png" alt="jeju_logo" class="flight-logo" />
+							                    	<p class="flight-brand"><c:out value="${n2_item.airlineNm}" /></p>
+							                	</div>
+							                	<div class="flight-info-body">
+							                    	<div class="">
+							                        	<div class="dep-block">
+							                            	<p><c:out value="${n2_item.depPlandTimeLastFour}" /></p>
+							                            	<div class="flight-time">
+							                                	<span class="flight-time-info"><c:out value="${n2_item.flightTimeMinutes}" /> 분 소요</span>
+							                            	</div>
+						                        		</div>
+							                        	<p class="airport-name"><c:out value="${n2_item.depAirportNm}" /></p>
+							                    	</div>
+							                    	<div style="margin-left: 35px">
+								                        <div class="arr-block">
+								                            <p><c:out value="${n2_item.arrPlandTimeLastFour}" /></p>
+								                        </div>
+							                        	<p class="airport-name"><c:out value="${n2_item.arrAirportNm}" /></p>
+							                    	</div>
+							                	</div>
+							            	</div>
+								            <div class="price-block">
+								                <span>${n2_item.economyCharge} 원</span>
+								            </div>
+								            <div class="n2-check-block">
+										        <input type="radio" id="n2-check${loop.index}" name="n2-check" class="n2-check-input" />
+										        <label for="n2-check${loop.index}" class="n2-check-air">선택</label>
+										    </div>
+							        	</div>
+							    	</div>
+								</c:forEach>
+                    	</div>
 	                    <!-- flight-info end -->
 						<!-- 항공권 정보 start -->
 						<div class="info-wrap">
@@ -70,7 +119,7 @@
 							</div>
 							<div class="info-body">
 								<div class="info-item">
-									<div class="round-ticket">가는 날</div>
+									<div class="round-ticket">가는 편</div>
 									<p class="round-ticket-content">
 										기내수하물 규정이 아래와 같이 변경되니 참고 바랍니다. <br /> [기내/위탁 수하물 안내] <br />
 										기내 : 삼면(가로 55cm/세로 20cm/높이 40cm)의 합이 115cm, 중량 10kg 이하인 수하물 /
@@ -80,7 +129,7 @@
 									</p>
 								</div>
 								<div class="info-item">
-									<div class="round-ticket">오는 날</div>
+									<div class="round-ticket">오는 편</div>
 									<p class="round-ticket-content">
 										기내수하물 규정이 아래와 같이 변경되니 참고 바랍니다. <br /> [기내/위탁 수하물 안내] <br />
 										기내 : 삼면(가로 55cm/세로 20cm/높이 40cm)의 합이 115cm, 중량 10kg 이하인 수하물 /
@@ -92,70 +141,6 @@
 							</div>
 						</div>
 						<!-- 항공권 정보 end -->
-						<!-- 구매자 정보 start -->
-						<div class="info-wrap">
-							<div class="info-header">
-								<p class="info-title">구매자 정보</p>
-							</div>
-							<div class="info-body">
-								<div class="customer-info-row">
-									<div class="customer-info">
-										<label for="info-name">이름 (한글)</label>
-										<input type="text" class="customer-info-input" name="customer-name" placeholder="홍길동" />
-									</div>
-								</div>
-								<div class="customer-info-row">
-									<div class="customer-info">
-										<label for="info-name">전화번호</label>
-										<input type="text" class="customer-info-input" name="customer-phone" placeholder="010-1234-5678"/>
-									</div>
-									<div class="customer-info">
-										<label for="info-name">이메일</label>
-										<input type="text" class="customer-info-input" name="customer-email" placeholder="example@example.com"/>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 구매자 정보 end -->
-						<!-- 탑승객 정보 start -->
-						<div class="info-wrap">
-							<div class="info-header">
-								<p class="info-title">탑승객 1</p>
-							</div>
-							<div class="info-body">
-								<label for="same-info" class="same-info">
-									<tr>
-										<td>
-											<label>
-												<input type="radio" name="info" id="same">
-												<span>구매자와 동일</span>
-											</label>
-											<label>
-												<input type="radio" name="info" id="new" checked>
-												<span>직접 입력</span>
-											</label>
-										</td>
-									</tr>
-								</label>
-								<div class="customer-info-row">
-									<div class="customer-info">
-										<label for="info-name">이름 (한글)</label>
-										<input type="text" name="username" class="customer-info-input" placeholder="홍길동" />
-									</div>
-								</div>
-								<div class="customer-info-row">
-									<div class="customer-info">
-										<label for="info-name">전화번호</label>
-										<input type="text" name="phone" class="customer-info-input" placeholder="010-1234-5678"/>
-									</div>
-									<div class="customer-info">
-										<label for="info-name">이메일</label>
-										<input type="text" name="email" class="customer-info-input" placeholder="example@example.com"/>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 탑승객 정보 end -->
 					</div>
 					<div class="right-info">
 						<!-- 항공권 취소 환불 정책 start -->
@@ -165,7 +150,7 @@
 							</div>
 							<div class="info-body">
 								<div class="info-item">
-									<div class="round-ticket">가는 날</div>
+									<div class="round-ticket">가는 편</div>
 									<p class="cancel-content">
 										■ 취소수수료 규정 (예약일 : ~ 21. 10. 24) <br /> 출발 61일 전 : 일반석 /
 										할인석(특가석) 2,000원 <br /> 출발 60일 ~ 31일 전 : 일반석 / 할인석(특가석) 4,000원
@@ -197,7 +182,7 @@
 									</p>
 								</div>
 								<div class="info-item">
-									<div class="round-ticket">오는 날</div>
+									<div class="round-ticket">오는 편</div>
 									<p class="cancel-content">
 										■ 취소수수료 규정 (예약일 : ~ 21. 10. 24) <br /> 출발 61일 전 : 일반석 /
 										할인석(특가석) 2,000원 <br /> 출발 60일 ~ 31일 전 : 일반석 / 할인석(특가석) 4,000원
@@ -239,14 +224,14 @@
 							<div class="info-body">
 								<div class="pay-info">
 									<div class="pay-detail">
-										<div class="round-ticket">가는 날 항공권</div>
+										<div class="round-ticket">가는 편 항공권</div>
 										<div class="pay-ditail-list">
 											<div class="price-info">
 												<p class="item-text">
-													<span>성인</span> <span> X 1</span>
+													<span>탑승객</span> <span> X 1</span>
 												</p>
 												<p class="item-price">
-													<span>60,000원</span>
+													<span> 원</span>
 												</p>
 											</div>
 											<div class="price-info">
@@ -254,20 +239,20 @@
 													<span>티켓 수수료</span>
 												</p>
 												<p class="item-price">
-													<span>5,000원</span>
+													<span>5,000 원</span>
 												</p>
 											</div>
 										</div>
 									</div>
 									<div class="pay-detail">
-										<div class="round-ticket">오는 날 항공권</div>
-										<div class="pay-ditail-list">
+										<div class="round-ticket">오는 편 항공권</div>
+										<div class="pay-ditail-list">	
 											<div class="price-info">
 												<p class="item-text">
-													<span>성인</span> <span> X 1</span>
+													<span>탑승객</span> <span> X 1</span>
 												</p>
 												<p class="item-price">
-													<span>50,000원</span>
+													<span> 원</span>
 												</p>
 											</div>
 											<div class="price-info">
@@ -275,7 +260,7 @@
 													<span>티켓 수수료</span>
 												</p>
 												<p class="item-price">
-													<span>5,000원</span>
+													<span>5,000 원</span>
 												</p>
 											</div>
 										</div>
@@ -283,13 +268,72 @@
 								</div>
 								<div class="final-price-info">
 									<p class="final-price">총 금액</p>
-									<p class="final-price" name="totalPrice">120,000 원</p>
+									<p class="final-price" name="totalPrice">0 원</p>
 								</div>
 								<div class="final-price-plus">항공료+유류할증료+세금 포함</div>
 							</div>
 						</div>
 						<!-- 가격 안내 end -->
-	
+						<!-- 구매자 정보 start -->
+						<div class="info-wrap">
+							<div class="info-header">
+								<p class="info-title">구매자 정보</p>
+							</div>
+							<div class="info-body">
+								<div class="customer-info-row">
+									<div class="customer-info">
+										<label for="info-name">이름 (한글)</label>
+										<input type="text" class="customer-info-input" name="customer-name" placeholder="홍길동" />
+									</div>
+								</div>
+								<div class="customer-info-row">
+									<div class="customer-info">
+										<label for="info-name">전화번호</label>
+										<input type="text" class="customer-info-input" name="customer-phone" placeholder="010-1234-5678"/>
+									</div>
+									<div class="customer-info">
+										<label for="info-name">이메일</label>
+										<input type="text" class="customer-info-input" name="customer-email" placeholder="example@example.com"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 구매자 정보 end -->
+						<!-- 탑승객 정보 start -->
+						<div class="info-wrap">
+							<div class="info-header">
+								<p class="info-title">탑승객 1</p>
+							</div>
+							<div class="info-body">
+								<div class="same-info">
+									<label>
+										<input type="radio" name="info" id="same">
+										<span>구매자와 동일</span>
+									</label>
+									<label>
+										<input type="radio" name="info" id="new" checked>
+										<span>직접 입력</span>
+									</div>
+								</label>
+								<div class="customer-info-row">
+									<div class="customer-info">
+										<label for="info-name">이름 (한글)</label>
+										<input type="text" name="username" class="customer-info-input" placeholder="홍길동" />
+									</div>
+								</div>
+								<div class="customer-info-row">
+									<div class="customer-info">
+										<label for="info-name">전화번호</label>
+										<input type="text" name="phone" class="customer-info-input" placeholder="010-1234-5678"/>
+									</div>
+									<div class="customer-info">
+										<label for="info-name">이메일</label>
+										<input type="text" name="email" class="customer-info-input" placeholder="example@example.com"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 탑승객 정보 end -->
 						<!-- 결제수단 start -->
 						<div class="info-wrap">
 							<div class="info-header">

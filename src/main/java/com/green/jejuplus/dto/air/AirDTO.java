@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AirPlanDTO {
+public class AirDTO {
 	
 	private String depPlandTime; // 출발 일자 및 시간
     private String arrPlandTime; // 도착 일자 및 시간

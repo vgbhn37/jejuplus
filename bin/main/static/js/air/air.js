@@ -46,28 +46,18 @@ document.addEventListener('DOMContentLoaded', function() {
 	const increaseButtonsAdult = document.querySelectorAll('.cus-plus-adult');
 	const passengerCountElementsAdult = document.querySelectorAll('.passengerCountAdult');
 
-	// 어린이 승객 관련 요소
-	const decreaseButtonsChild = document.querySelectorAll('.cus-minus-child');
-	const increaseButtonsChild = document.querySelectorAll('.cus-plus-child');
-	const passengerCountElementsChild = document.querySelectorAll('.passengerCountChild');
-
 	// 초기 승객 수 설정
 	let passengerCountAdult = 1; // 성인 기본값 1로 설정
-	let passengerCountChild = 0; // 어린이 기본값 0으로 설정
 
 	// 초기 승객 수를 업데이트
 	passengerCountElementsAdult.forEach((element) => {
 		element.textContent = passengerCountAdult;
 	});
 
-	passengerCountElementsChild.forEach((element) => {
-		element.textContent = passengerCountChild;
-	});
-
 	// 성인 승객 감소 버튼 클릭 시
 	decreaseButtonsAdult.forEach((button, index) => {
 		button.addEventListener('click', () => {
-			if (passengerCountAdult > 1 || (passengerCountAdult === 1 && passengerCountChild > 0)) {
+			if (passengerCountAdult > 1) {
 				passengerCountAdult--;
 				passengerCountElementsAdult[index].textContent = passengerCountAdult;
 			}
@@ -83,31 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
 				passengerCountElementsAdult[index].textContent = passengerCountAdult;
 				updateTotalPassengerCount();
 			} else {
-				alert('총 성인 및 어린이 승객 수는 6명을 초과할 수 없습니다.');
-			}
-		});
-	});
-
-	// 어린이 승객 감소 버튼 클릭 시
-	decreaseButtonsChild.forEach((button, index) => {
-		button.addEventListener('click', () => {
-			if (passengerCountChild > 0 || (passengerCountChild === 0 && passengerCountAdult > 1)) {
-				passengerCountChild--;
-				passengerCountElementsChild[index].textContent = passengerCountChild;
-			}
-			updateTotalPassengerCount();
-		});
-	});
-
-	// 어린이 승객 증가 버튼 클릭 시
-	increaseButtonsChild.forEach((button, index) => {
-		button.addEventListener('click', () => {
-			if (getTotalPassengerCount() < 6) {
-				passengerCountChild++;
-				passengerCountElementsChild[index].textContent = passengerCountChild;
-				updateTotalPassengerCount();
-			} else {
-				alert('총 성인 및 어린이 승객 수는 6명을 초과할 수 없습니다.');
+				alert('총 승객 수는 6명을 초과할 수 없습니다.');
 			}
 		});
 	});
@@ -118,17 +84,15 @@ document.addEventListener('DOMContentLoaded', function() {
 		// 원하는 작업을 수행할 수 있습니다. 예를 들어, 6명 이상인 경우 필요한 조치를 취할 수 있습니다.
 		// totalPassengerCount를 사용하여 원하는 작업을 수행하세요.
 		if (totalPassengerCount < 1) {
-			alert('적어도 1명의 성인 승객과 1명의 어린이 승객을 선택해야 합니다.');
+			alert('적어도 1명의 승객을 선택해야 합니다.');
 		}
 	}
 
-	// 총 승객 수를 반환하는 함수
+	// 전체 승객 수 반환 함수
 	function getTotalPassengerCount() {
-		return passengerCountAdult + passengerCountChild;
+		return passengerCountAdult;
 	}
 });
-
-
 /* 탑승객 숫자 end */
 
 /* 예약하기 버튼 */
@@ -241,4 +205,47 @@ $(document).ready(function() {
 });
 
 
+/* 결제 정보 가격 start */
+document.addEventListener('DOMContentLoaded', function() {
+	// 가는편 선택 버튼
+	const n1CheckInputs = document.querySelectorAll('.n1-check-input');
+	// 오는편 선택 버튼
+	const n2CheckInputs = document.querySelectorAll('.n2-check-input');
+	// 가격 표시 엘리먼트
+	const totalPriceElement = document.querySelector('p[name="totalPrice"]');
+
+	// 각 항공편의 가격 정보를 저장할 변수
+	let n1Price = 0;
+	let n2Price = 0;
+
+	// 가는편 선택 버튼 리스너 등록
+	n1CheckInputs.forEach((input, index) => {
+		input.addEventListener('change', function() {
+			// 선택된 항공편의 가격을 가져와서 변수에 저장
+			n1Price = parseInt(document.querySelectorAll('.n1-check-block .price-block span')[index].textContent.replace(/[^\d]/g, ''));
+			// 총 가격 업데이트
+			updateTotalPrice();
+		});
+	});
+
+	// 오는편 선택 버튼 리스너 등록
+	n2CheckInputs.forEach((input, index) => {
+		input.addEventListener('change', function() {
+			// 선택된 항공편의 가격을 가져와서 변수에 저장
+			n2Price = parseInt(document.querySelectorAll('.n2-check-block .price-block span')[index].textContent.replace(/[^\d]/g, ''));
+			// 총 가격 업데이트
+			updateTotalPrice();
+		});
+	});
+
+	// 총 가격 업데이트 함수
+	function updateTotalPrice() {
+		// 가는편과 오는편의 가격을 합산하여 총 가격 업데이트
+		const totalAmount = n1Price + n2Price;
+		totalPriceElement.textContent = `${totalAmount.toLocaleString()} 원`;
+	}
+});
+
+
+/* 결제 정보 가격 end */
 

@@ -43,6 +43,7 @@ import com.green.jejuplus.repository.model.Payment;
 import com.green.jejuplus.repository.model.Promotion;
 import com.green.jejuplus.repository.model.PromotionImg;
 import com.green.jejuplus.repository.model.User;
+import com.green.jejuplus.service.payment.PaymentService;
 import com.green.jejuplus.service.user.EmailService;
 import com.green.jejuplus.service.user.UserService;
 import com.green.jejuplus.util.Define;
@@ -626,20 +627,19 @@ public class UserController {
 	/**
 	 * 11-09 강중현 추가
 	 */
+	@Autowired
+	public PaymentService paymentService;
+	
 	@GetMapping("/orderList/")
-	public String orderList(Model model) {
+	public String orderList(Model model, PaymentDTO paymentDTO) {
 		
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		Payment payList = paymentService.payNumber(paymentDTO.getPaymentId());
 		
-		PaymentDTO paymentDTO = (PaymentDTO) session.getAttribute("paymentDTO");
+		// Timestamp를 Date로 변환
 
-		// PaymentService를 사용하여 paymentId 값을 가지고 옴
-		List<Payment> orderView = userService.readOrderList(user.getUserId());
-		
-		model.addAttribute("orderView", orderView);
-		System.out.println("orderView : " + orderView);
-		model.addAttribute("user", user);
-		System.out.println("user 구매내역 : "+user);
+	    model.addAttribute("payList", payList);
+	    model.addAttribute("user", user);
 		
 		return "user/orderList";
 	}

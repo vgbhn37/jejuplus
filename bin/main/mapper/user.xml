@@ -4,10 +4,7 @@
 
 <mapper namespace="com.green.jejuplus.repository.interfaces.UserRepository">
 
-	<!-- 강중현 추가 -->
-	<select id="findOrderAll" resultType="com.green.jejuplus.repository.model.User">>
-		select * from tb_payment
-	</select>
+	
 
 
 <select id="findByUsername"

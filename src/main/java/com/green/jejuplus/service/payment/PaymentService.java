@@ -30,6 +30,7 @@ public class PaymentService {
 	    int result = paymentRepository.insert(payment);
 	}
 	
+	// 결제 번호
 	public Payment payNumber(int paymentId) {
 		Payment result = paymentRepository.findById(paymentId);
 		return result;
