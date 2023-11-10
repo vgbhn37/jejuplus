@@ -29,7 +29,7 @@
 			readonly value="${promotion.introduce}"> 
 			
 			<label
-			class="promotionDetail-label" style="margin-bottom:3rem;">상세소개</label>
+			class="promotionDetail-label" style="margin-bottom:3rem; margin-left: 44%;">상세소개</label>
 		
 		<div class="promotionDetail-image-container">
 			<c:forEach var="image" items="${images}">
@@ -44,7 +44,7 @@
 		<div style="margin-top: 20px;"></div>
 
 		<label class="promotionDetail-label"></label> 
-		<textarea name="promotionContent" class="promotionDetail-form-control" readonly>${promotion.content}</textarea>
+		<textarea name="promotionContent" class="promotionDetail-form-control promotion-content" readonly>${promotion.content}</textarea>
 	</div>
 
 </body>

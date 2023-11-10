@@ -16,7 +16,16 @@
 <link rel="stylesheet" href="/css/schedule/scheduleList.css" />
 
 <!-- ------------------------------------------------------------- -->
-
+<div class="schedule-promotion-img-text">
+	<div id="img-box">
+		<img src="/images/시험해보자.jpg"
+			onerror="this.src='/images/NoImage.jpg'" id="up-img">
+	</div>
+	
+	<div class="schedule-promotion-uptext">
+		<b style="color: white;">My schedule</b>
+		</div>
+		</div>
 <div class="container">
 	<div class="list-header row">
 		<div class="col-8">
