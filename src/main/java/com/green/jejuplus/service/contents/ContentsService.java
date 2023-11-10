@@ -22,6 +22,7 @@ import com.green.jejuplus.handler.exception.CustomRestfulException;
 import com.green.jejuplus.repository.interfaces.ContentsRepository;
 import com.green.jejuplus.repository.model.Contents;
 import com.green.jejuplus.repository.model.Favorite;
+import com.green.jejuplus.util.PagingDto;
 
 @Service
 public class ContentsService {
@@ -30,8 +31,8 @@ public class ContentsService {
 	private ContentsRepository contentsRepository;
 
 	@Transactional
-	public List<TouristAreaListDto> findTouristArea(String contentsLabel) {
-	List<TouristAreaListDto> list = contentsRepository.findTouristAreaList(contentsLabel);
+	public List<TouristAreaListDto> findTouristArea( PagingDto paging) {
+	List<TouristAreaListDto> list = contentsRepository.findTouristAreaList(paging);
         StringBuilder sb = new StringBuilder();
         for (TouristAreaListDto contents : list) {
             String tag = contents.getTag();
@@ -160,6 +161,11 @@ public class ContentsService {
 	@Transactional
 	public List<FavoriteDto> selectFavotiteList(Integer userId) {
 		return contentsRepository.selectFavoriteList(userId);
+	}
+
+	public int countTouristArea() {
+
+		return contentsRepository.countTouristArea();
 	}
 
 }

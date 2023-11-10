@@ -24,8 +24,30 @@
 		</c:forEach>
 	</div>
 	
+<div class="paging">
+	<div class="text-center clearfix">
+		<ul class="pagination" id="pagination">
+			<c:if test="${pagination.prev}">
+				<li class="page-item"><a class="page-link"
+					onclick="contentsList.changePage(event)" data-page="${pagination.beginPage-1}">Prev</a></li>
+			</c:if>
+			<c:forEach var="num" begin="${pagination.beginPage}"
+				end="${pagination.endPage}">
+				<li
+					class="${pagination.paging.page == num ? 'page-item active' : ''}"><a
+					class="page-link" onclick="contentsList.changePage(event)" data-page="${num}">${num}</a></li>
+			</c:forEach>
+
+			<c:if test="${pagination.next}">
+				<li class="page-item"><a class="page-link"
+					onclick="contentsList.changePage(event)" data-page="${pagination.endPage+1}">Next</a></li>
+			</c:if>
+		</ul>
+	</div>
+</div>
+	
 </body>
-<script>
+<script src='/js/contents/list.js'>
 
 </script>
 <%@ include file="/WEB-INF/view/footer.jsp"%>

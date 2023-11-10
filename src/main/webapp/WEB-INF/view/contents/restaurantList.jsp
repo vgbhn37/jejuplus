@@ -11,7 +11,7 @@
 		<c:forEach var="contents" items="${restaurantList}">
 			<div id="img-box"><img src="${contents.thumbnailPath}" onerror="this.src='/images/NoImage.jpg'" id="img"></div>
 			<div id="content-box">
-				<div id="title">${contents.title}</div> 
+				<div id="title">${contents.title}</div>
 				<div id="location">${contents.region1} > ${contents.region2}</div>
 				<div id="tag">${contents.tag}</div>
 				<div id="icon">
@@ -23,6 +23,7 @@
 			</div>
 		</c:forEach>
 	</div>
+	
 </body>
 <script>
 

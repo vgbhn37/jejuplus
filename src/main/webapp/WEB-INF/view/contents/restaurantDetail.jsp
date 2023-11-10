@@ -6,14 +6,14 @@
 <link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 
 <body>
-	<div>
+	<div id="img-cover">
 		<div id="img-box">
 		<img src="${restaurantDetail.imgPath}" onerror="this.src='/images/NoImage.jpg'" id=imgPath>
 		</div>
+		<div id="title">${restaurantDetail.title}</div>
 	</div>
 	<div id="box">		
 		<br>
-		<div id="title">${restaurantDetail.title}</div>
 		<br>
 		<div id="introduction">" ${restaurantDetail.introduction} "</div>
 		<br>

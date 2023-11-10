@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.green.jejuplus.dto.contents.FavoriteRequestDto;
 import com.green.jejuplus.dto.contents.RecommendedDto;
 import com.green.jejuplus.dto.contents.ReviewDto;
+import com.green.jejuplus.handler.exception.CustomRestfulException;
 import com.green.jejuplus.handler.exception.UnAuthorizedException;
 import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.service.contents.FavoriteService;
@@ -86,8 +87,14 @@ public class ContentsApiController {
 		if (principal == null) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(reviewDto);
 		} else {
-			reviewService.insertReview(principal.getUserId(), reviewDto);
-			return ResponseEntity.status(HttpStatus.OK).body(reviewDto);
+			boolean isReview = reviewService.selectReview(principal.getUserId(),contentsId);
+			if (isReview == false) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(reviewDto);
+				
+			} else {
+				reviewService.insertReview(principal.getUserId(), reviewDto);
+				return ResponseEntity.status(HttpStatus.OK).body(reviewDto);	
+			}
 		}
 	}
 	

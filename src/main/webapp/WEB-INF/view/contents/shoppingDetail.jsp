@@ -5,14 +5,14 @@
 <link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 
 <body>
-	<div>
+	<div id="img-cover">
 		<div id="img-box">
 		<img src="${shoppingDetail.imgPath}" onerror="this.src='/images/NoImage.jpg'" id=imgPath>
 		</div>
+		<div id="title">${shoppingDetail.title}</div>
 	</div>
 	<div id="box">		
 		<br>
-		<div id="title">${shoppingDetail.title}</div>
 		<br>
 		<div id="introduction">" ${shoppingDetail.introduction} "</div>
 		<br>

@@ -197,6 +197,9 @@ let contents = {
             } else if(response.status == 401) {
                 alert("로그인이 필요합니다.");
                 window.location.href = "/user/sign-in";
+            } else if(response.status == 400){
+                alert("이미 등록된 댓글입니다.");
+				window.location.reload();
             } else {
                 alert("리뷰 등록 실패");
             }

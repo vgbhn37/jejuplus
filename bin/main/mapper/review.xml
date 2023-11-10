@@ -3,6 +3,9 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.green.jejuplus.repository.interfaces.ReviewRepository">
+	<select id="selectReview" resultType="com.green.jejuplus.repository.model.Review">
+		select * from tb_review where  user_id = #{userId} and contents_id = #{contentsId} limit 1
+	</select>
 
 	<select id="findUsernameByUserId" resultType="String"> <!-- resultType 확인! -->
 		select username from tb_user where user_id = #{userId}
@@ -13,8 +16,8 @@
 	</select>
 	
 	<insert id="insertReview">
-		insert into tb_review(review_star, contents_id, user_id, review_content,created_at,review_recommend)
-		values(#{reviewStar},#{contentsId},#{userId},#{reviewContent},now(),0)
+		insert into tb_review(review_star, contents_id, user_id, review_content,created_at)
+		values(#{reviewStar},#{contentsId},#{userId},#{reviewContent},now())
 	</insert>
 	
 	<update id="updateReview">

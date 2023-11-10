@@ -33,7 +33,7 @@ public class FavoriteService {
 	public ResponseEntity<Integer> insertFavorite(Integer userId, Integer contentsId) {
 		int result = favoriteRepository.insertFavorite(Favorite.builder().userId(userId).contentsId(contentsId).build());
 		if (result != 1) {
-			throw new CustomRestfulException("정상 처리되지 않았습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new CustomRestfulException("정상 처리되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}

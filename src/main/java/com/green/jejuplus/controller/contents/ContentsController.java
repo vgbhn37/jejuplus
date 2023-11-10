@@ -2,14 +2,17 @@ package com.green.jejuplus.controller.contents;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.jejuplus.dto.contents.FavoriteDto;
@@ -30,6 +33,8 @@ import com.green.jejuplus.service.contents.FavoriteService;
 import com.green.jejuplus.service.contents.RecommendedService;
 import com.green.jejuplus.service.contents.ReviewService;
 import com.green.jejuplus.util.Define;
+import com.green.jejuplus.util.Pagination;
+import com.green.jejuplus.util.PagingDto;
 
 
 @Controller
@@ -58,9 +63,16 @@ public class ContentsController {
 	
 	// 관광지 리스트	
 	@GetMapping("/touristAreaList")
-	public String touristAreaList(Model model) {
-		List<TouristAreaListDto> touristAreaList = contentsService.findTouristArea("관광지");		
+	public String touristAreaList(@ModelAttribute("paging")PagingDto paging,
+			@RequestParam(value = "page", required = false, defaultValue = "1")int page, Model model, HttpServletRequest request) {
+		Pagination pagination = new Pagination();
+		paging.setPage(page);
+		pagination.setPaging(paging);
+		List<TouristAreaListDto> touristAreaList = contentsService.findTouristArea(paging);
+		int total = contentsService.countTouristArea();
+		pagination.setArticleTotalCount(total);
 		model.addAttribute("touristAreaList", touristAreaList);
+		model.addAttribute("pagination", pagination);
 		return "contents/touristAreaList";
 	}
 	

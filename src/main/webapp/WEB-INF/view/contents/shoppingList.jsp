@@ -4,14 +4,14 @@
 <link rel="stylesheet" href="/css/contents/list.css" />
 <link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 <body>
-	<div id="contentsLabel">관광지</div>
+	<div id="contentsLabel">쇼핑</div>
 	<hr>
 	<br><br>
 	<div id="container">
 		<c:forEach var="contents" items="${shoppingList}">
 			<div id="img-box"><img src="${contents.thumbnailPath}" onerror="this.src='/images/NoImage.jpg'" id="img"></div>
 			<div id="content-box">
-				<div id="title">${contents.title}</div> 
+				<div id="title">${contents.title}</div>
 				<div id="location">${contents.region1} > ${contents.region2}</div>
 				<div id="tag">${contents.tag}</div>
 				<div id="icon">
@@ -23,6 +23,7 @@
 			</div>
 		</c:forEach>
 	</div>
+	
 </body>
 <script>
 

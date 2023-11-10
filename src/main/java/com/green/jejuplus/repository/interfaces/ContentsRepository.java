@@ -16,11 +16,12 @@ import com.green.jejuplus.dto.contents.TouristAreaDetailDto;
 import com.green.jejuplus.dto.contents.TouristAreaListDto;
 import com.green.jejuplus.repository.model.Contents;
 import com.green.jejuplus.repository.model.Favorite;
+import com.green.jejuplus.util.PagingDto;
 
 @Mapper
 public interface ContentsRepository {
 	
-	public List<TouristAreaListDto> findTouristAreaList(String contentsLabel);
+	public List<TouristAreaListDto> findTouristAreaList(PagingDto paging);
 	public List<RestaurantListDto> findRestaurantList(String contentsLabel);
 	public List<LodgingListDto> findLodgingList(String contentsLabel);
 	public List<ShoppingListDto> findShoppingList(String contentsLabel);
@@ -30,4 +31,5 @@ public interface ContentsRepository {
 	public ShoppingDetailDto showShoppingDetail(int contentsId);
 	public List<FavoriteDto> selectFavoriteList(@Param("userId") Integer userId);
 	public Contents selectRecommend(Contents contents);
+	public int countTouristArea();
 }

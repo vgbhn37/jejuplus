@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.green.jejuplus.dto.contents.ReviewDto;
 import com.green.jejuplus.repository.interfaces.ReviewRepository;
+import com.green.jejuplus.repository.model.Review;
 
 @Service
 public class ReviewService {
@@ -41,5 +42,11 @@ public class ReviewService {
 		reviewRepository.deleteReview(reviewId);
 	}
 
+	public boolean selectReview(int userId, int contentsId) {
+		if (reviewRepository.selectReview(Review.builder().userId(userId).contentsId(contentsId).build()) == null) {
+			return true;
+		}
+		return false;
+	}
 
 }
