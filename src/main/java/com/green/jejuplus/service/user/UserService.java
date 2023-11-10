@@ -164,7 +164,10 @@ public class UserService {
 	}
 
 	public User findUserByEmail(String email) {
+		
+		System.out.println("이메일 찾기 서비스란 before:" + email);
 		User findUsername = userRepository.findByEmail(email);
+		System.out.println("이메일 찾기 서비스란 after:" + findUsername);
 		return findUsername;
 	}
 
@@ -184,7 +187,8 @@ public class UserService {
 	
 
 	public void userDelete(String username, String password) {
-		 userRepository.userDelete(username, password);
+		System.out.println("유저탈퇴 서비스 확인 : " + username + "그리고 " + password);
+		 userRepository.userDelete(username);
 
 	}
 

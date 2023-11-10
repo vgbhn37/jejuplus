@@ -38,6 +38,6 @@
 </main>
 
 
-<script src='/js/user/delete.js'></script>
+
 <!-- footer.jsp  -->
 <%@ include file="/WEB-INF/view/footer.jsp"%>

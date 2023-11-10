@@ -32,7 +32,7 @@ public interface UserRepository {
 	User findByUserPassword(@Param("username") String username);
 	User findByUsernameEmail(@Param("username")String username, @Param("email") String email);
 	UserDeleteDto findByUserDelete(@Param("username")String username);
-	void userDelete(@Param("username")String username, @Param("password") String password);
+	void userDelete(@Param("username")String username);
 	UserDeleteDto findByUserDeleteCheck(@Param("username")String username, @Param("password") String password);
 	List<AdminUserDto> findUsers(@Param("pageSize") int pageSize, @Param("offset") int offset);
 	AdminUserDto totalUsers();

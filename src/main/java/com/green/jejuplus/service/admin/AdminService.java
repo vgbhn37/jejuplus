@@ -144,6 +144,7 @@ public class AdminService {
 		// 프로모션 정보를 저장
 		promotionRepository.savePromotion(promotion);
 
+		
 		// 이미지 정보를 별도로 저장
 		for (MultipartFile imageFile : images) {
 			if(imageFile != null && !imageFile.isEmpty()){

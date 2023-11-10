@@ -97,7 +97,7 @@
 								<div class="promotionUpdate-image-container">
 									<c:forEach var="image" items="${images}">
 										<div class="promotionUpdate-image-container">
-											<img src="${image.imgPath}" style="max-width: 500px;">
+											<img src="${image.imgPath}" style="max-width: 500px; margin-top:20px;">
 										</div>
 									</c:forEach>
 								</div>

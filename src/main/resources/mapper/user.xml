@@ -17,7 +17,7 @@
 	
 	<select id="findByEmail"
 		resultType="com.green.jejuplus.repository.model.User">
-		select * from tb_user where email = #{email}
+		select * from tb_user where email =#{email}
 	</select>
 	
 	<select id="findById" resultType = "com.green.jejuplus.repository.model.User">
@@ -150,7 +150,7 @@ update tb_user set password=#{password} where user_id = #{userId}
 	</insert>
 	
 <delete id = "userDelete">
-delete from tb_user where username = #{username} and password=#{password}
+delete from tb_user where username = #{username}
 </delete>
 
 <delete id = "adminUserDelete">

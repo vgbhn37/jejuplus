@@ -158,9 +158,8 @@ public class UserController {
 	// 인증 코드를 전송하는 메서드
 	@PostMapping("/send-verification-code")
 	public ResponseEntity<String> sendVerificationCode(@RequestParam("email") String email, HttpSession session) {
-		// 이메일 검증 로직을 추가하여 유효한 이메일에만 코드를 전송
-		// 여기서는 간단한 예시로 모든 이메일에 코드를 전송하고 있습니다.
 
+		System.out.println("인증코드 컨트롤러 이메일 확인 : " + email);
 		String randomCode = RandomCodeGenerator.generateRandomCode();
 		session.setAttribute("randomCode", randomCode);
 
@@ -393,19 +392,24 @@ public class UserController {
 	@PostMapping("/find-username")
 	@ResponseBody
 	public ResponseEntity<String> findUsername(@RequestBody String email) {
-		// 이메일 주소를 사용하여 사용자를 검색하고 아이디를 가져옵니다.
+	    // 이메일 주소를 사용하여 사용자를 검색하고 아이디를 가져옵니다.
+		System.out.println("Email before: " + email);
 		User user = userService.findUserByEmail(email);
+		System.out.println("Email after: " + email);
 
-		if (user != null) {
-			// 사용자를 찾았을 경우 아이디를 반환합니다.
-			String username = user.getUsername();
-			emailService.sendUsername(email, username);
-			return new ResponseEntity<>(username, HttpStatus.OK);
-		} else {
-			// 사용자를 찾지 못한 경우 오류 메시지를 반환합니다.
-			return new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
-		}
+
+	    if (user != null) {
+	        // 사용자를 찾았을 경우 아이디를 반환합니다.
+	    	System.out.println("컨트롤러 유저 :" + user);
+	        String username = user.getUsername();
+	        emailService.sendUsername(email, username);
+	        return new ResponseEntity<>(username, HttpStatus.OK);
+	    } else {
+	        // 사용자를 찾지 못한 경우 오류 메시지를 반환합니다.
+	        return new ResponseEntity<>("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+	    }
 	}
+
 
 	// 비밀번호 찾기
 	@GetMapping("/find-password")
@@ -415,24 +419,27 @@ public class UserController {
 
 	@PostMapping("/check-id-email")
 	@ResponseBody
-	public ResponseEntity<String> checkIdAndEmail(@RequestParam(name = "username") String username,
-			@RequestParam(name = "email") String email) {
+	public ResponseEntity<String> checkIdAndEmail(@RequestBody Map<String, String> data) {
+	    String username = data.get("username");
+	    String email = data.get("email");
 
-		User user = userService.findByUsernameEmail(username, email);
-		System.out.println("컨트롤러 유저: " + user);
-		System.out.println("컨트롤러 아이디: " + username);
-		System.out.println("컨트롤러 이메일: " + email);
+	    User user = userService.findByUsernameEmail(username, email);
+	    System.out.println("컨트롤러 아이디: " + username);
+	    System.out.println("컨트롤러 이메일: " + email);
+	    System.out.println("컨트롤러 유저: " + user);
 
-		if (user != null && user.getEmail().equals(email)) {
-			// 아이디와 이메일이 일치할 경우
-			System.out.println("여기오면혼난다");
-			return new ResponseEntity<>("Matched", HttpStatus.OK);
-		} else {
-			// 아이디와 이메일이 일치하지 않을 경우
-			System.out.println("여기옴?");
-			return new ResponseEntity<>("Not Matched", HttpStatus.BAD_REQUEST);
-		}
+	    if (user != null && user.getEmail().equals(email)) {
+	        // 아이디와 이메일이 일치할 경우
+	        System.out.println("여기오면혼난다");
+	        return new ResponseEntity<>("success", HttpStatus.OK);
+	    } else {
+	        // 아이디와 이메일이 일치하지 않을 경우
+	        System.out.println("여기옴?");
+	        return new ResponseEntity<>("Not Matched", HttpStatus.BAD_REQUEST);
+	    }
 	}
+	
+
 
 	@PostMapping("/find-password")
 	@ResponseBody
@@ -463,7 +470,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<String> resetPassword(@RequestParam String email) {
 		// 1. 이메일 주소를 사용하여 사용자를 검색합니다.
-
+		System.out.println("컨트롤러 임시비밀번호발급 이메일 확인 :" + email);
 		User user = userService.findUserByEmail(email);
 
 		if (user != null) {
@@ -581,13 +588,14 @@ public class UserController {
 			System.out.println("컨트롤러 사용자디비에서 가져온 패스워드" + storedPasswordHash);
 			// 3. 입력된 해시화된 비밀번호와 저장된 해시화된 비밀번호를 비교
 			if (passwordEncoder.matches(password, storedPasswordHash)) {
+				System.out.println("탈퇴서비스 여기 안옴?");
 				userService.userDelete(username, password);
 
+				// 모델에 메시지 추가
+				// alert 창을 표시하는 페이지로 리다이렉트
+				model.addAttribute("message", "사용자가 삭제되었습니다.");
 				// 세션 로그아웃 처리
 				session.invalidate();
-				// 모델에 메시지 추가
-				model.addAttribute("message", "사용자가 삭제되었습니다.");
-				// alert 창을 표시하는 페이지로 리다이렉트
 				return "redirect:/user/delete-confirmation";
 			} else {
 				throw new CustomException("아이디 비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);

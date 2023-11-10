@@ -90,7 +90,7 @@ color: black;
 }
 
 .register-body> .register-textButton> .register-button:hover{
-filter: brightness(1.5);
+filter: brightness(0.8);
 }
 
 #register-final{
@@ -110,8 +110,21 @@ border-radius: 10px;
 }
 
 #register-final-button:hover{
-filter: brightness(1.5);
+filter: brightness(0.8);
 }
+  .register-textButton {
+        display: flex;
+        align-items: center;
+    }
+
+    .register-textField {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+    .register-button {
+        margin: 0;
+    }
 
 /* 아이디찾기 */
 .find-username-body{

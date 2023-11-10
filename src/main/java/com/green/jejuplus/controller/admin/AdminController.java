@@ -101,6 +101,7 @@ public class AdminController {
 	@PostMapping("/adminUserDelete/{username}")
 	@ResponseBody
 	public Map<String, String> adminUserDelete(@PathVariable("username") String username) {
+		System.out.println("관리자 유저네임 컨트롤러 : " + username);
 		Map<String, String> response = new HashMap<>();
 		try {
 			adminService.userDelete(username);
@@ -146,7 +147,7 @@ public class AdminController {
 			@RequestParam("content") String content,
 			@RequestParam("images") MultipartFile[] images) {
 		adminService.insertPromotion(title, introduce, content, images);
-
+		
 		return "redirect:/admin/adminPromotionManagement"; // 성공 페이지로 리다이렉트
 	}
 	
