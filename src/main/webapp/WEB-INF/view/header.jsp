@@ -66,7 +66,7 @@
 			</c:choose>
 			<ul class="menu">
 				<li><a href="/air/index">항공권</a></li>
-				<li><a href="#" id="myPageLink">마이페이지</a></li>
+				<li><a href="#" id="myPageLink">마이페이지 ▾</a></li>
 
 				<div id="hiddenMenu" style="display: none;">
 					<c:choose>

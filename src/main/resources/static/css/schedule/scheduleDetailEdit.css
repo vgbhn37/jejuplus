@@ -1,3 +1,6 @@
+body {
+	background-color: #fafafa;
+}
 
 
 .container {
@@ -82,6 +85,9 @@
 }
 
 
+.card-title{
+	cursor: pointer;
+}
 
 
 .circle {
@@ -96,19 +102,19 @@
 	font-size: 14px;
 }
 
-#tab-output {
-	margin-top: 40px;
-	margin-bottom: 40px;
+#tab-output, #search-output {
+	margin : 40px 0;
 }
 
 .search-container {
 	margin-top: 50px;
 	display: flex;
 	align-items: center;
+	justify-content: center;
 }
 
 #search-input {
-	width: 200px;
+	width: 400px;
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 5px;

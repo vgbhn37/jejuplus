@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.green.jejuplus.dto.schedule.ScheduleDetailDto;
 import com.green.jejuplus.dto.schedule.ScheduleDto;
 import com.green.jejuplus.dto.schedule.ScheduleItemDto;
+import com.green.jejuplus.dto.schedule.ScheduleListDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.handler.exception.UnAuthorizedException;
 import com.green.jejuplus.repository.model.Contents;
@@ -54,9 +55,8 @@ public class ScheduleController {
 		
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 	
-		List<Schedule> list = scheduleService.findScheduleByUserId(user.getUserId());
+		List<ScheduleListDto> list = scheduleService.findScheduleByUserId(user.getUserId());
 		model.addAttribute("scheduleList", list);
-		log.info(Integer.toString(list.size()));
 		
 		return "/schedule/list";
 	}
