@@ -251,8 +251,6 @@ let scheduleDetailEdit = {
 			.then(data => {
 				tabOutput.innerHTML = data;
 				//location.href="#";
-
-
 			}).catch((error) => {
 				console.error(error);
 			});
