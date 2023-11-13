@@ -11,5 +11,4 @@ public class Payment {
 	private int userId;
 	private Timestamp createdAt;
 	private String pgTid;
-	
 }

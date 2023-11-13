@@ -41,9 +41,9 @@ text-decoration: none;
 	                            <div class="dep-search">
 	                            	<select class="dep-input" name="depAirportNm">
 	                            		<option>선택</option>
-	                            		<option value="NAARKSS">김포</option>
 	                            		<option value="NAARKPK">김해</option>
 										<option value="NAARKPC">제주</option>
+										<option value="NAARKSS">김포</option>
 <!-- 										<option value="NAARKJB">무안</option> -->
 <!-- 										<option value="NAARKJJ">광주</option> -->
 <!-- 										<option value="NAARKJK">군산</option> -->
@@ -67,9 +67,9 @@ text-decoration: none;
 	                            <div class="arr-search">
 	                            	<select class="arr-input" name="arrAirportNm">
 	                            		<option>선택</option>
-	                            		<option value="NAARKSS">김포</option>
 	                            		<option value="NAARKPK">김해</option>
 										<option value="NAARKPC">제주</option>
+										<option value="NAARKSS">김포</option>
 <!-- 										<option value="NAARKJB">무안</option> -->
 <!-- 										<option value="NAARKJJ">광주</option> -->
 <!-- 										<option value="NAARKJK">군산</option> -->

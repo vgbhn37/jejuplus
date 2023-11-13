@@ -17,6 +17,4 @@ public class PaymentDTO {
 	private int userId;
 	private String pgTid;
 	private String created_at;
-    
-	
 }

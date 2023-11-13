@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.jejuplus.dto.air.AirDTO;
 import com.green.jejuplus.dto.air.CustomerDTO;
 import com.green.jejuplus.dto.payment.PaymentDTO;
+import com.green.jejuplus.repository.interfaces.PaymentRepository;
 import com.green.jejuplus.repository.model.Payment;
 import com.green.jejuplus.repository.model.User;
 import com.green.jejuplus.service.air.AirService;
@@ -47,6 +48,9 @@ public class AirController {
 
 	@Autowired
 	private AirService airService;
+	
+	@Autowired
+	private PaymentRepository paymentRepository;
 
 	// main page (강중현)
 	@GetMapping("/index")
@@ -231,7 +235,7 @@ public class AirController {
 	// 예약 및 결제 페이지
 	@PostMapping("/booking")
 	@ResponseBody
-	public String bookingProc(CustomerDTO customerDTO, PaymentDTO paymentDTO, AirDTO airDTO,
+	public String bookingProc(Model model, CustomerDTO customerDTO, PaymentDTO paymentDTO, AirDTO airDTO,
 			@RequestParam(name = "airlineName", required = false) String airlineName,
 			@RequestParam(name = "n1DepAirport", required = false) String n1DepAirport,
 			@RequestParam(name = "n1ArrAirport", required = false) String n1ArrAirport,
@@ -257,8 +261,11 @@ public class AirController {
 		System.out.println("받은 userId : " + userId);
 
 		paymentService.insertPayment(paymentDTO, userId);
-		System.out.println("paymentService paymentDTO : " + paymentDTO);
 
+		System.out.println("paymentService paymentDTO : 1. " + paymentDTO);
+
+		session.setAttribute("paymentDTO", paymentDTO);
+		System.out.println("paymentService paymentDTO : 2. " + paymentDTO);
 //		System.out.println("받은 airlineName : " + airlineName);
 //		System.out.println("받은 n1DepAirport : " + n1DepAirport);
 //		System.out.println("받은 n1ArrAirport : " + n1ArrAirport);
@@ -269,20 +276,39 @@ public class AirController {
 //		System.out.println("받은 n2DepPlandTime : " + n2DepPlandTime);
 //		System.out.println("받은 n2ArrPlandTime : " + n2ArrPlandTime);
 
-		airDTO.setUserId(userId);
-		airDTO.setAirlineNm(airlineName);
-		airDTO.setDepAirportNm(n1DepAirport); // 예시, 필요에 따라 변경
-		airDTO.setArrAirportNm(n1ArrAirport); // 예시, 필요에 따라 변경
-		airDTO.setDepPlandTime(n1DepPlandTime); // 예시, 필요에 따라 변경
-		airDTO.setArrPlandTime(n1ArrPlandTime); // 예시, 필요에 따라 변경
+		
+		// PaymentDTO를 세션에서 가져온 후 paymentId 값을 확인하는 코드
+		
+		
+		
+		Payment savedPayment = paymentRepository.findById(paymentDTO.getPaymentId());
+		int paymentId = savedPayment.getPaymentId();
+		
+		System.out.println("savedPayment : "+savedPayment);
+		System.out.println("paymentId 값 확인 : 1111." + paymentId);
 
-		airService.insertAir(airDTO, userId);
+		airDTO.setUserId(userId);
+		airDTO.setPaymentId(paymentId);
+		airDTO.setAirlineNm(airlineName);
+		airDTO.setDepAirportNm(n1DepAirport);
+		airDTO.setArrAirportNm(n1ArrAirport);
+		airDTO.setDepPlandTime(n1DepPlandTime);
+		airDTO.setArrPlandTime(n1ArrPlandTime);
+
+		airDTO.setDepAirportNm2(n2DepAirport);
+		airDTO.setArrAirportNm2(n2ArrAirport);
+		airDTO.setDepPlandTime2(n2DepPlandTime);
+		airDTO.setArrPlandTime2(n2ArrPlandTime);
+
+		System.out.println("paymentId : 555. " + paymentId);
+		airService.insertAir(airDTO, userId, paymentDTO);
 		System.out.println("airService airDTO : " + airDTO);
 
 		// 세션에 데이터 담음
-		session.setAttribute("paymentDTO", paymentDTO);
+
+		session.setAttribute("airDTO", airDTO);
 		session.setAttribute("customerDTO", customerDTO);
-		System.out.println("booking에서 customerDTO 데이터 넘김 확인 " + customerDTO);
+//		System.out.println("booking에서 customerDTO 데이터 넘김 확인 " + customerDTO);
 
 		// Object 로 리턴해야 중간에 메세지 컨번터가 JSON 문자열로 변환해서 던져 준다.
 		String jsonResult = "1";

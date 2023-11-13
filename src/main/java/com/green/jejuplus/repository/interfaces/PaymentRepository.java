@@ -10,7 +10,4 @@ public interface PaymentRepository {
 	public int insert(Payment payment);
 	
 	public Payment findById(int paymentId);
-	
-//	public Payment findByOrder(int userId);
-
 }

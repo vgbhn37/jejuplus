@@ -7,11 +7,15 @@
 	<insert id="insertAir">
 		INSERT INTO tb_air(user_id, payment_id, dep_pland_time, arr_pland_time, airline_nm, arr_airport_nm, dep_airport_nm)
 		VALUES(#{userId}, #{paymentId}, #{depPlandTime}, #{arrPlandTime}, #{airlineNm}, #{arrAirportNm}, #{depAirportNm}),
-		(#{userId}, #{paymentId}, #{depPlandTime}, #{arrPlandTime}, #{airlineNm}, #{arrAirportNm}, #{depAirportNm});
+		(#{userId}, #{paymentId}, #{depPlandTime2}, #{arrPlandTime2}, #{airlineNm}, #{arrAirportNm2}, #{depAirportNm2});
 	</insert>
 	
 	<select id="selectAir" resultType="com.green.jejuplus.repository.model.Air">
 		select * from tb_air;
+	</select>
+	
+	<select id="findById" resultType="com.green.jejuplus.repository.model.Payment">
+		SELECT * FROM tb_payment ORDER BY payment_id DESC LIMIT 1;
 	</select>
 
 </mapper>

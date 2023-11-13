@@ -266,7 +266,8 @@
 											</div>
 											<div class="price-info">
 												<p class="item-text">
-													<span>탑승객</span> <span> X 1</span>
+													<span>탑승객</span>
+													<span> X 1</span>
 												</p>
 												<p class="item-price">
 													<p name="arrPrice"> 원</p>
