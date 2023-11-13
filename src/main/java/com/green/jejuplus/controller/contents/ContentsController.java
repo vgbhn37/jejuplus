@@ -156,7 +156,7 @@ public class ContentsController {
 			boolean isRecommended = recommendedService.selectRecommended(principal.getUserId(), contentsId);
 			model.addAttribute("isFavorite", isFavorite);
 			model.addAttribute("isRecommended", isRecommended);
-		}
+		}	
 		
 		model.addAttribute("lodgingDetail", lodgingDetail);
 		model.addAttribute("review",review);

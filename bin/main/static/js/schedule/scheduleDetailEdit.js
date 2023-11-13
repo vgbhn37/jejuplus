@@ -293,6 +293,8 @@ let scheduleDetailEdit = {
 
 	/* 검색 창 출력 */
 	printSearchWindow: function() {
+		
+		this.modifyActive('search');
 
 		const tabOutput = document.getElementById('tab-output');
 
@@ -304,9 +306,15 @@ let scheduleDetailEdit = {
 				return res.text();
 			}).then(data => {
 				tabOutput.innerHTML = data;
+				const searchInput = document.getElementById('search-input');
 				const searchButton = document.getElementById('search-button');
 				searchButton.addEventListener('click', () => {
 					this.setSearchValue();
+				});
+				searchInput.addEventListener('keyup', (event)=>{
+					if(event.keyCode==13){
+						this.setSearchValue();
+					}
 				})
 			}).catch((error) => {
 				console.error(error);
@@ -339,6 +347,33 @@ let scheduleDetailEdit = {
 			searchOutput.innerHTML = data;
 		});
 
+	},
+	
+	/* 상세보기 페이지 팝업*/
+	moveToDetailPage: function(contentsId, label){
+		
+		let url = '';
+		
+		switch(label){
+			case '관광지' :
+				url = '/contents/touristAreaDetail/'+contentsId;
+				break;
+			case '숙박' :
+				url = '/contents/lodgingDetail/'+contentsId;
+				break;
+			case '쇼핑' :
+				url = '/contents/shoppingDetail/'+contentsId;
+				break;
+			case '음식점' :
+				url = '/contents/restaurantDetail/'+contentsId;
+				break;
+			default :
+				alert('상세보기가 지원되지 않는 페이지입니다.')
+				break;	
+		}
+		
+		window.open(url, '_blank', 'width=1200,height=1000');
+		
 	},
 
 	/* 일정추가한 컨텐츠를 일정리스트에 추가 후 지도와 리스트 출력*/

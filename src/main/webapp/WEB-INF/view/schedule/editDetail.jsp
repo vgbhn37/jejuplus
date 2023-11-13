@@ -35,8 +35,9 @@
 						value="${schedule.startDate}" readonly>
 				</div>
 			</div>
-			<div id="map" class="map" style="width: 90%; height: 500px;"></div>
-
+			<hr>
+			<div id="map" class="map" style="width: 100%; height: 600px;"></div>
+			<hr>
 			<div class="label-tabs">
 				<ul class="nav justify-content-between">
 					<li class="nav-item active"><a class="nav-link" data-tab="all"
@@ -72,9 +73,7 @@
 					<button id="saving-btn" class="btn btn-primary">저장</button>
 				</div>
 			</div>
-			<div class=notice>
-				※ 표시되는 거리는 직선거리 기준입니다.<br> ※ 거리를 클릭하시면 길찾기 페이지가 새 창으로 열립니다.
-			</div>
+	
 			<div id="list-output" class="float-right"></div>
 		</div>
 	</div>

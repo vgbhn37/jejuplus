@@ -9,7 +9,7 @@
 				onerror="this.src='/images/NoImage.jpg'">
 		</div>
 		<div class="card-body p-3">
-			<h4 class="card-title">${item.title}</h4>
+			<h4 class="card-title" onclick="scheduleDetailEdit.moveToDetailPage(${item.contentsId},'${item.contentsLabel}')">${item.title}</h4>
 			<p class="card-text">${item.region1 }>${item.region2}</p>
 			<p class="card-text tag">${item.tag }</p>
 			<button class="btn btn-orange float-right"
