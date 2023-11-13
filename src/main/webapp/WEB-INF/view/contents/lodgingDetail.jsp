@@ -70,11 +70,22 @@
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	23d4bf3926d523313e54a46d82cbb016"></script>
 		</div><br>
 		<div id="infomation">
-			<div>기본정보</div>
+			<div id="infomation-title">기본정보</div>
 			<hr>
-			<div>${lodgingDetail.title}</div>
-			<div>주소 : ${lodgingDetail.roadAddress}</div>
-			<div>연락처 : ${lodgingDetail.phoneNo}</div>
+			<table id="table">
+				<tr>
+					<th>장소</th>
+					<td style="text-align:left">${lodgingDetail.title}</td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td style="text-align:left">${lodgingDetail.roadAddress}</td>
+				</tr>
+				<tr>
+					<th>연락처</th>
+					<td style="text-align:left">${lodgingDetail.phoneNo}</td>
+				</tr>
+			</table>
 		</div>
 		<br><br><br>
 		<div class="subTitle">리뷰</div>
@@ -95,53 +106,54 @@
 		</div>
 		<div>
 			<input type="hidden" id="contentsId" value="${lodgingDetail.contentsId}">
-		</div>					
+		</div>
 		<div id="review-btn"><input type="button" value="리뷰등록" id="insertReviewBtn"></div>
 	</form>
 	<br>
+	<br>
 	
 	<div id="reviewList">
-	<table>
+	<c:forEach var="review" items="${review}">
+	<table width="1000px">
 		<tbody>
-			<c:forEach var="review" items="${review}">
 				<tr>
-					<td>
+					<td width="10%">
+						<div><input type="hidden" value="${review.reviewId}" id="reviewId"></div>
+						<div id="username">${review.username}</div>
+					</td>
+					<td width="8%">
 						<div>
 							<span class="${review.reviewStar>=1 ? "yellowStar" : "greyStar"}">★</span>
 							<span class="${review.reviewStar>=2 ? "yellowStar" : "greyStar"}">★</span>
 							<span class="${review.reviewStar>=3 ? "yellowStar" : "greyStar"}">★</span>
 							<span class="${review.reviewStar>=4 ? "yellowStar" : "greyStar"}">★</span>
 							<span class="${review.reviewStar>=5 ? "yellowStar" : "greyStar"}">★</span>
-							<span> ${review.reviewStar}</span>
 						</div>					
 					</td>
-					<td>
-						<div><input type="hidden" value="${review.reviewId}" id="reviewId"></div>
-						<div>${review.username}</div>
+					<td width="64%">
+						<div id="reviewStar">${review.reviewStar}</div>
 					</td>
-					<td>
-						<div>${review.createdAt}</div>
-					</td>
-					<td>
-						<div>${review.reviewRecommend}</div>
+					<td style="text-align:right" width="20%">
+						<div id="reviewDate">${review.createdAt}</div>
 					</td>
 				</tr>
 				<tr>
-					<td>${review.reviewContent}</td>
+					<td colspan="3" width="85%" style="word-break:break-all">${review.reviewContent}</td>
 					<c:if test="${review.userId eq principal.userId}">
-						<td><input type="button" value="수정" id="modifyReviewBtn"></td>
-						<td><input type="button" value="삭제" id="deleteReviewBtn"></td>
+						<td style="text-align:right" width="15%"><input type="button" value="수정" id="modifyReviewBtn">
+						<input type="button" value="삭제" id="deleteReviewBtn"></td>
 					</c:if>
 				</tr>
-			</c:forEach>
 		</tbody>
 	</table>
-	<br><hr><br>
+	<hr>
+	</c:forEach>
 	</div>
+	<br><br>
 	
 	<div id="modal">
 		<div class="modal-content">
-			<h2>리뷰 수정</h2>
+			<div id="modal-title">리뷰 수정</div>
 			<form name="modifyReview" id="modifyReview" method="post">
 				<fieldset>
 					<span class="text-bold">별점을 선택해주세요</span>
@@ -153,10 +165,14 @@
 				</fieldset>
 				<textarea id="modifyContent" placeholder="직접 경험한 솔직한 리뷰를 남겨주세요."></textarea>
 			</form>
-			<button id="modifyModal">수정</button>
-			<button id="closeModal">취소</button>
+			<div id="modal-button">
+				<button id="modifyModal">수정완료</button>
+				<button id="closeModal">취소</button>
+			</div>
 		</div>
 	</div>
+	
+	<input type="hidden" id="user-id" value="${principal.userId }">
 </body>
 
 <script>

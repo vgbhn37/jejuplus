@@ -30,8 +30,9 @@ public class ContentsService {
 	@Autowired
 	private ContentsRepository contentsRepository;
 
+	// 관광지 리스트
 	@Transactional
-	public List<TouristAreaListDto> findTouristArea( PagingDto paging) {
+	public List<TouristAreaListDto> findTouristArea(PagingDto paging) {
 	List<TouristAreaListDto> list = contentsRepository.findTouristAreaList(paging);
         StringBuilder sb = new StringBuilder();
         for (TouristAreaListDto contents : list) {
@@ -47,6 +48,7 @@ public class ContentsService {
 		return list;
 	}
 	
+	// 관광지 상세보기
 	@Transactional
 	public TouristAreaDetailDto touristAreaDetail(int contentsId) {
 		TouristAreaDetailDto touristAreaDetailDto = contentsRepository.showTouristAreaDetail(contentsId);
@@ -62,9 +64,10 @@ public class ContentsService {
 		return touristAreaDetailDto;
 	}
 
+	// 음식점 리스트
 	@Transactional
-	public List<RestaurantListDto> findRestaurant(String contentsLabel) {
-		List<RestaurantListDto> list = contentsRepository.findRestaurantList(contentsLabel);
+	public List<RestaurantListDto> findRestaurant(PagingDto paging) {
+		List<RestaurantListDto> list = contentsRepository.findRestaurantList(paging);
         StringBuilder sb = new StringBuilder();
         for (RestaurantListDto contents : list) {
             String tag = contents.getTag();
@@ -79,6 +82,7 @@ public class ContentsService {
 		return list;
 	}
 	
+	// 음식점 상세보기
 	@Transactional
 	public RestaurantDetailDto restaurantDetail(int contentsId) {
 		RestaurantDetailDto restaurantDetailDto = contentsRepository.showRestaurantDetail(contentsId);
@@ -94,9 +98,10 @@ public class ContentsService {
 		return restaurantDetailDto;
 	}
 	
+	// 숙박 리스트
 	@Transactional
-	public List<LodgingListDto> findLodging(String contentsLabel) {
-		List<LodgingListDto> list = contentsRepository.findLodgingList(contentsLabel);
+	public List<LodgingListDto> findLodging(PagingDto paging) {
+		List<LodgingListDto> list = contentsRepository.findLodgingList(paging);
         StringBuilder sb = new StringBuilder();
         for (LodgingListDto contents : list) {
             String tag = contents.getTag();
@@ -111,6 +116,7 @@ public class ContentsService {
 		return list;
 	}
 
+	// 숙박 상세보기
 	@Transactional
 	public LodgingDetailDto lodgingDetail(int contentsId) {
 		LodgingDetailDto lodgingDetailDto = contentsRepository.showLodgingDetail(contentsId);
@@ -126,9 +132,10 @@ public class ContentsService {
 		return lodgingDetailDto;
 	}
 	
+	// 쇼핑 리스트
 	@Transactional
-	public List<ShoppingListDto> findShopping(String contentsLabel) {
-		List<ShoppingListDto> list = contentsRepository.findShoppingList(contentsLabel);
+	public List<ShoppingListDto> findShopping(PagingDto paging) {
+		List<ShoppingListDto> list = contentsRepository.findShoppingList(paging);
         StringBuilder sb = new StringBuilder();
         for (ShoppingListDto contents : list) {
             String tag = contents.getTag();
@@ -143,6 +150,7 @@ public class ContentsService {
 		return list;
 	}
 	
+	// 쇼핑 상세보기
 	@Transactional
 	public ShoppingDetailDto shoppingDetail(int contentsId) {
 		ShoppingDetailDto shoppingDetailDto = contentsRepository.showShoppingDetail(contentsId);
@@ -158,14 +166,23 @@ public class ContentsService {
 		return shoppingDetailDto;
 	}
 
+	// 찜 리스트
 	@Transactional
 	public List<FavoriteDto> selectFavotiteList(Integer userId) {
 		return contentsRepository.selectFavoriteList(userId);
 	}
 
 	public int countTouristArea() {
-
 		return contentsRepository.countTouristArea();
+	}
+	public int countRestaurant() {
+		return contentsRepository.countRestaurant();
+	}
+	public int countLodging() {
+		return contentsRepository.countLodging();
+	}
+	public int countShopping() {
+		return contentsRepository.countShopping();
 	}
 
 }
