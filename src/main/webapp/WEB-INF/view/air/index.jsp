@@ -40,21 +40,21 @@ text-decoration: none;
 	                            <div class="dep-search">
 	                            	<select class="dep-input" name="depAirportNm">
 	                            		<option>선택</option>
+	                            		<option value="NAARKSS">김포</option>
 	                            		<option value="NAARKPK">김해</option>
 										<option value="NAARKPC">제주</option>
-										<option value="NAARKJB">무안</option>
-										<option value="NAARKJJ">광주</option>
-										<option value="NAARKJK">군산</option>
-										<option value="NAARKJY">여수</option>
-										<option value="NAARKNW">원주</option>
-										<option value="NAARKNY">양양</option>
-										<option value="NAARKPS">사천</option>
-										<option value="NAARKPU">울산</option>
-										<option value="NAARKSI">인천</option>
-										<option value="NAARKSS">김포</option>
-										<option value="NAARKTH">포항</option>
-										<option value="NAARKTN">대구</option>
-										<option value="NAARKTU">청주</option>
+<!-- 										<option value="NAARKJB">무안</option> -->
+<!-- 										<option value="NAARKJJ">광주</option> -->
+<!-- 										<option value="NAARKJK">군산</option> -->
+<!-- 										<option value="NAARKJY">여수</option> -->
+<!-- 										<option value="NAARKNW">원주</option> -->
+<!-- 										<option value="NAARKNY">양양</option> -->
+<!-- 										<option value="NAARKPS">사천</option> -->
+<!-- 										<option value="NAARKPU">울산</option> -->
+<!-- 										<option value="NAARKSI">인천</option> -->
+<!-- 										<option value="NAARKTH">포항</option> -->
+<!-- 										<option value="NAARKTN">대구</option> -->
+<!-- 										<option value="NAARKTU">청주</option> -->
 	                            	</select>
 	                            </div>
 	                        </div>
@@ -66,21 +66,21 @@ text-decoration: none;
 	                            <div class="arr-search">
 	                            	<select class="arr-input" name="arrAirportNm">
 	                            		<option>선택</option>
-										<option value="NAARKPK">김해</option>
+	                            		<option value="NAARKSS">김포</option>
+	                            		<option value="NAARKPK">김해</option>
 										<option value="NAARKPC">제주</option>
-										<option value="NAARKJB">무안</option>
-										<option value="NAARKJJ">광주</option>
-										<option value="NAARKJK">군산</option>
-										<option value="NAARKJY">여수</option>
-										<option value="NAARKNW">원주</option>
-										<option value="NAARKNY">양양</option>
-										<option value="NAARKPS">사천</option>
-										<option value="NAARKPU">울산</option>
-										<option value="NAARKSI">인천</option>
-										<option value="NAARKSS">김포</option>
-										<option value="NAARKTH">포항</option>
-										<option value="NAARKTN">대구</option>
-										<option value="NAARKTU">청주</option>
+<!-- 										<option value="NAARKJB">무안</option> -->
+<!-- 										<option value="NAARKJJ">광주</option> -->
+<!-- 										<option value="NAARKJK">군산</option> -->
+<!-- 										<option value="NAARKJY">여수</option> -->
+<!-- 										<option value="NAARKNW">원주</option> -->
+<!-- 										<option value="NAARKNY">양양</option> -->
+<!-- 										<option value="NAARKPS">사천</option> -->
+<!-- 										<option value="NAARKPU">울산</option> -->
+<!-- 										<option value="NAARKSI">인천</option> -->
+<!-- 										<option value="NAARKTH">포항</option> -->
+<!-- 										<option value="NAARKTN">대구</option> -->
+<!-- 										<option value="NAARKTU">청주</option> -->
 	                            	</select>
 	                            </div>
 	                        </div>

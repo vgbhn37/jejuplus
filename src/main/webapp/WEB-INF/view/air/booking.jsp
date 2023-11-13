@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ include file="/WEB-INF/view/header.jsp" %>
 <!-- css -->
 <link rel="stylesheet" href="/css/air/air.css" />
@@ -28,7 +29,7 @@
 						<!-- 가는 편 -->
 	                    <div class="info-wrap">
 	                        <div class="info-header">
-	                            <p class="info-title">총 <c:out value="${n1_itemList.size()}" />개의 항공편이 있습니다</p>
+	                            <p class="info-title">총 ${n1_itemList.size()} 개의 항공편이 있습니다</p>
 	                            <div class="round-ticket">가는 편</div>
 	                        </div>
 	                        	<c:forEach var="n1_item" items="${n1_itemList}" varStatus="loop">
@@ -37,23 +38,25 @@
 							        		<div class="flight-info-column">
 							                	<div class="flight-info-head">
 							                    	<img src="../../images/air/jeju_air_logo.png" alt="jeju_logo" class="flight-logo" />
-							                    	<p class="flight-brand"><c:out value="${n1_item.airlineNm}" /></p>
+							                    	<p class="flight-brand">${n1_item.airlineNm}</p>
 							                	</div>
 							                	<div class="flight-info-body">
 							                    	<div class="">
 							                        	<div class="dep-block">
-							                            	<p><c:out value="${n1_item.depPlandTimeLastFour}" /></p>
+							                            	<p>${fn:substring(n1_item.depPlandTime, 8, 10)}:${fn:substring(n1_item.depPlandTime, 10, 12)}</p>
+							                            	<p id="n1-depPlandTime" style="display:none;">${n1_item.depPlandTime}</p>
 							                            	<div class="flight-time">
-							                                	<span class="flight-time-info"><c:out value="${n1_item.flightTimeMinutes}" /> 분 소요</span>
+							                                	<span class="flight-time-info">${n1_item.flightTimeMinutes} 분 소요</span>
 							                            	</div>
 						                        		</div>
-							                        	<p class="airport-name"><c:out value="${n1_item.depAirportNm}" /></p>
+							                        	<p class="airport-name" id="n1-dep-airport">${n1_item.depAirportNm}</p>
 							                    	</div>
 							                    	<div style="margin-left: 35px">
 								                        <div class="arr-block">
-								                            <p><c:out value="${n1_item.arrPlandTimeLastFour}" /></p>
+								                            <p>${fn:substring(n1_item.arrPlandTime, 8, 10)}:${fn:substring(n1_item.arrPlandTime, 10, 12)}</p>
+								                            <p id="n1-arrPlandTime" style="display:none;">${n1_item.arrPlandTime}</p>
 								                        </div>
-							                        	<p class="airport-name"><c:out value="${n1_item.arrAirportNm}" /></p>
+							                        	<p class="airport-name" id="n1-arr-airport">${n1_item.arrAirportNm}</p>
 							                    	</div>
 							                	</div>
 							            	</div>
@@ -71,7 +74,7 @@
                     	<!-- 오는 편 -->
                     	<div class="info-wrap">
 	                        <div class="info-header">
-	                            <p class="info-title">총 <c:out value="${n2_itemList.size()}" />개의 항공편이 있습니다</p>
+	                            <p class="info-title">총 ${n2_itemList.size()} 개의 항공편이 있습니다</p>
 	                            <div class="round-ticket">오는 편</div>
 	                        </div>
 	                        	<c:forEach var="n2_item" items="${n2_itemList}" varStatus="loop">
@@ -80,23 +83,25 @@
 							        		<div class="flight-info-column">
 							                	<div class="flight-info-head">
 							                    	<img src="../../images/air/jeju_air_logo.png" alt="jeju_logo" class="flight-logo" />
-							                    	<p class="flight-brand"><c:out value="${n2_item.airlineNm}" /></p>
+							                    	<p class="flight-brand">${n2_item.airlineNm}</p>
 							                	</div>
 							                	<div class="flight-info-body">
 							                    	<div class="">
 							                        	<div class="dep-block">
-							                            	<p><c:out value="${n2_item.depPlandTimeLastFour}" /></p>
+							                            	<p>${fn:substring(n2_item.depPlandTime, 8, 10)}:${fn:substring(n2_item.depPlandTime, 10, 12)}</p>
+							                            	<p id="n2-depPlandTime" style="display:none;">${n2_item.depPlandTime}</p>
 							                            	<div class="flight-time">
-							                                	<span class="flight-time-info"><c:out value="${n2_item.flightTimeMinutes}" /> 분 소요</span>
+							                                	<span class="flight-time-info">${n2_item.flightTimeMinutes} 분 소요</span>
 							                            	</div>
 						                        		</div>
-							                        	<p class="airport-name"><c:out value="${n2_item.depAirportNm}" /></p>
+							                        	<p class="airport-name" id="n2-dep-airport">${n2_item.depAirportNm}</p>
 							                    	</div>
 							                    	<div style="margin-left: 35px">
 								                        <div class="arr-block">
-								                            <p><c:out value="${n2_item.arrPlandTimeLastFour}" /></p>
+								                            <p>${fn:substring(n2_item.arrPlandTime, 8, 10)}:${fn:substring(n2_item.arrPlandTime, 10, 12)}</p>
+								                            <p id="n2-arrPlandTime" style="display:none;">${n2_item.arrPlandTime}</p>
 								                        </div>
-							                        	<p class="airport-name"><c:out value="${n2_item.arrAirportNm}" /></p>
+							                        	<p class="airport-name" id="n2-arr-airport">${n2_item.arrAirportNm}</p>
 							                    	</div>
 							                	</div>
 							            	</div>
@@ -231,7 +236,7 @@
 													<span>탑승객</span> <span> X 1</span>
 												</p>
 												<p class="item-price">
-													<span> 원</span>
+													<p name="depPrice"> 원</p>
 												</p>
 											</div>
 											<div class="price-info">
@@ -246,13 +251,24 @@
 									</div>
 									<div class="pay-detail">
 										<div class="round-ticket">오는 편 항공권</div>
-										<div class="pay-ditail-list">	
+										<div class="pay-ditail-list">
+											<div>
+												<p name="n1DepAirport">n1출발공항</p>
+												<p name="n1ArrAirport">n1출발공항</p>
+												<p name="n2DepAirport">n2출발공항</p>
+												<p name="n2ArrAirport">n2출발공항</p>
+												<p name="airlineName">항공사 명</p>
+												<p name="n1DepPlandTime">출발시간1</p>
+												<p name="n1ArrPlandTime">도착시간1</p>
+												<p name="n2DepPlandTime">출발시간2</p>
+												<p name="n2ArrPlandTime">도착시간2</p>
+											</div>
 											<div class="price-info">
 												<p class="item-text">
 													<span>탑승객</span> <span> X 1</span>
 												</p>
 												<p class="item-price">
-													<span> 원</span>
+													<p name="arrPrice"> 원</p>
 												</p>
 											</div>
 											<div class="price-info">
@@ -268,7 +284,7 @@
 								</div>
 								<div class="final-price-info">
 									<p class="final-price">총 금액</p>
-									<p class="final-price" name="totalPrice">0 원</p>
+									<p class="final-price" name="totalPrice"> 원</p>
 								</div>
 								<div class="final-price-plus">항공료+유류할증료+세금 포함</div>
 							</div>
@@ -367,60 +383,88 @@
 	</div>
 </main>
 <script>
+
+/* Kakao Pay start */
 var IMP = window.IMP;
 IMP.init("imp88272048");
 
-// 필요한 DOM 요소
-const amountElement = document.querySelector('p[name="totalPrice"]');
-
-// 금액에서 "원"을 제거하고 숫자 부분만 추출
-const amountText = amountElement.textContent;
-const amount = parseInt(amountText.replace(/[^\d]/g, ''));
-
-//'pg_tid' 생성 및 설정
+// Create and set 'pg_tid'
 var pgTid = "";
 
 function requestPay() {
-	IMP.request_pay({
-		pg : "kakaopay",
-		pay_method : "card",
-//		merchant_uid : "jeju2001-29", // 주문번호
-		name : "제주플러스",
-		amount : amount, // 가격
-		pg_tid : pgTid,
-	}, function(rsp) {
-		console.log("결제 rsp: " + JSON.stringify(rsp));
+    // 가격을 불러와서 표시
+    const totalPriceText = $('p[name=totalPrice]').text();
+    const totalPrice = parseInt(totalPriceText.replace(/[^\d]/g, '')) || 0;
 
-		if (rsp.success) {
-			// [1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 및 pg_tid 전달하기
-			jQuery.ajax({
-				url : "/air/booking",
-				type : 'POST',
-				dataType : 'json',
-				data : {
-					imp_uid : rsp.imp_uid,
-					pg_tid : rsp.pg_tid, // pg_tid 추가
-					merchant_uid : rsp.merchant_uid,
-				// 기타 필요한 데이터가 있으면 추가 전달
-				}
-    		}).done(function(data, textStatus, xhr) {
-    			console.log("result OK " + data.name);
-     			alert(data);
-				
-    			
-    			window.location.href = "http://localhost:80/air/bookingcomplete";
-    			
-    		}).fail(function(error) {
-    			console.log("실패");
-    			alert("실패 : "+error.responseText);
-    		});
+    // 선택 시 데이터 수집
+    const airlineName = $('p[name=airlineName]').text();
+    const n1DepAirport = $('p[name=n1DepAirport]').text();
+    const n1ArrAirport = $('p[name=n1ArrAirport]').text();
+    const n2DepAirport = $('p[name=n2DepAirport]').text();
+    const n2ArrAirport = $('p[name=n2ArrAirport]').text();
+    const n1DepPlandTime = $('p[name=n1DepPlandTime]').text();
+    const n1ArrPlandTime = $('p[name=n1ArrPlandTime]').text();
+    const n2DepPlandTime = $('p[name=n2DepPlandTime]').text();
+    const n2ArrPlandTime = $('p[name=n2ArrPlandTime]').text();
+    
+    IMP.request_pay({
+        pg: "kakaopay",
+        pay_method: "card",
+        name: "Jeju Plus",
+        amount: totalPrice, // 수정된 부분
+        pg_tid: pgTid,
+        // 추가 데이터
+        airlineName: airlineName,
+        n1DepAirport: n1DepAirport,
+        n1ArrAirport: n1ArrAirport,
+        n2DepAirport: n2DepAirport,
+        n2ArrAirport: n2ArrAirport,
+        n1DepPlandTime: n1DepPlandTime,
+        n1ArrPlandTime: n1ArrPlandTime,
+        n2DepPlandTime: n2DepPlandTime,
+        n2ArrPlandTime: n2ArrPlandTime,
+        
+    }, function(rsp) {
+        console.log("Payment rsp: " + JSON.stringify(rsp));
 
+        if (rsp.success) {
+            jQuery.ajax({
+                url: "/air/booking",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    imp_uid: rsp.imp_uid,
+                    pg_tid: rsp.pg_tid, // add pg_tid
+                    merchant_uid: rsp.merchant_uid,
+                 	// 추가 데이터
+                    airlineName: airlineName,
+                    n1DepAirport: n1DepAirport,
+                    n1ArrAirport: n1ArrAirport,
+                    n2DepAirport: n2DepAirport,
+                    n2ArrAirport: n2ArrAirport,
+                    n1DepPlandTime: n1DepPlandTime,
+                    n1ArrPlandTime: n1ArrPlandTime,
+                    n2DepPlandTime: n2DepPlandTime,
+                    n2ArrPlandTime: n2ArrPlandTime,
+                }
+            }).done(function(data, textStatus, xhr) {
+                console.log("result OK " + data.name);
+                alert(data);
+                window.location.href = "http://localhost:80/air/bookingcomplete";
+            }).fail(function(error) {
+                console.log("Failure");
+                alert("Failure: " + error.responseText);
+            });
         } else {
-            var msg = '결제에 실패하였습니다.';
-            msg += '\n에러내용: ' + rsp.error_msg;
+            var msg = 'Payment failed.';
+            msg += '\nError details: ' + rsp.error_msg;
             alert(msg);
         }
     });
 }
+/* 카카오페이 end */
+/*  */
+
+	
 </script>
 <%@ include file="/WEB-INF/view/footer.jsp"%>

@@ -179,7 +179,7 @@ $(document).ready(function() {
 
 /* 왕복 편도 라디오 버튼 end */
 
-/*  */
+/* 구매자와 동일 start */
 $(document).ready(function() {
 	// "구매자와 동일" 라디오 버튼 클릭 시
 	$('#same').click(function() {
@@ -203,49 +203,69 @@ $(document).ready(function() {
 		}
 	});
 });
-
-
+/* 구매자와 동일 end */
 /* 결제 정보 가격 start */
-document.addEventListener('DOMContentLoaded', function() {
-	// 가는편 선택 버튼
-	const n1CheckInputs = document.querySelectorAll('.n1-check-input');
-	// 오는편 선택 버튼
-	const n2CheckInputs = document.querySelectorAll('.n2-check-input');
-	// 가격 표시 엘리먼트
-	const totalPriceElement = document.querySelector('p[name="totalPrice"]');
+$(document).ready(function() {
+    // "가는 편" 라디오 버튼 및 "오는 편" 라디오 버튼 클릭 시
+    $('input[name=n1-check], input[name=n2-check]').click(function() {
+        if (this.checked) {
+            // 선택된 가격을 가져와서 표시
+            const selectedPrice = $(this).closest('.info-body').find('.price-block span').text();
+            let fee = 0;
+            
+            const airlineName = $(this).closest('.info-body').find('.flight-brand').text();
+            const n1DepAirport = $(this).closest('.info-body').find('#n1-dep-airport').text();
+            const n1ArrAirport = $(this).closest('.info-body').find('#n1-arr-airport').text();
+            const n2DepAirport = $(this).closest('.info-body').find('#n2-dep-airport').text();
+            const n2ArrAirport = $(this).closest('.info-body').find('#n2-arr-airport').text();
+            const n1DepPlandTime = $(this).closest('.info-body').find('#n1-depPlandTime').text();
+            const n1ArrPlandTime = $(this).closest('.info-body').find('#n1-arrPlandTime').text();
+            const n2DepPlandTime = $(this).closest('.info-body').find('#n2-depPlandTime').text();
+            const n2ArrPlandTime = $(this).closest('.info-body').find('#n2-arrPlandTime').text();
+            
+//            console.log("Airline Name:", airlineName);
+//            console.log("n1DepAirport:", n1DepAirport);
+//            console.log("n1ArrAirport:", n1ArrAirport);
+//            console.log("n2DepAirport:", n2DepAirport);
+//            console.log("n2ArrAirport:", n2ArrAirport);
+//
+//			$('p[name=n1DepAirport]').text(n1DepAirport);
 
-	// 각 항공편의 가격 정보를 저장할 변수
-	let n1Price = 0;
-	let n2Price = 0;
+            // 가는 편인지 오는 편인지에 따라 적절한 위치에 가격을 표시
+            if ($(this).attr('name') === 'n1-check') {
+                fee = 5000; // 가는 편 추가할 수수료 수정
+                $('p[name=depPrice]').text(selectedPrice);
+                $('p[name=n1DepAirport]').text(n1DepAirport);
+                $('p[name=n1ArrAirport]').text(n1ArrAirport);
+                $('p[name=n1DepPlandTime]').text(n1DepPlandTime);
+                $('p[name=n1ArrPlandTime]').text(n1ArrPlandTime);
+            } else if ($(this).attr('name') === 'n2-check') {
+                fee = 10000; // 오는 편 추가할 수수료 수정
+                $('p[name=arrPrice]').text(selectedPrice);
+                $('p[name=n2DepAirport]').text(n2DepAirport);
+                $('p[name=n2ArrAirport]').text(n2ArrAirport);
+                $('p[name=airlineName]').text(airlineName);
+                $('p[name=n2DepPlandTime]').text(n2DepPlandTime);
+                $('p[name=n2ArrPlandTime]').text(n2ArrPlandTime);
+            }
+            
+            // 가는 편 및 오는 편의 총 가격 계산
+            const depPrice = parseInt($('p[name=depPrice]').text().replace(/[^\d]/g, '')) || 0;
+            const arrPrice = parseInt($('p[name=arrPrice]').text().replace(/[^\d]/g, '')) || 0;
+            const totalPrice = depPrice + arrPrice + fee;
 
-	// 가는편 선택 버튼 리스너 등록
-	n1CheckInputs.forEach((input, index) => {
-		input.addEventListener('change', function() {
-			// 선택된 항공편의 가격을 가져와서 변수에 저장
-			n1Price = parseInt(document.querySelectorAll('.n1-check-block .price-block span')[index].textContent.replace(/[^\d]/g, ''));
-			// 총 가격 업데이트
-			updateTotalPrice();
-		});
-	});
+            // 총 가격을 표시
+            $('p[name=totalPrice]').text(totalPrice.toLocaleString() + ' 원');
+        }
+    });
 
-	// 오는편 선택 버튼 리스너 등록
-	n2CheckInputs.forEach((input, index) => {
-		input.addEventListener('change', function() {
-			// 선택된 항공편의 가격을 가져와서 변수에 저장
-			n2Price = parseInt(document.querySelectorAll('.n2-check-block .price-block span')[index].textContent.replace(/[^\d]/g, ''));
-			// 총 가격 업데이트
-			updateTotalPrice();
-		});
-	});
-
-	// 총 가격 업데이트 함수
-	function updateTotalPrice() {
-		// 가는편과 오는편의 가격을 합산하여 총 가격 업데이트
-		const totalAmount = n1Price + n2Price;
-		totalPriceElement.textContent = `${totalAmount.toLocaleString()} 원`;
-	}
+    // "결제하기" 버튼 클릭 시
+    $('.btnOrder').click(function() {
+        // 결제 함수 호출
+        requestPay();
+        
+    });
 });
-
-
 /* 결제 정보 가격 end */
+/*  */
 
