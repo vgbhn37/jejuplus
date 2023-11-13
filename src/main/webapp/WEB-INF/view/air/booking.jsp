@@ -4,6 +4,7 @@
 <%@ include file="/WEB-INF/view/header.jsp" %>
 <!-- css -->
 <link rel="stylesheet" href="/css/air/air.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 <!-- js -->
 <script src="../../js/air/air.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>

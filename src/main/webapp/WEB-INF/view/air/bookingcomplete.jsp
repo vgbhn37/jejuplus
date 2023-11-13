@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/view/header.jsp" %>
 <!-- css -->
 <link rel="stylesheet" href="../../css/air/air.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 <!-- js -->
 <script src="../../js/main.js"></script>
 <!-- main -->

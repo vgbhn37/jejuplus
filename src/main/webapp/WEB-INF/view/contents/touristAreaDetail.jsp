@@ -72,7 +72,7 @@
 		<div id="infomation">
 			<div id="infomation-title">기본정보</div>
 			<hr>
-			<table width="1000px">
+			<table id="table">
 				<tr>
 					<th>장소</th>
 					<td style="text-align:left">${touristAreaDetail.title}</td>
@@ -113,7 +113,7 @@
 	<br>
 	
 	<div id="reviewList">
-			<c:forEach var="review" items="${review}">
+	<c:forEach var="review" items="${review}">
 	<table width="1000px">
 		<tbody>
 				<tr>
@@ -131,7 +131,7 @@
 						</div>					
 					</td>
 					<td width="64%">
-						<div id="reviewStar">${review.reviewStar}</div>
+						<div id="reviewStar">(${review.reviewStar})</div>
 					</td>
 					<td style="text-align:right" width="20%">
 						<div id="reviewDate">${review.createdAt}</div>
@@ -147,7 +147,7 @@
 		</tbody>
 	</table>
 	<hr>
-			</c:forEach>
+	</c:forEach>
 	</div>
 	<br><br>
 	

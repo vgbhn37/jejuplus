@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/view/header.jsp"%>
+
 <link rel="stylesheet" href="/css/contents/detail.css" />
 <link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 
@@ -34,7 +35,7 @@
 						</c:choose>
 					</c:if>
 					<c:if test="${principal == null}">
-						<img src="/images/좋아요.png" class="icon">
+						<img src="/images/좋아요.png" class="icon" id="unrecommended2">
 					</c:if>
 				</td>
 				<td><a href="#insertReview"><img src="/images/리뷰.png" class="icon"></a></td>
@@ -69,11 +70,22 @@
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	23d4bf3926d523313e54a46d82cbb016"></script>
 		</div><br>
 		<div id="infomation">
-			<div>기본정보</div>
+			<div id="infomation-title">기본정보</div>
 			<hr>
-			<div>${shoppingDetail.title}</div>
-			<div>주소 : ${shoppingDetail.roadAddress}</div>
-			<div>연락처 : ${shoppingDetail.phoneNo}</div>
+			<table id="table">
+				<tr>
+					<th>장소</th>
+					<td style="text-align:left">${shoppingDetail.title}</td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td style="text-align:left">${shoppingDetail.roadAddress}</td>
+				</tr>
+				<tr>
+					<th>연락처</th>
+					<td style="text-align:left">${shoppingDetail.phoneNo}</td>
+				</tr>
+			</table>
 		</div>
 		<br><br><br>
 		<div class="subTitle">리뷰</div>
@@ -99,8 +111,9 @@
 	</form>
 	<br>
 	<br>
+	
 	<div id="reviewList">
-			<c:forEach var="review" items="${review}">
+	<c:forEach var="review" items="${review}">
 	<table width="1000px">
 		<tbody>
 				<tr>
@@ -118,7 +131,7 @@
 						</div>					
 					</td>
 					<td width="64%">
-						<div id="reviewStar">${review.reviewStar}</div>
+						<div id="reviewStar">(${review.reviewStar})</div>
 					</td>
 					<td style="text-align:right" width="20%">
 						<div id="reviewDate">${review.createdAt}</div>
@@ -133,9 +146,10 @@
 				</tr>
 		</tbody>
 	</table>
-	<br><hr><br>
-			</c:forEach>
+	<hr>
+	</c:forEach>
 	</div>
+	<br><br>
 	
 	<div id="modal">
 		<div class="modal-content">
@@ -157,6 +171,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<input type="hidden" id="user-id" value="${principal.userId }">
 </body>
 
 <script>

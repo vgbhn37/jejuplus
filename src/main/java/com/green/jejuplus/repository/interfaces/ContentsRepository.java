@@ -22,9 +22,9 @@ import com.green.jejuplus.util.PagingDto;
 public interface ContentsRepository {
 	
 	public List<TouristAreaListDto> findTouristAreaList(PagingDto paging);
-	public List<RestaurantListDto> findRestaurantList(String contentsLabel);
-	public List<LodgingListDto> findLodgingList(String contentsLabel);
-	public List<ShoppingListDto> findShoppingList(String contentsLabel);
+	public List<RestaurantListDto> findRestaurantList(PagingDto paging);
+	public List<LodgingListDto> findLodgingList(PagingDto paging);
+	public List<ShoppingListDto> findShoppingList(PagingDto paging);
 	public TouristAreaDetailDto showTouristAreaDetail(int contentsId);
 	public RestaurantDetailDto showRestaurantDetail(int contentsId);
 	public LodgingDetailDto showLodgingDetail(int contentsId);
@@ -32,4 +32,7 @@ public interface ContentsRepository {
 	public List<FavoriteDto> selectFavoriteList(@Param("userId") Integer userId);
 	public Contents selectRecommend(Contents contents);
 	public int countTouristArea();
+	public int countRestaurant();
+	public int countLodging();
+	public int countShopping();
 }

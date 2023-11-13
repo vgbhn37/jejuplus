@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/view/header.jsp"%>
 
 <link rel="stylesheet" href="/css/user/user.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <main>

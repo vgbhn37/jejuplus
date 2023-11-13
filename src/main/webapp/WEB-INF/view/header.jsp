@@ -30,6 +30,7 @@
 	href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 <!-- google font -->
 
 <!-- fontawesome -->
@@ -66,29 +67,49 @@
 			</c:choose>
 			<ul class="menu">
 				<li><a href="/air/index">항공권</a></li>
-				<li><a href="#" id="myPageLink">마이페이지 ▾</a></li>
+				
+				<li><a href="#" id="travelLink">여행 정보</a></li>
+				<div id="hiddenMenu2" style="display: none;">
+					<div class="hidden_div">
+						<div><a href="/contents/touristAreaList">관광지</a></div>
+						<div><a href="/contents/restaurantList">음식점</a></div>
+						<div><a href="/contents/lodgingList">숙박</a></div>
+						<div><a href="/contents/shoppingList">쇼핑</a></div>
+					</div>
+				</div>
+				
+				<li><a href="#" id="mytravelLink">나의 여행</a></li>
+				<div id="hiddenMenu3" style="display: none;">
+					<div class="hidden_div">
+						<div><a href="/schedule/list">여행 일정</a></div>
+						<div><a href="/contents/favoriteList">찜한 여행</a></div>
+					</div>
+				</div>
+				
+				<li><a href="#" id="myPageLink">마이페이지</a></li>
 
 				<div id="hiddenMenu" style="display: none;">
-					<c:choose>
-						<c:when test="${principal == null}">
-							<li><a href="/user/register">회원가입</a></li>
-							<li><a href="/user/sign-in">로그인</a></li>
-						</c:when>
-
-						<c:otherwise>
-							<input type="hidden" id="is-login" value='${principal ne null}'>
-							<li><a href="/user/userUpdate/${principal.userId}">내 정보</a></li>
-							<li><a href="/user/orderList/">구매 내역</a></li>
-							<li><a href="/user/logout">로그아웃</a></li>
-							<c:if test="${principal.levelId >= 2}">
-								<li><a class="common-black-font"
-									href="/admin/adminUserManagement">관리자</a></li>
-							</c:if>
-						</c:otherwise>
-					</c:choose>
+					<div class="hidden_div">
+						<c:choose>
+							<c:when test="${principal == null}">
+								<div><a href="/user/register">회원가입</a></div>
+								<div><a href="/user/sign-in">로그인</a></div>
+							</c:when>
+	
+							<c:otherwise>
+								<input type="hidden" id="is-login" value='${principal ne null}'>
+								<div><a href="/user/userUpdate/${principal.userId}">내 정보</a></div>
+								<div><a href="/user/orderList/">구매 내역</a></div>
+								<div><a href="/user/logout">로그아웃</a></div>
+								<c:if test="${principal.levelId >= 2}">
+									<div><a class="common-black-font"
+										href="/admin/adminUserManagement">관리자</a></div>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</div>
-
-				<li><a href="/contents/touristAreaList">여행 정보</a></li>
+				
 				<li><a href="#" id="toggleButton">날씨</a></li>
 				<div class="app">
 					<div class="sidebar">
@@ -108,6 +129,28 @@
 					hiddenMenu.style.display = "block";
 				} else {
 					hiddenMenu.style.display = "none";
+				}
+			});
+			
+			var travelLink = document.getElementById("travelLink");
+			var hiddenMenu2 = document.getElementById("hiddenMenu2");
+
+			travelLink.addEventListener("click", function() {
+				if (hiddenMenu2.style.display === "none") {
+					hiddenMenu2.style.display = "block";
+				} else {
+					hiddenMenu2.style.display = "none";
+				}
+			});
+			
+			var mytravelLink = document.getElementById("mytravelLink");
+			var hiddenMenu3 = document.getElementById("hiddenMenu3");
+
+			mytravelLink.addEventListener("click", function() {
+				if (hiddenMenu3.style.display === "none") {
+					hiddenMenu3.style.display = "block";
+				} else {
+					hiddenMenu3.style.display = "none";
 				}
 			});
 		</script>

@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/css/contents/list.css" />
 <link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 <body>
-	<div id="contentsLabel">맛집</div>
+	<div id="contentsLabel">음식점</div>
 	<hr>
 	<br><br>
 	<div id="container">
@@ -18,14 +18,34 @@
 					<div><img src="/images/좋아요.png" class="icon">${contents.recommendedCnt}</div>
 					<div><img src="/images/리뷰.png" class="icon">${contents.reviewAvg} (${contents.reviewCnt})</div>
 				</div>
-				<div><input type="hidden" value="${contents.contentsLabel}"></div>
+				<div><input type="hidden" value="${contents.contentsLabel}" id="contents-label"></div>
 				<input type="button" onclick="location.href='/contents/restaurantDetail/${contents.contentsId}'" value="자세히보기" id="btn">
 			</div>
 		</c:forEach>
+		<div class="paging">
+			<div class="text-center clearfix">
+				<ul class="pagination" id="pagination">
+					<c:if test="${pagination.prev}">
+						<li class="page-item"><a class="page-link"
+							onclick="contentsList.changePage(event)" data-page="${pagination.beginPage-1}">Prev</a></li>
+					</c:if>
+					<c:forEach var="num" begin="${pagination.beginPage}"
+						end="${pagination.endPage}">
+						<li
+							class="${pagination.paging.page == num ? 'page-item active' : ''}"><a
+							class="page-link" onclick="contentsList.changePage(event)" data-page="${num}">${num}</a></li>
+					</c:forEach>
+		
+					<c:if test="${pagination.next}">
+						<li class="page-item"><a class="page-link"
+							onclick="contentsList.changePage(event)" data-page="${pagination.endPage+1}">Next</a></li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
 	</div>
 	
 </body>
-<script>
-
+<script src='/js/contents/list.js'>
 </script>
 <%@ include file="/WEB-INF/view/footer.jsp"%>

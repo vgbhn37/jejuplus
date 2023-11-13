@@ -70,11 +70,22 @@
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	23d4bf3926d523313e54a46d82cbb016"></script>
 		</div><br>
 		<div id="infomation">
-			<div>기본정보</div>
+			<div id="infomation-title">기본정보</div>
 			<hr>
-			<div>${restaurantDetail.title}</div>
-			<div>주소 : ${restaurantDetail.roadAddress}</div>
-			<div>연락처 : ${restaurantDetail.phoneNo}</div>
+			<table id="table">
+				<tr>
+					<th>장소</th>
+					<td style="text-align:left">${restaurantDetail.title}</td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td style="text-align:left">${restaurantDetail.roadAddress}</td>
+				</tr>
+				<tr>
+					<th>연락처</th>
+					<td style="text-align:left">${restaurantDetail.phoneNo}</td>
+				</tr>
+			</table>
 		</div>
 		<br><br><br>
 		<div class="subTitle">리뷰</div>
@@ -102,7 +113,7 @@
 	<br>
 	
 	<div id="reviewList">
-			<c:forEach var="review" items="${review}">
+	<c:forEach var="review" items="${review}">
 	<table width="1000px">
 		<tbody>
 				<tr>
@@ -120,7 +131,7 @@
 						</div>					
 					</td>
 					<td width="64%">
-						<div id="reviewStar">${review.reviewStar}</div>
+						<div id="reviewStar">(${review.reviewStar})</div>
 					</td>
 					<td style="text-align:right" width="20%">
 						<div id="reviewDate">${review.createdAt}</div>
@@ -135,9 +146,10 @@
 				</tr>
 		</tbody>
 	</table>
-	<br><hr><br>
-			</c:forEach>
+	<hr>
+	</c:forEach>
 	</div>
+	<br><br>
 	
 	<div id="modal">
 		<div class="modal-content">
@@ -159,6 +171,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<input type="hidden" id="user-id" value="${principal.userId }">
 </body>
 
 <script>

@@ -9,7 +9,7 @@
 	}
 	#container {
 		width: 1000px;
-		height:30px;
+		height:100%;
 		margin: 0 auto;
 		padding-left: 30px;
 
@@ -87,4 +87,27 @@
 	    color: white;
 	    border: solid 1px #f37021;
 	    cursor: pointer;
+	}
+	.paging {
+		width: 1000px;
+		text-align: center;
+	}
+	
+	.pagination{
+	justify-content: center;
+	margin-bottom: 50px;
+	}
+	
+	.page-link {
+		cursor: pointer;
+		color: #292929;
+	}
+	
+	.page-prev, .page-next{
+		font-weight: bold;
+	}
+	
+	.page-item.active .page-link{
+		background-color: #f37021;
+		border: solid 1px #f37021;
 	}

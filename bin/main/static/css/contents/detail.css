@@ -37,10 +37,7 @@
 		font-weight: 500;
 		margin: auto;
 	}
-	#infomation-title {
-		font-weight: bold;
-		margin-top: 10px;
-	}
+
 	#tag {
 		font-size: 15px;
 		color:grey;
@@ -53,7 +50,19 @@
 	}
 	#infomation {
 		background-color:#f4f4f4;
+		height: 180px;
 		font-size: 15px;
+	}
+	#infomation-title {
+		font-weight: bold;
+    	padding-top: 15px;
+	}
+	#table{
+		margin:auto;
+	}
+	#table td{
+		padding-left: 20px;
+		height: 30px;
 	}
 	.subTitle {
 		margin: auto;
@@ -216,17 +225,19 @@
 	
 	#username {
 		color: #292929;
-		font-weight: 600;
+		font-weight: 700;
 	}
 	
 	#reviewDate {
 		color:darkgrey;
-		font-size: 13px;
+		font-size: 15px;
+		font-weight: 400;
+		margin-bottom: 5px;
 	}
 	
 	#reviewStar{
-		color:grey;
-		font-weight: 500;
+		color:#292929;
+		font-weight: 400;
 	}
 	
 	.yellowStar{

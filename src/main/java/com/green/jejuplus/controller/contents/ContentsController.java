@@ -98,9 +98,16 @@ public class ContentsController {
 	
 	// 맛집 리스트
 	@GetMapping("/restaurantList")
-	public String restaurantList(Model model) {
-		List<RestaurantListDto> restaurantList = contentsService.findRestaurant("음식점");
+	public String restaurantList(@ModelAttribute("paging")PagingDto paging,
+			@RequestParam(value = "page", required = false, defaultValue = "1")int page, Model model, HttpServletRequest request) {
+		Pagination pagination = new Pagination();
+		paging.setPage(page);
+		pagination.setPaging(paging);
+		List<RestaurantListDto> restaurantList = contentsService.findRestaurant(paging);
+		int total = contentsService.countRestaurant();
+		pagination.setArticleTotalCount(total);
 		model.addAttribute("restaurantList", restaurantList);
+		model.addAttribute("pagination", pagination);
 		return "contents/restaurantList";
 	}
 	
@@ -124,9 +131,16 @@ public class ContentsController {
 	
 	// 숙소 리스트
 	@GetMapping("/lodgingList")
-	public String lodgingList(Model model) {
-		List<LodgingListDto> lodgingList = contentsService.findLodging("숙박");
+	public String lodgingList(@ModelAttribute("paging")PagingDto paging,
+			@RequestParam(value = "page", required = false, defaultValue = "1")int page, Model model, HttpServletRequest request) {
+		Pagination pagination = new Pagination();
+		paging.setPage(page);
+		pagination.setPaging(paging);
+		List<LodgingListDto> lodgingList = contentsService.findLodging(paging);
+		int total = contentsService.countLodging();
+		pagination.setArticleTotalCount(total);
 		model.addAttribute("lodgingList", lodgingList);
+		model.addAttribute("pagination", pagination);
 		return "contents/lodgingList";
 	}
 	
@@ -152,11 +166,19 @@ public class ContentsController {
 	
 	// 쇼핑 리스트
 	@GetMapping("/shoppingList")
-	public String shoppingList(Model model) {
-		List<ShoppingListDto> shoppingList = contentsService.findShopping("쇼핑");
+	public String shoppingList(@ModelAttribute("paging")PagingDto paging,
+			@RequestParam(value = "page", required = false, defaultValue = "1")int page, Model model, HttpServletRequest request) {
+		Pagination pagination = new Pagination();
+		paging.setPage(page);
+		pagination.setPaging(paging);
+		List<ShoppingListDto> shoppingList = contentsService.findShopping(paging);
+		int total = contentsService.countShopping();
+		pagination.setArticleTotalCount(total);
 		model.addAttribute("shoppingList", shoppingList);
+		model.addAttribute("pagination", pagination);
 		return "contents/shoppingList";
-	} 
+	}
+	
 	
 	// 쇼핑 상세보기
 	@GetMapping("/shoppingDetail/{contentsId}")
