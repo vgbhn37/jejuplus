@@ -66,7 +66,6 @@ nav {
   position: absolute;
   right: 7.3rem !important;
   top: 55px;
-  border: none;
   box-sizing: border-box;
   width: 100px !important;
   background-color: rgb(0,0,0,0.4) !important;
@@ -78,7 +77,6 @@ nav {
   position: absolute;
   right: 20.3rem !important;
   top: 55px;
-  border: none;
   box-sizing: border-box;
   width: 100px !important;
   background-color: rgb(0,0,0,0.4) !important;
@@ -90,7 +88,6 @@ nav {
   position: absolute;
   right:13.8rem !important;
   top: 55px;
-  border: none;
   box-sizing: border-box;
   width: 100px !important;
   background-color: rgb(0,0,0,0.4) !important;

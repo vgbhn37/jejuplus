@@ -14,6 +14,7 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d5568461ac8305d5d4737b9523509aed"></script>
 <link rel="stylesheet" href="/css/schedule/scheduleDetailEdit.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 <!-- ------------------------------------------------------------- -->
 
 

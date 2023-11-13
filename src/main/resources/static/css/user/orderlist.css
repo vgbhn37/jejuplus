@@ -3,7 +3,9 @@ ol {
 	list-style: none;
 	-webkit-padding-start: 0px;
 }
-
+body { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
 
 .mainBackgorund {
     display: flex;
