@@ -196,13 +196,19 @@
 
 ## 5️⃣ SiteMap
 
-#### User
-![image](https://github.com/vgbhn37/jejuplus/assets/125956057/1f386cc2-a5f1-4e6f-b29f-0d787f47f34f)
 
-<br>
 
-#### Admin
-![image](https://github.com/vgbhn37/jejuplus/assets/125956057/2051cffd-bfcc-4327-8d25-6411c3611451)
+<table>
+<tr>
+  <td>User</td>
+  <td>Admin</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/1f386cc2-a5f1-4e6f-b29f-0d787f47f34f"></td>
+   <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/2051cffd-bfcc-4327-8d25-6411c3611451"></td>
+</tr>
+</table>
+
 
 
 
@@ -246,7 +252,42 @@
 
 #### 광고 상세보기
 - 광고에 대한 정보들 출력(제목,소개글,이미지,내용)
- 
+<br>
+
+<table>
+<tr>
+  <td>회원가입</td>
+  <td>회원탈퇴</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/35736629-f3fe-4eb9-a8f3-90caec1ef527"></td>
+   <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/1fb8c519-36cf-4a9e-89a7-7173ba857f11"></td>
+</tr>
+<tr>
+  <td>카카오 소셜 로그인</td>
+  <td>로그인</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/07ea6981-f120-4601-bf60-721f303e52ed"></td>
+  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/e064d879-b2bc-4514-892b-c548b1ff157c"></td>
+</tr>
+<tr>
+<tr>
+  <td>아이디 찾기</td>
+  <td>비밀번호 찾기</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/edde31dc-5ef8-4b8b-9ba4-71a4ef04fd77"></td>
+   <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/2bb0c77c-8378-4f83-ad73-b016b16e976a"></td>
+</tr>	
+  <td>내정보수정</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/39868f6f-e6a2-40c4-b6ba-f4c551bcb48f"></td>
+</tr>
+</table>
+
+ <br>
   
 ## 8️⃣ 기능 - 관리자
 
@@ -274,4 +315,24 @@
 #### 광고 수정
 - 작성했던 제목,소개,내용,이미지들 출력
 - 작성했던 제목,소개,내용,이미지들 수정 기능
-  
+<br>
+
+<table>
+
+<tr>
+  <td>회원관리(삭제,권한변경)</td>
+  <td>광고관리(삭제,기간연장)</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/306a3795-5bd1-4285-a36b-b9026bccf43d"></td>
+   <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/24e1ba62-ddd1-48d9-807a-bdcbfd1a3d64"></td>
+</tr>
+<tr>
+  <td>광고 추가</td>
+  <td>광고 수정 및 상세보기</td>
+</tr>
+<tr>
+  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/4fe56f18-a921-43c0-abe8-ba071cf352ca"></td>
+  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/0042fe36-dcf0-45d4-9d5f-4ac7a65d32c9"></td>
+</tr>
+</table>
