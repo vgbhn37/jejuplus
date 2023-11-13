@@ -28,7 +28,7 @@
 		</button>
 		<section class="tour-packages">
 			<div>
-				<h2>광고</h2>
+				<h2># 광고</h2>
 			</div>
 
 			<div class="carousel-container">
@@ -39,7 +39,7 @@
 							<img src="${promotions.imageUrl}" alt="sample" />
 							<h3>${promotions.title}</h3>
 							<p>${promotions.introduce}</p>
-							<a href="/user/promotionDetail/${promotions.promotionId}">자세히 보기</a>
+							<a href="/user/promotionDetail/${promotions.promotionId}" style="color:#f37021">자세히 보기</a>
 						</div>
 					</c:forEach>
 				</div>
@@ -62,7 +62,7 @@
 		</button>
 		<section class="tour-packages">
 			<div>
-				<h2>맛집</h2>
+				<h2># 맛집</h2>
 			</div>
 
 			<div class="carousel-container">
@@ -73,7 +73,7 @@
 							<img src="${restaurantDto.imgPath}" alt="sample" />
 							<h3>${restaurantDto.title}</h3>
 							<p>${restaurantDto.tag}</p>
-							<a href="/contents/restaurantDetail/${restaurantDto.contentsId}">자세히 보기</a>
+							<a href="/contents/restaurantDetail/${restaurantDto.contentsId}" style="color:#f37021">자세히 보기</a>
 						</div>
 					</c:forEach>
 				</div>
@@ -93,7 +93,7 @@
 		</button>
 		<section class="tour-packages">
 			<div>
-				<h2>인기 관광지</h2>
+				<h2># 인기 관광지</h2>
 			</div>
 
 			<div class="carousel-container">
@@ -104,7 +104,7 @@
 							<img src="${palceDto.imgPath}" alt="sample" />
 							<h3>${palceDto.title}</h3>
 							<p>${palceDto.tag}</p>
-							<a href="/contents/touristAreaDetail/${palceDto.contentsId}">자세히 보기</a>
+							<a href="/contents/touristAreaDetail/${palceDto.contentsId}" style="color:#f37021">자세히 보기</a>
 						</div>
 					</c:forEach>
 				</div>

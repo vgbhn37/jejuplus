@@ -131,7 +131,7 @@
 						</div>					
 					</td>
 					<td width="64%">
-						<div id="reviewStar">${review.reviewStar}</div>
+						<div id="reviewStar">(${review.reviewStar})</div>
 					</td>
 					<td style="text-align:right" width="20%">
 						<div id="reviewDate">${review.createdAt}</div>

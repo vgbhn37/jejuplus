@@ -4,6 +4,7 @@
 <%@ include file="/WEB-INF/view/header.jsp"%>
 <!-- css -->
 <link rel="stylesheet" href="/css/user/orderlist.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 
 <!-- 메인 -->
 <main>

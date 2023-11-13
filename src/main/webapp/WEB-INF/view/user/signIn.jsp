@@ -4,6 +4,7 @@
 <%@ include file="/WEB-INF/view/header.jsp"%>
 <!-- header.jsp  -->
 <link rel="stylesheet" href="/css/user/user.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 
 <!-- start main.jsp -->
 <main>

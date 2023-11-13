@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/view/header.jsp"%>
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 <!-- header.jsp  -->
 <link rel="stylesheet" href="/css/user/user.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
