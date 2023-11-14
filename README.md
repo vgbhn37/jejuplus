@@ -32,7 +32,7 @@
       <br>
       <ul>
           <li>springboot  </li>
-          <li>H2 Database → MySQL </li>
+          <li>MySQL </li>
           <li>jdk  </li>
           <li>lombok </li>
           <li>MyBatis </li>
