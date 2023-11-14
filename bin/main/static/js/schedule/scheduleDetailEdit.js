@@ -3,7 +3,7 @@
 스케쥴의 세부 일정 수정 페이지
 */
 let scheduleDetailEdit = {
-	
+
 	container: document.getElementById('map'), // 지도 컨테이너
 	locations: [], // 선택한 장소 정보를 담을 배열
 	distances: [], // 거리 정보를 담을 배열
@@ -32,22 +32,22 @@ let scheduleDetailEdit = {
 		const savingBtn = document.getElementById('saving-btn');
 		const editcomplBtn = document.getElementById('edit-compl');
 		let scheduleId = document.getElementById('schedule-id').value;
-		
+
 		sortingBtn.addEventListener('click', () => {
 			this.sortingScheduleDetail();
 		});
 		savingBtn.addEventListener('click', () => {
 			this.saveScheduleDetail();
 		});
-		editcomplBtn.addEventListener('click', ()=>{
-			if(confirm('저장되지 않은 일정은 삭제됩니다. 확인 버튼을 누르시면 편집을 종료합니다.')){
-				location.href ="/schedule/detail/show/"+scheduleId;
+		editcomplBtn.addEventListener('click', () => {
+			if (confirm('저장되지 않은 일정은 삭제됩니다. 확인 버튼을 누르시면 편집을 종료합니다.')) {
+				location.href = "/schedule/detail/show/" + scheduleId;
 			}
 		});
 
 		this.map = new kakao.maps.Map(this.container, this.options); //지도 생성 및 객체 리턴
 		this.printContentsList('all');
-		
+
 		this.requestLocations(1);
 
 
@@ -60,7 +60,7 @@ let scheduleDetailEdit = {
 		const startDateValue = document.getElementById('start-date').value;
 		const scheduleDate = document.getElementById('schedule-day');
 		const output = document.getElementById('list-output');
-		
+
 
 		if (confirm('저장되지 않은 일정은 삭제됩니다. 날짜를 바꾸시겠습니까?')) {
 			this.deleteMarkers();
@@ -75,13 +75,13 @@ let scheduleDetailEdit = {
 			diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
 			scheduleDate.textContent = diff + 1;
 			dateInput.value = changedDate;
-			
+
 			output.innerHTML = '';
-			this.requestLocations(diff+1);
-			
+			this.requestLocations(diff + 1);
+
 			return true;
 
-		} else {	
+		} else {
 			return false;
 		}
 
@@ -90,7 +90,7 @@ let scheduleDetailEdit = {
 
 	/* 날짜를 변경했을 시 DB에 저장되어있는 상세일정 불러오기*/
 	requestLocations: function(day) {
-		
+
 		this.locations.length = 0;
 		const scheduleId = document.getElementById('schedule-id');
 
@@ -202,11 +202,20 @@ let scheduleDetailEdit = {
 		let d = R * c; // Distance in km
 		return d;
 	},
+	/* active 클래스 제거 및 추가*/
+	modifyActive: function(label) {
+		const oldItem = document.querySelector('.nav-item.active');
+		oldItem.classList.remove('active');
+		const selectedTab = document.querySelector('.nav-link[data-tab="' + label + '"]');
+		selectedTab.closest('.nav-item').classList.add('active');
+	},
 
 	/* 컨텐츠 리스트 출력 */
 	printContentsList: function(label) {
 
 		const tabOutput = document.getElementById('tab-output');
+
+		this.modifyActive(label);
 
 		let url = "";
 		switch (label) {
@@ -242,8 +251,6 @@ let scheduleDetailEdit = {
 			.then(data => {
 				tabOutput.innerHTML = data;
 				//location.href="#";
-
-
 			}).catch((error) => {
 				console.error(error);
 			});
@@ -285,6 +292,8 @@ let scheduleDetailEdit = {
 	/* 검색 창 출력 */
 	printSearchWindow: function() {
 
+		this.modifyActive('search');
+
 		const tabOutput = document.getElementById('tab-output');
 
 		fetch('/schedule/call-search')
@@ -295,9 +304,15 @@ let scheduleDetailEdit = {
 				return res.text();
 			}).then(data => {
 				tabOutput.innerHTML = data;
+				const searchInput = document.getElementById('search-input');
 				const searchButton = document.getElementById('search-button');
 				searchButton.addEventListener('click', () => {
 					this.setSearchValue();
+				});
+				searchInput.addEventListener('keyup', (event) => {
+					if (event.keyCode == 13) {
+						this.setSearchValue();
+					}
 				})
 			}).catch((error) => {
 				console.error(error);
@@ -332,6 +347,33 @@ let scheduleDetailEdit = {
 
 	},
 
+	/* 상세보기 페이지 팝업*/
+	moveToDetailPage: function(contentsId, label) {
+
+		let url = '';
+
+		switch (label) {
+			case '관광지':
+				url = '/contents/touristAreaDetail/' + contentsId;
+				break;
+			case '숙박':
+				url = '/contents/lodgingDetail/' + contentsId;
+				break;
+			case '쇼핑':
+				url = '/contents/shoppingDetail/' + contentsId;
+				break;
+			case '음식점':
+				url = '/contents/restaurantDetail/' + contentsId;
+				break;
+			default:
+				alert('상세보기가 지원되지 않는 페이지입니다.')
+				break;
+		}
+
+		window.open(url, '_blank', 'width=1200,height=1000');
+
+	},
+
 	/* 일정추가한 컨텐츠를 일정리스트에 추가 후 지도와 리스트 출력*/
 	addToScheduleList: function(idValue, titleValue, region1Value, region2Value, labelValue, mapX, mapY) {
 		for (let i = 0; i < this.locations.length; i++) {
@@ -358,6 +400,11 @@ let scheduleDetailEdit = {
 			this.polyline.setMap(null);
 		}
 		this.drawLine(this.locations);
+		scrollTo({
+			top: 20,
+			left: 0,
+			behavior: "smooth",
+		});
 	},
 
 	/* 일정에 추가된 컨텐츠들 출력*/
@@ -365,7 +412,7 @@ let scheduleDetailEdit = {
 
 		const output = document.getElementById('list-output');
 		output.innerHTML = '';
-		
+
 		this.locations.forEach((item, index) => {
 			const itemDiv = document.createElement('div');
 			itemDiv.classList.add('list-card');
@@ -393,7 +440,7 @@ let scheduleDetailEdit = {
 
 			const colDiv7 = document.createElement('div');
 			colDiv7.classList.add('col-7');
-			colDiv7.innerHTML = "<p>"+ item.title + "</p>" + "<p class='list-item-region'>" + item.region1 +  ">" + item.region2 + "</p>";
+			colDiv7.innerHTML = "<p>" + item.title + "</p>" + "<p class='list-item-region'>" + item.region1 + ">" + item.region2 + "</p>";
 			rowDiv.appendChild(colDiv7);
 
 			const colDiv3 = document.createElement('div');
@@ -411,7 +458,7 @@ let scheduleDetailEdit = {
 			const binIcon = document.createElement('img');
 			binIcon.src = '/images/schedule/bin.png';
 			binIcon.classList.add('item-btn');
-			binIcon.addEventListener('click', (index) => {
+			binIcon.addEventListener('click', () => {
 				this.removeList(index);
 			});
 			colDiv3.appendChild(binIcon);

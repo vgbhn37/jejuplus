@@ -14,4 +14,5 @@ public class RestaurantListDto {
 	private int recommended;
 	private int reviewCnt;
 	private int recommendedCnt;
+	private double reviewAvg;
 }

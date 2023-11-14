@@ -1,10 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/view/air/header.jsp" %>
-
+<%@ include file="/WEB-INF/view/header.jsp" %>
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
+<style>
+*{
+text-decoration: none;
+    color: black;
+}
+</style>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	
 <!-- air css -->
 <link rel="stylesheet" href="../../css/air/air.css" />
 <!-- js -->
 <script src="../../js/air/air.js"></script>
+
        <!-- main -->
         <main>
         
@@ -27,19 +43,19 @@
 	                            		<option>선택</option>
 	                            		<option value="NAARKPK">김해</option>
 										<option value="NAARKPC">제주</option>
-										<option value="NAARKJB">무안</option>
-										<option value="NAARKJJ">광주</option>
-										<option value="NAARKJK">군산</option>
-										<option value="NAARKJY">여수</option>
-										<option value="NAARKNW">원주</option>
-										<option value="NAARKNY">양양</option>
-										<option value="NAARKPS">사천</option>
-										<option value="NAARKPU">울산</option>
-										<option value="NAARKSI">인천</option>
 										<option value="NAARKSS">김포</option>
-										<option value="NAARKTH">포항</option>
-										<option value="NAARKTN">대구</option>
-										<option value="NAARKTU">청주</option>
+<!-- 										<option value="NAARKJB">무안</option> -->
+<!-- 										<option value="NAARKJJ">광주</option> -->
+<!-- 										<option value="NAARKJK">군산</option> -->
+<!-- 										<option value="NAARKJY">여수</option> -->
+<!-- 										<option value="NAARKNW">원주</option> -->
+<!-- 										<option value="NAARKNY">양양</option> -->
+<!-- 										<option value="NAARKPS">사천</option> -->
+<!-- 										<option value="NAARKPU">울산</option> -->
+<!-- 										<option value="NAARKSI">인천</option> -->
+<!-- 										<option value="NAARKTH">포항</option> -->
+<!-- 										<option value="NAARKTN">대구</option> -->
+<!-- 										<option value="NAARKTU">청주</option> -->
 	                            	</select>
 	                            </div>
 	                        </div>
@@ -51,21 +67,21 @@
 	                            <div class="arr-search">
 	                            	<select class="arr-input" name="arrAirportNm">
 	                            		<option>선택</option>
-										<option value="NAARKPK">김해</option>
+	                            		<option value="NAARKPK">김해</option>
 										<option value="NAARKPC">제주</option>
-										<option value="NAARKJB">무안</option>
-										<option value="NAARKJJ">광주</option>
-										<option value="NAARKJK">군산</option>
-										<option value="NAARKJY">여수</option>
-										<option value="NAARKNW">원주</option>
-										<option value="NAARKNY">양양</option>
-										<option value="NAARKPS">사천</option>
-										<option value="NAARKPU">울산</option>
-										<option value="NAARKSI">인천</option>
 										<option value="NAARKSS">김포</option>
-										<option value="NAARKTH">포항</option>
-										<option value="NAARKTN">대구</option>
-										<option value="NAARKTU">청주</option>
+<!-- 										<option value="NAARKJB">무안</option> -->
+<!-- 										<option value="NAARKJJ">광주</option> -->
+<!-- 										<option value="NAARKJK">군산</option> -->
+<!-- 										<option value="NAARKJY">여수</option> -->
+<!-- 										<option value="NAARKNW">원주</option> -->
+<!-- 										<option value="NAARKNY">양양</option> -->
+<!-- 										<option value="NAARKPS">사천</option> -->
+<!-- 										<option value="NAARKPU">울산</option> -->
+<!-- 										<option value="NAARKSI">인천</option> -->
+<!-- 										<option value="NAARKTH">포항</option> -->
+<!-- 										<option value="NAARKTN">대구</option> -->
+<!-- 										<option value="NAARKTU">청주</option> -->
 	                            	</select>
 	                            </div>
 	                        </div>
@@ -75,19 +91,11 @@
 							<div class="customer-container">
 							    <label for="">탑승객</label>
 							    <div class="customer-option">
-							        <span>성인</span>
+							        <span>인원</span>
 							        <div class="passenger-selector">
 							            <a class="cus-minus-adult">-</a>
 							            <span class="passengerCountAdult" name="passengerCount">1</span>
 							            <a class="cus-plus-adult">+</a>
-							        </div>
-							    </div>
-							    <div class="customer-option">
-							        <span>어린이</span>
-							        <div class="passenger-selector">
-							            <a class="cus-minus-child">-</a>
-							            <span class="passengerCountChild" name="passengerCount">1</span>
-							            <a class="cus-plus-child">+</a>
 							        </div>
 							    </div>
 							</div>
@@ -123,6 +131,7 @@
             <!-- 항공 스케줄 선택 end -->
 
             <!-- 공지사항 start -->
+            <!-- 
             <section class="air_notice">
                 <h2>항공권 공지사항</h2>
                 <div class="more_view">
@@ -145,6 +154,7 @@
                     </table>
                 </div>
             </section>
+             -->
             <!-- 공지사항 end -->
         </main>
 <%@ include file="/WEB-INF/view/footer.jsp" %>

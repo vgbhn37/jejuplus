@@ -178,20 +178,31 @@ document.querySelector('#myForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const formData = new FormData(this);
-
+	var introduce = document.getElementById('introduceField').value;
+	var title = document.getElementById('titleField').value;
+	
     fetch('/admin/insertPromotion', {
         method: 'POST',
         body: formData,
     })
     .then(response => {
+    	if(introduce.length > 45) {
+    		alert("소개글이 45글자를 초과했습니다.");
+    		return;
+    	} else if(title.length > 45) {
+    		alert("장소를 입력하는 곳은 50글자가 최대입니다.");
+    		return;
+    	} else {
         if (response.ok) {
             // Form submission was successful
+            console.log(introduce);
             alert('광고가 업로드 되었습니다.');
             window.location.href='/admin/insertPromotion';
         } else {
             // Form submission failed
             alert('작성하지 않은 곳이 있는지 다시 한번 확인해주세요');
         }
+    	}
     })
     .catch(error => {
         console.error('Error:', error);

@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.green.jejuplus.dto.schedule.ScheduleDetailDto;
 import com.green.jejuplus.dto.schedule.ScheduleDto;
 import com.green.jejuplus.dto.schedule.ScheduleItemDto;
+import com.green.jejuplus.dto.schedule.ScheduleListDto;
 import com.green.jejuplus.handler.exception.CustomException;
+import com.green.jejuplus.handler.exception.UnAuthorizedException;
 import com.green.jejuplus.repository.model.Contents;
 import com.green.jejuplus.repository.model.Schedule;
 import com.green.jejuplus.repository.model.User;
@@ -34,9 +36,12 @@ import com.green.jejuplus.util.Define;
 import com.green.jejuplus.util.Pagination;
 import com.green.jejuplus.util.PagingDto;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @Controller
 @RequestMapping("/schedule")
+@Slf4j
 public class ScheduleController {
 
 	@Autowired
@@ -45,14 +50,12 @@ public class ScheduleController {
 	@Autowired
 	HttpSession session;
 
-	@GetMapping("/list/{userId}")
-	public String list(@PathVariable("userId")Integer userId ,Model model) {
-		User user = (User) session.getAttribute(Define.PRINCIPAL);
-		if(!userId.equals(user.getUserId())) {
-			throw new CustomException("잘못된 접근입니다.", HttpStatus.UNAUTHORIZED);
-		}
+	@GetMapping("/list")
+	public String list(Model model, HttpServletRequest request) {
 		
-		List<Schedule> list = scheduleService.findScheduleByUserId(userId);
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+	
+		List<ScheduleListDto> list = scheduleService.findScheduleByUserId(user.getUserId());
 		model.addAttribute("scheduleList", list);
 		
 		return "/schedule/list";

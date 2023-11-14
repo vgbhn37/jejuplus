@@ -14,13 +14,23 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d5568461ac8305d5d4737b9523509aed"></script>
 <link rel="stylesheet" href="/css/schedule/scheduleList.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 
 <!-- ------------------------------------------------------------- -->
-
+<div class="schedule-promotion-img-text">
+	<div id="img-box">
+		<img src="/images/시험해보자.jpg"
+			onerror="this.src='/images/NoImage.jpg'" id="up-img">
+	</div>
+	
+	<div class="schedule-promotion-uptext">
+		<b style="color: white;">My schedule</b>
+		</div>
+		</div>
 <div class="container">
 	<div class="list-header row">
 		<div class="col-8">
-			<h3>${principal.username}님의 제주 여행</h3>
+			<h3>${principal.fullname} 님의 제주 여행</h3>
 		</div>
 		<div class="col-4 float-right">
 			<button class="btn btn-orange open-add-modal">일정 등록</button>
@@ -38,7 +48,19 @@
 			<div class="list-body">
 				<c:forEach var="item" items="${scheduleList }">
 					<div class="card">
-						<div class="card-header"></div>
+						<div class="card-header">
+						<c:choose>
+							<c:when test="${item.status==0 }">
+							<span class="status">여행 중</span>
+							</c:when>
+							<c:when test="${item.status==1 }">
+							<span class="status">여행 전</span>
+							</c:when>
+							<c:otherwise>
+							<span class="status">여행 종료</span>
+							</c:otherwise>
+						</c:choose>
+						</div>
 						<div class="card-body">
 							<h5 class="card-title">
 								<a href="/schedule/detail/show/${ item.scheduleId}">${ item.title }</a>

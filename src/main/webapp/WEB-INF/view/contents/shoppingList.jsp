@@ -1,112 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/view/header.jsp"%>
-<style>
-	body {
-		background-color: white;
-	}
-	#touristArea {
-		font-size: 50px;
-		text-align: center;
-		margin: 50px;
-	}
-	#container {
-		width: 1000px;
-		height:30px;
-		margin: 0 auto;
-		backgroud-color:white;
-
-	}
-	#container div {
-		display: inline-block;
-	}
-	#img-box {
-		float:left;
-		width:500px;
-		height:250px;
-		overflow:hidden;
-		border-radius: 10px;
-	}
-	#img {
-		width:100%;
-		height:100%;
-	    object-fit: cover;
-	}
-	#content-box {
-		margin-left:30px;
-		margin-bottom:30px;
-		padding-left: 10px;
-		float:left;
-		width:460px;
-		height:250px;
-	
-	}
-	#title {
-		font-size: 30px;
-		font-weight: bold;
-	}
-	#location {
-		width:460px;
-		font-size: 20px;
-		margin-top: 10px;
-	}
-	#tag {
-		width:460px;
-		font-size: 15px;
-		color:grey;
-		margin-top: 10px;
-	}
-	.icon{
-		width:20px;
-		margin-right:5px;
-
-	}
-	#icon{
-		margin-top: 10px;
-		font-size: 15px;
-	}
-	#btn {
-		width: 460px;
-		height: 40px;
-		background-color: orange;
-		color: white;
-		border: none;
-		margin-top: 30px;
-		font-size: 15px;
-		font-weight: bold;
-		
-	}
-	#btn:hover {
-	    background-color: white;
-	    color: orange;
-	    border: solid 2px orange;
-	    cursor: pointer;
-	}
-	
-</style>
+<link rel="stylesheet" href="/css/contents/list.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 <body>
-	<div id="touristArea">쇼핑</div>
+	<div id="contentsLabel">쇼핑</div>
 	<hr>
 	<br><br>
 	<div id="container">
 		<c:forEach var="contents" items="${shoppingList}">
 			<div id="img-box"><img src="${contents.thumbnailPath}" onerror="this.src='/images/NoImage.jpg'" id="img"></div>
 			<div id="content-box">
-				<div id="title">${contents.title}</div> 
+				<div id="title">${contents.title}</div>
 				<div id="location">${contents.region1} > ${contents.region2}</div>
 				<div id="tag">${contents.tag}</div>
 				<div id="icon">
-					<div><img src="/images/좋아요.png" class="icon">1234</div>
-					<div><img src="/images/리뷰.png" class="icon">${contents.reviewCnt}</div>
+					<div><img src="/images/좋아요.png" class="icon">${contents.recommendedCnt}</div>
+					<div><img src="/images/리뷰.png" class="icon">${contents.reviewAvg} (${contents.reviewCnt})</div>
 				</div>
-				<div><input type="hidden" value="${contents.contentsLabel}"></div>
+				<div><input type="hidden" value="${contents.contentsLabel}" id="contents-label"></div>
 				<input type="button" onclick="location.href='/contents/shoppingDetail/${contents.contentsId}'" value="자세히보기" id="btn">
 			</div>
 		</c:forEach>
+		<div class="paging">
+			<div class="text-center clearfix">
+				<ul class="pagination" id="pagination">
+					<c:if test="${pagination.prev}">
+						<li class="page-item"><a class="page-link"
+							onclick="contentsList.changePage(event)" data-page="${pagination.beginPage-1}">Prev</a></li>
+					</c:if>
+					<c:forEach var="num" begin="${pagination.beginPage}"
+						end="${pagination.endPage}">
+						<li
+							class="${pagination.paging.page == num ? 'page-item active' : ''}"><a
+							class="page-link" onclick="contentsList.changePage(event)" data-page="${num}">${num}</a></li>
+					</c:forEach>
+		
+					<c:if test="${pagination.next}">
+						<li class="page-item"><a class="page-link"
+							onclick="contentsList.changePage(event)" data-page="${pagination.endPage+1}">Next</a></li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
 	</div>
+	
 </body>
-<script>
-
-
+<script src='/js/contents/list.js'>
 </script>
 <%@ include file="/WEB-INF/view/footer.jsp"%>

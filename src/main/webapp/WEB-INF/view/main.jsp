@@ -1,16 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- main css -->
+
 <link rel="stylesheet" href="/css/main.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 
 <!-- main -->
 <main>
 
 	<section class="hero">
+	<c:set var="isMainPage" value="true" />
 	<%@ include file="/WEB-INF/view/header.jsp"%>
+	
 		<h1>제주를 더하다, 제주플러스</h1>
 		<p>항공권 예약부터 일정까지 제주여행을 더 간편하게!</p>
-		<input type="button" onclick="location.href='/main'" value="버튼활용" id="main_btn">
+		<input type="button" onclick="location.href='/schedule/list'" value="나의 일정 만들기" id="main_btn">
 
 
 	</section>
@@ -23,7 +28,7 @@
 		</button>
 		<section class="tour-packages">
 			<div>
-				<h2>광고</h2>
+				<h2># 광고</h2>
 			</div>
 
 			<div class="carousel-container">
@@ -34,7 +39,7 @@
 							<img src="${promotions.imageUrl}" alt="sample" />
 							<h3>${promotions.title}</h3>
 							<p>${promotions.introduce}</p>
-							<a href="/user/promotionDetail/${promotions.promotionId}">자세히 보기</a>
+							<a href="/user/promotionDetail/${promotions.promotionId}" style="color:#f37021">자세히 보기</a>
 						</div>
 					</c:forEach>
 				</div>
@@ -57,7 +62,7 @@
 		</button>
 		<section class="tour-packages">
 			<div>
-				<h2>맛집</h2>
+				<h2># 맛집</h2>
 			</div>
 
 			<div class="carousel-container">
@@ -68,7 +73,7 @@
 							<img src="${restaurantDto.imgPath}" alt="sample" />
 							<h3>${restaurantDto.title}</h3>
 							<p>${restaurantDto.tag}</p>
-							<a href="#">자세히 보기</a>
+							<a href="/contents/restaurantDetail/${restaurantDto.contentsId}" style="color:#f37021">자세히 보기</a>
 						</div>
 					</c:forEach>
 				</div>
@@ -88,7 +93,7 @@
 		</button>
 		<section class="tour-packages">
 			<div>
-				<h2>인기 관광지</h2>
+				<h2># 인기 관광지</h2>
 			</div>
 
 			<div class="carousel-container">
@@ -99,7 +104,7 @@
 							<img src="${palceDto.imgPath}" alt="sample" />
 							<h3>${palceDto.title}</h3>
 							<p>${palceDto.tag}</p>
-							<a href="#">자세히 보기</a>
+							<a href="/contents/touristAreaDetail/${palceDto.contentsId}" style="color:#f37021">자세히 보기</a>
 						</div>
 					</c:forEach>
 				</div>

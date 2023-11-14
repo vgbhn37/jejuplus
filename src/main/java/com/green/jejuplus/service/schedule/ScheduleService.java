@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.green.jejuplus.dto.schedule.ScheduleDetailDto;
 import com.green.jejuplus.dto.schedule.ScheduleDto;
 import com.green.jejuplus.dto.schedule.ScheduleItemDto;
+import com.green.jejuplus.dto.schedule.ScheduleListDto;
 import com.green.jejuplus.handler.exception.CustomException;
 import com.green.jejuplus.repository.interfaces.ScheduleRepository;
 import com.green.jejuplus.repository.model.Contents;
@@ -130,7 +131,7 @@ public class ScheduleService {
 		return schedule;
 	}
 	
-	public List<Schedule> findScheduleByUserId(Integer UserId){
+	public List<ScheduleListDto> findScheduleByUserId(Integer UserId){
 		
 		return scheduleRepository.findScheduleByUserId(UserId);
 	}

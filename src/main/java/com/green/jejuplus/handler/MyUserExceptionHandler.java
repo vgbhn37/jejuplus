@@ -41,6 +41,7 @@ public class MyUserExceptionHandler {
 		sb.append("alert(' "+ e.getMessage() +" ');");
 		sb.append("location.href='/user/sign-in'");
 		sb.append("</script>");
+		System.out.println("마이유저이셉션핸들러");
 		return sb.toString();
 	}
 	

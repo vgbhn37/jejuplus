@@ -85,11 +85,15 @@ let scheduleDetailShow = {
 			const contentsTitle = document.createElement('h4');
 			contentsTitle.classList.add('card-title');
 			contentsTitle.textContent = data.title;
+			contentsTitle.addEventListener('click',()=>{
+				this.moveToDetailPage(data.contentsId, data.contentsLabel);
+			});
 			cardBody.appendChild(contentsTitle);
+			
 			
 			const contentsMemo = document.createElement('p');
 			contentsMemo.classList.add('card-text');
-			contentsMemo.textContent = this.locations[index].memo;
+			contentsMemo.textContent = this.locations[index].memo.length != 0 ? this.locations[index].memo : '작성된 메모가 없어요';
 			cardBody.appendChild(contentsMemo);
 			
 			
@@ -112,6 +116,8 @@ let scheduleDetailShow = {
 			}
 			return res.json();
 		}).then(list => {
+			const listOutput = document.getElementById('list-output');
+			
 			if (list.length > 0) {
 				list.forEach(data => {
 					let item = {
@@ -129,6 +135,20 @@ let scheduleDetailShow = {
 				this.printScheduleList();
 				this.drawLine(this.locations);
 				this.moveMapCenter(this.locations[0]);
+			} else{
+				const errorDiv = document.createElement('div');
+				errorDiv.classList.add('error-div');
+				listOutput.appendChild(errorDiv);
+				
+				const errorImg = document.createElement('img');
+				errorImg.src = '/images/schedule/list-none-calendar.png';
+				errorImg.classList.add('error-img');
+				errorDiv.appendChild(errorImg);
+				
+				const errorMsg = document.createElement('p');
+				errorMsg.textContent = '이 날에 등록 된 일정이 없어요.\n편집버튼을 눌러 추가해주세요!';
+				errorMsg.classList.add('error-msg');
+				errorDiv.appendChild(errorMsg);
 			}
 
 		})
@@ -212,6 +232,32 @@ let scheduleDetailShow = {
 		let d = R * c; // Distance in km
 		return d;
 	},
+	
+	moveToDetailPage: function(contentsId, label){
+		
+		let url = '';
+		
+		switch(label){
+			case '관광지' :
+				url = '/contents/touristAreaDetail/'+contentsId;
+				break;
+			case '숙박' :
+				url = '/contents/lodgingDetail/'+contentsId;
+				break;
+			case '쇼핑' :
+				url = '/contents/shoppingDetail/'+contentsId;
+				break;
+			case '음식점' :
+				url = '/contents/restaurantDetail/'+contentsId;
+				break;
+			default :
+				alert('상세보기가 지원되지 않는 페이지입니다.')
+				break;	
+		}
+		
+		window.open(url, '_blank', 'width=1200,height=1000');
+		
+	},
 
 
 
@@ -284,25 +330,3 @@ let scheduleDetailShow = {
 scheduleDetailShow.init();
 
 
-/*
- 모달 
-const modal = document.getElementById("myModal");// 모달 창
- 모달창(메모창) 열기 
-function openModal(title, index) {
-	modal.style.display = "block";
-	let contentsTitle = document.getElementById('contents-title');
-	let contentsIndex = document.getElementById('contents-index');
-	let contentsMemo = document.getElementById('contents-memo');
-	contentsMemo.value = scheduleDetailEdit.locations[index].memo; // 해당 컨텐츠의 메모내용
-	contentsTitle.textContent = title; //해당 컨텐츠(장소)의 이름
-	contentsIndex.value = index;
-
-}
-
- 모달 닫기 버튼 눌렀을 시 
-function closeModal() {
-	scheduleDetailEdit.locations[document.getElementById('contents-index').value].memo = document.getElementById('contents-memo').value;
-	document.getElementById('contents-memo').value = '';
-	document.getElementById('contents-index').value = "";
-	modal.style.display = "none";
-}*/

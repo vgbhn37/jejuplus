@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Component
 public class MainRestaurantDto {
+	String contentsId;
 	String imgPath;
 	String title;
 	String tag;	

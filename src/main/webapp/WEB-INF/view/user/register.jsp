@@ -3,22 +3,9 @@
 <%@ include file="/WEB-INF/view/header.jsp"%>
 
 <link rel="stylesheet" href="/css/user/user.css" />
+<link rel='stylesheet' href='//fonts.googleapis.com/earlyaccess/notosanskr.css'>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-  .register-textButton {
-        display: flex;
-        align-items: center;
-    }
 
-    .register-textField {
-        flex: 1;
-        margin-right: 10px;
-    }
-
-    .register-button {
-        margin: 0;
-    }
-</style>
 <main>
 <div class="d-flex justify-content-center">
 	<form action="/user/register" method="post" id="registrationForm">
