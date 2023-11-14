@@ -156,7 +156,7 @@ body {
 	display: inline-block;
 	width: 30px;
 	height: 30px;
-	background-color: #007BFF;
+	background-color: #f37021;
 	/* 배경색을 원하는 색상으로 지정하세요 */
 	color: #fff;
 	/* 텍스트 색상을 원하는 색상으로 지정하세요 */
@@ -476,14 +476,14 @@ main .booking-container .mybooking .nav p.current span {
 	width: 80%;
 	height: 50px;
 	font-weight: bold;
-	border: 1px solid #6d6bff;
+	border: 1px solid #f37021;
 	border-radius: 10px;
 	background-color: #fff;
 	color: #333;
 }
 
 .n1-check-block input[type='radio']:checked+label {
-	background-color: #6d6bff;
+	background-color: #f37021;
 	color: #fff;
 }
 
@@ -507,14 +507,14 @@ main .booking-container .mybooking .nav p.current span {
 	width: 80%;
 	height: 50px;
 	font-weight: bold;
-	border: 1px solid #6d6bff;
+	border: 1px solid #f37021;
 	border-radius: 10px;
 	background-color: #fff;
 	color: #333;
 }
 
 .n2-check-block input[type='radio']:checked+label {
-	background-color: #6d6bff;
+	background-color: #f37021;
 	color: #fff;
 }
 
@@ -683,7 +683,7 @@ main .booking-container .mybooking .nav p.current span {
 	font-weight: bold;
 	text-align: center;
 	line-height: 50px;
-	border: 1px solid #6d6bff;
+	border: 1px solid #f37021;
 	border-radius: 10px;
 	background-color: #fff;
 	color: #333;
@@ -692,7 +692,7 @@ main .booking-container .mybooking .nav p.current span {
 }
 
 .paymentList input[type='radio']:checked+label {
-	background-color: #6d6bff;
+	background-color: #f37021;
 	color: #fff;
 }
 
@@ -705,7 +705,7 @@ main .booking-container .mybooking .nav p.current span {
 	font-weight: bold;
 	line-height: 60px;
 	text-align: center;
-	background-color: #6d6bff;
+	background-color: #f37021;
 	border-radius: 6px;
 	margin: 0 auto;
 	border: none;
@@ -761,14 +761,14 @@ main .booking-container .mybooking .nav p.current span {
 }
 
 .complete-body>.btn>a:nth-of-type(1) {
-	color: #6d6bff;
+	color: #f37021;
 	background: #fff;
-	border: 1px solid #6d6bff;
+	border: 1px solid #f37021;
 }
 
 .complete-body>.btn>a:nth-of-type(2) {
 	color: white;
-	background: #6d6bff;
+	background: #f37021;
 	border: none;
 }
 
