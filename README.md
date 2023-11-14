@@ -202,9 +202,10 @@
 <tr>
   <td>User</td>
   <td>Admin</td>
+
 </tr>
 <tr>
-  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/1f386cc2-a5f1-4e6f-b29f-0d787f47f34f"></td>
+  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/d06db8ae-1bb8-4632-95de-6a010f5a5ddc"></td>
    <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/2051cffd-bfcc-4327-8d25-6411c3611451"></td>
 </tr>
 </table>
