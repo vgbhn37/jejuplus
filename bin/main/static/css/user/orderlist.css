@@ -96,6 +96,14 @@ div.myorderFrame>div.orderList>table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+div.myorderFrame>div.orderList>table th:first-child {
+	height: 50px;
+	font-size: 16px;
+	border: 1px solid #999;
+	border-left: 0;
+	border-right: 0;
+	text-align: left;
+}
 
 div.myorderFrame>div.orderList>table th {
 	height: 50px;
@@ -103,6 +111,7 @@ div.myorderFrame>div.orderList>table th {
 	border: 1px solid #999;
 	border-left: 0;
 	border-right: 0;
+	text-align: center;
 }
 
 div.myorderFrame>div.orderList>table td {

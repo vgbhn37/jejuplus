@@ -253,17 +253,6 @@
 									<div class="pay-detail">
 										<div class="round-ticket">오는 편 항공권</div>
 										<div class="pay-ditail-list">
-											<div>
-												<p name="n1DepAirport">n1출발공항</p>
-												<p name="n1ArrAirport">n1출발공항</p>
-												<p name="n2DepAirport">n2출발공항</p>
-												<p name="n2ArrAirport">n2출발공항</p>
-												<p name="airlineName">항공사 명</p>
-												<p name="n1DepPlandTime">출발시간1</p>
-												<p name="n1ArrPlandTime">도착시간1</p>
-												<p name="n2DepPlandTime">출발시간2</p>
-												<p name="n2ArrPlandTime">도착시간2</p>
-											</div>
 											<div class="price-info">
 												<p class="item-text">
 													<span>탑승객</span>
@@ -289,6 +278,17 @@
 									<p class="final-price" name="totalPrice"> 원</p>
 								</div>
 								<div class="final-price-plus">항공료+유류할증료+세금 포함</div>
+							</div>
+							<div style="display:none;">
+								<p name="n1DepAirport">n1출발공항</p>
+								<p name="n1ArrAirport">n1도착공항</p>
+								<p name="n2DepAirport">n2출발공항</p>
+								<p name="n2ArrAirport">n2도착공항</p>
+								<p name="airlineName">항공사 명</p>
+								<p name="n1DepPlandTime">출발시간1</p>
+								<p name="n1ArrPlandTime">도착시간1</p>
+								<p name="n2DepPlandTime">출발시간2</p>
+								<p name="n2ArrPlandTime">도착시간2</p>
 							</div>
 						</div>
 						<!-- 가격 안내 end -->
@@ -409,6 +409,9 @@ function requestPay() {
     const n2DepPlandTime = $('p[name=n2DepPlandTime]').text();
     const n2ArrPlandTime = $('p[name=n2ArrPlandTime]').text();
     
+    const depPrice = parseInt($('p[name=depPrice]').text().replace(/[^\d]/g, '')) || 0;
+	const arrPrice = parseInt($('p[name=arrPrice]').text().replace(/[^\d]/g, '')) || 0;
+    
     IMP.request_pay({
         pg: "kakaopay",
         pay_method: "card",
@@ -425,6 +428,8 @@ function requestPay() {
         n1ArrPlandTime: n1ArrPlandTime,
         n2DepPlandTime: n2DepPlandTime,
         n2ArrPlandTime: n2ArrPlandTime,
+        depPrice: depPrice,
+        arrPrice: arrPrice,
         
     }, function(rsp) {
         console.log("Payment rsp: " + JSON.stringify(rsp));
@@ -448,6 +453,8 @@ function requestPay() {
                     n1ArrPlandTime: n1ArrPlandTime,
                     n2DepPlandTime: n2DepPlandTime,
                     n2ArrPlandTime: n2ArrPlandTime,
+                    depPrice: depPrice,
+                    arrPrice: arrPrice,
                 }
             }).done(function(data, textStatus, xhr) {
                 console.log("result OK " + data.name);
