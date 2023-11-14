@@ -377,9 +377,9 @@ public class UserController {
 		// null 아닌 경우 처리
 		// 그게 아니라면 바로 세션에 데이터 등록 로그인 처리
 		session.setAttribute(Define.PRINCIPAL, olderUser); // 로그인 처리
-
+		
 		System.out.println("signUpFormDto : " + signUpFormDto);
-
+		
 		return "redirect:/main";
 
 	}
@@ -394,6 +394,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<String> findUsername(@RequestBody String email) {
 	    // 이메일 주소를 사용하여 사용자를 검색하고 아이디를 가져옵니다.
+		System.out.println("asdf");
 		System.out.println("Email before: " + email);
 		User user = userService.findUserByEmail(email);
 		System.out.println("Email after: " + email);

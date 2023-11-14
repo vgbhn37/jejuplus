@@ -26,8 +26,6 @@ public class WebConfig implements WebMvcConfigurer{
 		public void addInterceptors(InterceptorRegistry registry) {
 			registry.addInterceptor(authInterceptor)
 			.addPathPatterns("/schedule/**")
-			.addPathPatterns("/user/userUpdate/**")
-			.addPathPatterns("/user/delete-confirmation")
 			.addPathPatterns("/user/userDelete")
 			.excludePathPatterns("/error/**"); 
 			
