@@ -48,7 +48,19 @@
 			<div class="list-body">
 				<c:forEach var="item" items="${scheduleList }">
 					<div class="card">
-						<div class="card-header"></div>
+						<div class="card-header">
+						<c:choose>
+							<c:when test="${item.status==0 }">
+							<span class="status">여행 중</span>
+							</c:when>
+							<c:when test="${item.status==1 }">
+							<span class="status">여행 전</span>
+							</c:when>
+							<c:otherwise>
+							<span class="status">여행 종료</span>
+							</c:otherwise>
+						</c:choose>
+						</div>
 						<div class="card-body">
 							<h5 class="card-title">
 								<a href="/schedule/detail/show/${ item.scheduleId}">${ item.title }</a>

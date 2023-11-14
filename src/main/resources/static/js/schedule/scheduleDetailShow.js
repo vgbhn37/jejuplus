@@ -90,9 +90,10 @@ let scheduleDetailShow = {
 			});
 			cardBody.appendChild(contentsTitle);
 			
+			
 			const contentsMemo = document.createElement('p');
 			contentsMemo.classList.add('card-text');
-			contentsMemo.textContent = this.locations[index].memo;
+			contentsMemo.textContent = this.locations[index].memo.length != 0 ? this.locations[index].memo : '작성된 메모가 없어요';
 			cardBody.appendChild(contentsMemo);
 			
 			
