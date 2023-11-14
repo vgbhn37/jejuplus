@@ -127,6 +127,8 @@
 			myPageLink.addEventListener("click", function() {
 				if (hiddenMenu.style.display === "none") {
 					hiddenMenu.style.display = "block";
+					hiddenMenu2.style.display = "none";
+					hiddenMenu3.style.display = "none";
 				} else {
 					hiddenMenu.style.display = "none";
 				}
@@ -138,6 +140,8 @@
 			travelLink.addEventListener("click", function() {
 				if (hiddenMenu2.style.display === "none") {
 					hiddenMenu2.style.display = "block";
+					hiddenMenu.style.display = "none";
+					hiddenMenu3.style.display = "none";
 				} else {
 					hiddenMenu2.style.display = "none";
 				}
@@ -149,6 +153,8 @@
 			mytravelLink.addEventListener("click", function() {
 				if (hiddenMenu3.style.display === "none") {
 					hiddenMenu3.style.display = "block";
+					hiddenMenu.style.display = "none";
+					hiddenMenu2.style.display = "none";
 				} else {
 					hiddenMenu3.style.display = "none";
 				}
