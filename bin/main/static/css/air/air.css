@@ -28,19 +28,20 @@ body {
 /* flight start */
 .flight {
 	background-image: url(../../images/air/air-main.PNG);
-	height: 450px;
+	height: 600px;
 	margin: auto;
 	color: white;
 	display: flex;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 
 .flight .flight-container {
-	background-color: white;
-	/*border: 1px solid red;*/
+	background-color: #fff;
 	margin: auto;
 	width: 1000px;
-	height: 350px;
 	padding: 15px;
+	border-radius: 30px;
 }
 
 .flight .flight-container h4 {
@@ -189,7 +190,7 @@ body {
 }
 
 .justify-content-center {
-	margin-top: 25px;
+	margin-top: 45px;
 	display: flex !important;
 	justify-content: space-evenly !important;
 }
@@ -273,6 +274,7 @@ tbody tr td {
 
 .flight-find {
 	margin: 10px 0;
+	padding: 5px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
