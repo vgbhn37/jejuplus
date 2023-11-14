@@ -268,4 +268,8 @@
 		border: solid 1px darkgrey;
 		border-radius: 3px;
 	}
+	
+	#recommended, #unrecommended, #unrecommended2, #favorite, #unfavorite{
+		cursor: pointer;
+	}
 

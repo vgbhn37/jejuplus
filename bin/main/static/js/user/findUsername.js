@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/user/find-username", true);
-        xhr.setRequestHeader("Content-Type", "application/json charset=UTF-8");
+        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (responseText === "UserNotFound") {
                         alert("사용자를 찾을 수 없습니다.");
                     } else {
-                        alert("입력하신 이메일에서 아이디를 확인해주세요: " + responseText);
+                        alert("입력하신 이메일에서 아이디를 확인해주세요: ");
                         window.location.href = "/user/sign-in";
                     }
                 } else {
@@ -23,6 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
         };
-        xhr.send(JSON.stringify(email));
+        xhr.send(email);
     });
 });

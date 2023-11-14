@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/view/header.jsp"%>
 
 <link rel="stylesheet" href="/css/contents/detail.css" />
@@ -134,7 +135,7 @@
 						<div id="reviewStar">(${review.reviewStar})</div>
 					</td>
 					<td style="text-align:right" width="20%">
-						<div id="reviewDate">${review.createdAt}</div>
+						<div id="reviewDate"><fmt:formatDate value = "${review.createdAt}" pattern="yyyy-MM-dd hh:mm"/></div>
 					</td>
 				</tr>
 				<tr>
