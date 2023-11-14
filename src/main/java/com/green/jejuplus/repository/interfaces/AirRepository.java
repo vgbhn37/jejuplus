@@ -1,5 +1,7 @@
 package com.green.jejuplus.repository.interfaces;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.green.jejuplus.repository.model.Air;
@@ -8,6 +10,7 @@ import com.green.jejuplus.repository.model.Air;
 public interface AirRepository {
 	
 	public int insertAir(Air air);
-	public Air selectAir(int airId);
+	
+	public List<Air> findByAirList(int userId);
 
 }

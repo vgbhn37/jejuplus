@@ -244,7 +244,10 @@ public class AirController {
 			@RequestParam(name = "n1DepPlandTime", required = false) String n1DepPlandTime,
 			@RequestParam(name = "n1ArrPlandTime", required = false) String n1ArrPlandTime,
 			@RequestParam(name = "n2DepPlandTime", required = false) String n2DepPlandTime,
-			@RequestParam(name = "n2ArrPlandTime", required = false) String n2ArrPlandTime) throws Exception {
+			@RequestParam(name = "n2ArrPlandTime", required = false) String n2ArrPlandTime,
+			@RequestParam(name = "depPrice", required = false) String depPrice,
+			@RequestParam(name = "arrPrice", required = false) String arrPrice
+			) throws Exception {
 
 		// 유저 정보 받아옴
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
@@ -275,11 +278,11 @@ public class AirController {
 //		System.out.println("받은 n1ArrPlandTime : " + n1ArrPlandTime);
 //		System.out.println("받은 n2DepPlandTime : " + n2DepPlandTime);
 //		System.out.println("받은 n2ArrPlandTime : " + n2ArrPlandTime);
+		System.out.println("받은 depPrice : " + depPrice);
+		System.out.println("받은 arrPrice : " + arrPrice);
 
 		
 		// PaymentDTO를 세션에서 가져온 후 paymentId 값을 확인하는 코드
-		
-		
 		
 		Payment savedPayment = paymentRepository.findById(paymentDTO.getPaymentId());
 		int paymentId = savedPayment.getPaymentId();
@@ -318,21 +321,23 @@ public class AirController {
 
 	// 결제 완료 페이지
 	@GetMapping("/bookingcomplete")
-	public String bookingcomplete(Model model) {
+	public String bookingcomplete(Model model, PaymentDTO paymentDTO) {
 
 		// 유저 정보 받아옴
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 
-		// session에 담긴 데이터를 받음
-		PaymentDTO paymentDTO = (PaymentDTO) session.getAttribute("paymentDTO");
-
 		// PaymentService를 사용하여 paymentId 값을 가지고 옴
 		Payment payList = paymentService.payNumber(paymentDTO.getPaymentId());
-
+		AirDTO airDTO = (AirDTO)session.getAttribute("airDTO"); 
+		
 		// payList를 모델에 추가
-		model.addAttribute("payList", payList);
 		model.addAttribute("user", user);
+		model.addAttribute("airDTO", airDTO);
+		model.addAttribute("payList", payList);
+		
 //		System.out.println("paylist : 777. " + payList);
+//		System.out.println("paymentDTO : 888. "+paymentDTO);
+//		System.out.println("airDTO : 999. "+airDTO);
 
 		return "air/bookingcomplete";
 	}

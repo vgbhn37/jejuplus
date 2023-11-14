@@ -27,5 +27,7 @@ public class AirDTO {
     private String arrPlandTime2; // 도착 일자 및 시간
     private String depAirportNm2; // 출발 공항 이름
     private String arrAirportNm2; // 도착 공항 이름
-	
+    
+    private int depPrice;
+    private int arrPrice;
 }

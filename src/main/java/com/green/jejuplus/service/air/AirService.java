@@ -1,5 +1,7 @@
 package com.green.jejuplus.service.air;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +39,15 @@ public class AirService {
 		
 		System.out.println("airDTO AirService end : " + airDTO);
 		int resultAir = airRepository.insertAir(air);
+	}
+	
+	/**
+	 * 구매 내역
+	 * */
+	@Transactional
+	public List<Air> readOrderList(int userId) {
+	    List<Air> list = airRepository.findByAirList(userId);
+	    System.out.println("[AirService] list: " + list);
+	    return list;
 	}
 }

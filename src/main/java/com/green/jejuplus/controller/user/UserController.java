@@ -39,10 +39,11 @@ import com.green.jejuplus.dto.user.SignUpFormDto;
 import com.green.jejuplus.dto.user.UserDeleteDto;
 import com.green.jejuplus.dto.user.UserUpdateDto;
 import com.green.jejuplus.handler.exception.CustomException;
-import com.green.jejuplus.repository.model.Payment;
+import com.green.jejuplus.repository.model.Air;
 import com.green.jejuplus.repository.model.Promotion;
 import com.green.jejuplus.repository.model.PromotionImg;
 import com.green.jejuplus.repository.model.User;
+import com.green.jejuplus.service.air.AirService;
 import com.green.jejuplus.service.payment.PaymentService;
 import com.green.jejuplus.service.user.EmailService;
 import com.green.jejuplus.service.user.UserService;
@@ -629,17 +630,17 @@ public class UserController {
 	 */
 	@Autowired
 	public PaymentService paymentService;
+	@Autowired
+	public AirService airService;
 	
 	@GetMapping("/orderList/")
 	public String orderList(Model model, PaymentDTO paymentDTO) {
 		
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
-		Payment payList = paymentService.payNumber(paymentDTO.getPaymentId());
 		
-		// Timestamp를 Date로 변환
-
-	    model.addAttribute("payList", payList);
-	    model.addAttribute("user", user);
+		List<Air> orderList = airService.readOrderList(user.getUserId());
+		model.addAttribute("orderList", orderList);
+		System.out.println("airList : 999. "+orderList);
 		
 		return "user/orderList";
 	}
