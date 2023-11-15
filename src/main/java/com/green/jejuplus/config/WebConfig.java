@@ -27,6 +27,7 @@ public class WebConfig implements WebMvcConfigurer{
 			registry.addInterceptor(authInterceptor)
 			.addPathPatterns("/schedule/**")
 			.addPathPatterns("/user/userDelete")
+			.addPathPatterns("/air/**")
 			.excludePathPatterns("/error/**"); 
 			
 			registry.addInterceptor(amdinInterceptor).addPathPatterns("/admin/**");
