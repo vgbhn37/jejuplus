@@ -203,10 +203,12 @@
   <td>User</td>
   <td>Admin</td>
 
+
+
 </tr>
 <tr>
-  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/d06db8ae-1bb8-4632-95de-6a010f5a5ddc"></td>
-   <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/2051cffd-bfcc-4327-8d25-6411c3611451"></td>
+  <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/81886e22-8dcb-44c7-83d5-5c8fd77a3424"></td>
+   <td><img src="https://github.com/vgbhn37/jejuplus/assets/125956057/becd3b5f-b7a3-4772-a99d-c8292cdfcef9"></td>
 </tr>
 </table>
 
