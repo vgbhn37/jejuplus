@@ -71,10 +71,10 @@
 	<select id="findScheduleByUserId" resultType="com.green.jejuplus.dto.schedule.ScheduleListDto">
 		select schedule_id, title, start_date, end_date,
 		case when now() >= start_date and now() <![CDATA[<=]]>
-		end_date then 0
+		DATE_ADD(end_date, INTERVAL 1 DAY) then 0
 		when now() <![CDATA[<]]>
 		start_date then 1
-		when now() > end_date then 2 end as status
+		when now() > DATE_ADD(end_date, INTERVAL 1 DAY) then 2 end as status
 		from tb_schedule
 		where user_id = #{userId}
 		order by status;
